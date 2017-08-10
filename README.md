@@ -1,11 +1,3 @@
-开发服务器域名：http://cms-dev.ucaiyuan.com/
-
-测试环境IP： 192.168.17.15 
-用户名：ulife 
-密码：ulife
-
-
-
 
 Grunt 打包编译命令
 grunt build 测试环境
