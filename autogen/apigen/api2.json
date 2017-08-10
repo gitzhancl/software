@@ -1,0 +1,388 @@
+{
+    "apiList": [
+        {
+            //分页查询 cms_page 表
+            "methodName": "cms.page.getList",
+            "parameterInfoList": [
+                {
+                    "isRequired": false,
+                    "name": "deviceId",  //cms_page.device_id
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "categoryId",  //cms_page.category_id
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "size",   //分页参数
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "from",  //分页参数
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "pageId",  //cms_page.id
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,  //cms_page.name
+                    "name": "name",
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "pagelist": [
+                    {
+                        "pageId": 1,  //cms_page.id
+                        "deviceId": "2",  //cms_device.name
+                        "deviceName": "PC",  //cms_device.name
+                        "name": "PC首页",  //cms_page.name
+                        "categoryId": "homepage",  //cms_page_category.name
+                        "categoryName": "homepage",  //cms_page_category.name
+                        "title": "ulife都市生活", //cms_page.title
+                        "keywords": "",  //cms_page.keywords
+                        "description": "" //cms_page.description
+                    }
+                ]
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            //根据id查询 cms_page 表
+            "methodName": "cms.page.get",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",   //cms_page.id
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "pageId": 1,   //cms_page.id
+                "deviceId": "PC",   //
+                "deviceName": "PC",   //
+                "name": "PC首页",  //cms_page.name
+                "categoryId": "homepage",  //cms_page_category.name
+                "categoryName": "homepage",  //cms_page_category.name
+                "title": "ulife都市生活",  //cms_page.title
+                "keywords": "",  //cms_page.keywords
+                "description": ""  //cms_page.description
+                //"preview": "http:www.ulife.com" //TODO
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            //更新 cms_page 表
+            "methodName": "cms.page.update",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",  //cms_page.id
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "title", //cms_page.title
+                    "type": "string"
+                },
+                {
+                    "isRequired": true,
+                    "name": "keywords", //cms_page.keywords
+                    "type": "string"
+                },
+                {
+                    "isRequired": true,
+                    "name": "description",  //cms_page.description
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            //TODO 这个方法做什么,将 cms_data、cms_data_list、cms_databinding 克隆一份
+            "methodName": "cms.page.publish",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId", //cms_page.id
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            //更新cms_page
+            "methodName": "cms.page.updateName",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",  //cms_page.id
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "name",  //cms_page.name
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            //TODO 这个方法做什么
+            "methodName": "cms.page.add",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "deviceId", //频道页  device_id
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "pageId": "", //cms_page.id
+                "name": "",  //cms_page.name
+                "modifTime": "",  //cms_page.modify_time
+                "deviceId": "",
+                "deviceName": "",
+                "categoryId": "",
+                "categoryName": ""
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+
+        {
+            // 取得cms_databinding表的数据
+            "methodName": "cms.page.getModuleList",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId", //cms_page.id
+                    "type": "long"
+                }
+            ],
+            "responseData": { //module 表内所有数据 和 databinding表的id, databinding表的name
+                "pagelist": [
+                    {
+                        "pageId": 1,  //cms_page.id
+                        "moduleId": 2,  //cms_module.id
+                        "databindingId": 3,  //cms_databinding.id
+                        "sort": 3,  //cms_databinding.sort
+                        "code": "newbie",   //cms_module.code
+                        "name": "新人必看A"  //cms_module.name
+                    },
+                    {
+                        "pageId": 1, //cms_page.id
+                        "moduleId": 2, //cms_module.id
+                        "databindingId": 4,  //cms_databinding.id
+                        "code": "newbie",    //cms_module.code
+                        "name": "新人必看B"  //cms_module.name
+                    }
+                ]
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"modules\" :[{\"id\":\"1\", \"title\":\"新人必看\", \"type\": \"newbie\"},{\"id\":\"2\", \"title\":\"module2\"},{\"id\":\"3\", \"title\":\"module3\"},{\"id\":\"4\", \"title\":\"module4\"},{\"id\":\"5\", \"title\":\"module5\"}]}"
+        },
+        {
+            //根据id 查询 cms_data 表中数据
+            "methodName": "cms.page.getModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id",  // cms_databinding.id
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "name": "新人必看A",  //cms_module.name
+                "attr": "属性数据",  //cms_data.type=2
+                "content": "数据位数据(坑位)"  //cms_data.type=1的cms_data.data
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            //更新 cms_data 表中数据
+            "methodName": "cms.page.updateModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id",// cms_databinding.id
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "attr",//更新cms_data.type=2的数据
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            //向cms_data  cms_databinding  cms_data_list 表中插入一条module数据
+            "methodName": "cms.page.addModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",  //cms_page.id
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "moduleId",  //cms_module.id
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "id": 1,  //cms_databinding.id
+                "name": 1,  //cms_databinding.name
+                "module": {
+                    "id":1,
+                    "name": "123231",
+                    "code": "123123"
+                },
+                "module": "module表内的数据"  //TODO cms_module+cms_databinding 的数据
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            //删除 cms_databinding表中数据
+            "methodName": "cms.page.deleteModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id", //cms_databinding.id
+                    "type": "long"
+                }
+            ],
+            "securityLevel": "UserLogin",
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            //排序 cms_databinding 数据
+            "methodName": "cms.page.sortModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "ids",  //TODO cms_databinding.id list 以","分隔
+                    "type": "string"
+                },
+                {
+                    "isRequired": true,
+                    "name": "sorts",  //TODO cms_databinding.sort list 以","分隔
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+
+        {
+            //取得 cms_data 表中关于模块的数据位数据
+            "methodName": "cms.page.getModuleContent",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id",  //cms_databinding.id
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "content": "坑位数据"  //cms_data.type=1 的cms_data.data
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            //更新 cms_data 表中关于模块的数据位数据
+            "methodName": "cms.page.updateModuleContent",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id", //cms_databinding.id
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "content",  //cms_data.type=1 的cms_data.data
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            //更新 cms_databinding 表中关于模块的名称
+            "methodName": "cms.page.updateModuleName",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id", //cms_databinding.id
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "name",  //cms_databinding.name
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+
+        {
+            //查询 cms_module全部
+            "methodName": "cms.module.getLibrary",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "deviceId", //cms_module.device_id
+                    "type": "string"
+                }
+            ],
+            "responseData": { //module 表内的所有数据
+                "modulelist": [
+                    {
+                        "moduleId": 1,  //cms_module.id
+                        "name": "name", //cms_module.name
+                        "deviceType": "",
+                        "code": "" //cms_module.code
+                       // "preview": ""
+                    }
+                ]
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        }
+    ]
+}

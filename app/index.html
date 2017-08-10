@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html class="panel-fit">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>光明 都市菜园CMS系统</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- build:css({app, .tmp}) /styles/ulife.cms.index.css -->
+    <link href="/styles/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="/styles/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+    <link href="/styles/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css"/>
+    <link href="/styles/ulife.cms.base.css" rel="stylesheet" type="text/css"/>
+    <link href="/styles/wangEditor.css" rel="stylesheet" type="text/css"/>
+    <link href="/styles/tree-control.css" rel="stylesheet" type="text/css"/>
+    <link href="/styles/tree-control-attribute.css" rel="stylesheet" type="text/css"/>
+    <!-- endbuild -->
+</head>
+<body>
+
+<div class="cms-layout">
+    <div class="cms-layout-left">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-primary cms-accordion-panel">
+                <div class="panel-heading hide" role="tab" id="content">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            内容管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="content">
+                    <a ng-href="index.html#/homepage/list" class="list-group-item hide">首页管理</a>
+                    <a ng-href="index.html#/page/list" class="list-group-item hide">页面管理</a>
+                    <a ng-href="index.html#/page/adList" class="list-group-item hide">开机广告页</a>
+                    <a ng-href="index.html#/page/adHotShareList" class="list-group-item hide">分类热门推荐</a>
+                    <a ng-href="index.html#/page/userBlackList" class="list-group-item hide">会员黑名单</a>
+                    <a ng-href="index.html#/page/pcPrefecture" class="list-group-item hide">PC专区频道</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="develop" style="display:none">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseDeveloper" aria-expanded="false" aria-controls="collapseFour">
+                            前端专用频道
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseDeveloper" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="develop"
+                     style="display:none">
+                    <a ng-href="index.html#/hybrid/config" class="list-group-item hide">hybrid包管理</a>
+                </div>
+                <div class="panel-heading hide" role="tab" id="source">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseSource" aria-expanded="false" aria-controls="collapseFour">
+                            Source管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseSource" class="panel-collapse collapse" role="tabpanel" aria-labelledby="source">
+                    <a ng-href="index.html#/source/list" class="list-group-item hide">渠道Source</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="channel">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseChannel" aria-expanded="false" aria-controls="collapseFour">
+                            渠道管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseChannel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="channel">
+                    <a ng-href="index.html#/channel/list" class="list-group-item">渠道配置</a>
+                    <a ng-href="index.html#/channelOM/list" class="list-group-item">渠道OM配置</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="promoact">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapsePromotionActivity" aria-expanded="false" aria-controls="collapseThree">
+                            优惠活动管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapsePromotionActivity" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="promoact">
+                    <a ng-href="index.html#/promotionActivityGroup/list" class="list-group-item hide">优惠活动组</a>
+                    <a ng-href="index.html#/promotionActivityBlacklist/list" ng-show='false'
+                       class="list-group-item hide">黑名单商品维护</a>
+                    <a ng-href="index.html#/promotionActivityManage/list" class="list-group-item hide">优惠活动配置</a>
+                    <a ng-href="index.html#/promotionActivityBank/list" class="list-group-item hide">银行优惠活动配置</a>
+                    <a ng-href="index.html#/offline/list" class="list-group-item hide">拉新抽奖活动</a>
+                </div>
+                <div class="panel-heading hide" role="tab" id="coupon">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapsePromotion" aria-expanded="false" aria-controls="collapseThree">
+                            优惠券管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapsePromotion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="coupon">
+                    <a ng-href="index.html#/promotionType/list" class="list-group-item hide">类型管理</a>
+                    <a ng-href="index.html#/promotionActivity/list" class="list-group-item hide">优惠券配置</a>
+                    <a ng-href="index.html#/promotionCode/list" class="list-group-item hide">优惠券code管理</a>
+                    <a ng-href="index.html#/promotionSend/list" class="list-group-item hide">批量投放</a>
+                    <a ng-href="index.html#/promotionAutoSend/list" class="list-group-item hide">自动送券</a>
+                    <a ng-href="index.html#/promotion/blacklist" class="list-group-item hide">全局黑名单商品</a>
+                </div>
+                <div class="panel-heading hide" role="tab" id="group">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseGroup" aria-expanded="false" aria-controls="collapseFour">
+                            吃货团管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseGroup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="group">
+                    <a ng-href="index.html#/group/list" class="list-group-item hide">团列表</a>
+                    <a ng-href="index.html#/shareBuy/list" class="list-group-item hide">分享购</a>
+                    <a ng-href="index.html#/pullNew/list" class="list-group-item hide">老拉新</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="sku">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseSKU" aria-expanded="false" aria-controls="collapsefive">
+                            商品管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseSKU" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sku">
+                    <a ng-href="index.html#/productTags/list" class="list-group-item hide">商品打标</a>
+                    <a ng-href="index.html#/sku/list" class="list-group-item hide">SKU管理</a>
+                    <a ng-href="index.html#/item/list" class="list-group-item hide">ITEM管理</a>
+                    <a ng-href="index.html#/hotkeys/list" class="list-group-item hide">热搜管理</a>
+                    <a ng-href="index.html#/productCategory/list" class="list-group-item hide">商品类目管理</a>
+
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="video">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseVideo" aria-expanded="false" aria-controls="collapseFour">
+                            视频管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseVideo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="video">
+                    <a ng-href="index.html#/videoHomepage/list" class="list-group-item hide">视频首页管理</a>
+                    <a ng-href="index.html#/video/list" class="list-group-item hide">视频素材管理</a>
+                    <a ng-href="index.html#/videoComments/list" class="list-group-item hide">评论管理</a>
+                    <a ng-href="index.html#/videoSensitive/list" class="list-group-item hide">敏感词库管理</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="extcoupons">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseExtCoupons" aria-expanded="false" aria-controls="collapsesix">
+                            合作商家优惠券管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseExtCoupons" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="extcoupons">
+                    <a ng-href="index.html#/extCoupons/list" class="list-group-item hide">优惠券列表</a>
+                    <a ng-href="index.html#/codeManage/list" class="list-group-item hide">CODE管理</a>
+                </div>
+                <div class="panel-heading hide" role="tab" id="order">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseOrder" aria-expanded="false" aria-controls="collapseFour">
+                            订单管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseOrder" class="panel-collapse collapse" role="tabpanel" aria-labelledby="order">
+                    <a ng-href="index.html#/order/list" class="list-group-item">订单列表</a>
+                    <a ng-href="index.html#/socancelbill/list" class="list-group-item">取消单列表</a>
+                    <a ng-href="index.html#/soRefundBill/list" class="list-group-item">退款单列表</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="privilege">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapsePrivilege" aria-expanded="false" aria-controls="collapseSeven">
+                            权限配置
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapsePrivilege" class="panel-collapse collapse" role="tabpanel" aria-labelledby="privilege">
+                    <a ng-href="index.html#/deptSet/list" class="list-group-item hide">部门设置</a>
+                    <a ng-href="index.html#/pageSet/list" class="list-group-item hide">页面设置</a>
+                    <a ng-href="index.html#/buttonManage/list" class="list-group-item hide">控件管理</a>
+                    <a ng-href="index.html#/ctrlPage/list" class="list-group-item hide">页面控件设置</a>
+                    <a ng-href="index.html#/roleManager/list" class="list-group-item hide">按角色设置</a>
+                    <a ng-href="index.html#/userSet/list" class="list-group-item hide">用户设置</a>
+                    <a ng-href="index.html#/pageAdmin/list" class="list-group-item hide">按页面查看</a>
+                    <a ng-href="index.html#/changePwd/list" class="list-group-item hide">修改密码</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="detailed">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseDetailed" aria-expanded="false" aria-controls="collapseSeven">
+                            清单管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseDetailed" class="panel-collapse collapse " role="tabpanel" aria-labelledby="detailed">
+                    <a ng-href="index.html#/detailed/list" class="list-group-item">sku在售清单</a>
+                    <a ng-href="index.html#/detailed/category" class="list-group-item">item所属类目</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="voucherchanged">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseVoucherchanged" aria-expanded="false" aria-controls="collapseSeven">
+                            卡券兑换管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseVoucherchanged" class="panel-collapse collapse " role="tabpanel"
+                     aria-labelledby="operation">
+                    <a ng-href="index.html#/voucherchanged/list" class="list-group-item">卡券兑换列表</a>
+                </div>
+
+
+                <div class="panel-heading hide" role="tab" id="adMaterial">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseAdMaterial" aria-expanded="false" aria-controls="collapseSeven">
+                            广告管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseAdMaterial" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="operation">
+                    <a ng-href="index.html#/adMaterial/list" class="list-group-item">素材管理</a>
+                </div>
+
+                <div class="panel-heading hide" role="tab" id="payRefund">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapsePayRefund" aria-expanded="false" aria-controls="collapseSeven">
+                            充值与退款
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapsePayRefund" class="panel-collapse collapse" role="tabpanel" aria-labelledby="operation">
+                    <a ng-href="index.html#/payRefund/list" class="list-group-item hide">余额退款申请单列表</a>
+                    <a ng-href="index.html#/detailReport/list" class="list-group-item hide">余额退款明细</a>
+                    <a ng-href="index.html#/recharge/list" class="list-group-item hide">充值记录</a>
+                    <a ng-href="index.html#/recharge/detailList" class="list-group-item hide">充值成功清单</a>
+                    <a ng-href="index.html#/paySet/list" class="list-group-item hide">充值配置</a>
+                    <a ng-href="index.html#/payActSet/list" class="list-group-item hide">充值活动配置</a>
+
+                </div>
+<!-- 兑换券管理-->
+                <div class="panel-heading hide" role="tab" id="exchangeCoupon">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#exchangeCouponManage" aria-expanded="false" aria-controls="collapseSeven">
+                            兑换券管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="exchangeCouponManage" class="panel-collapse collapse" role="tabpanel" aria-labelledby="operation">
+                    <a ng-href="index.html#/exchangeCoupon/exchangeCouponList" class="list-group-item hide">兑换券列表</a>
+                    <a ng-href="index.html#/exchangeCoupon/buildCouponList" class="list-group-item hide">券号生成单</a>
+                    <a ng-href="index.html#/exchangeCoupon/inStockList" class="list-group-item hide">入库单</a>
+                    <a ng-href="index.html#/exchangeCoupon/takeOutStockList" class="list-group-item hide">领用出库单</a>
+                    <a ng-href="index.html#/exchangeCoupon/backStockList" class="list-group-item hide">退库单</a>
+                    <a ng-href="index.html#/exchangeCoupon/giftVideoBooklist" class="list-group-item hide">卡券定制视频管理</a>
+                    <a ng-href="index.html#/exchangeCoupon/codeOutStoreList" class="list-group-item hide">兑换券出库报表</a>
+                    <a ng-href="index.html#/exchangeCoupon/codeReStoreList" class="list-group-item hide">兑换券退库报表</a>
+                    <a ng-href="index.html#/exchangeCoupon/codeSumList" class="list-group-item hide">券数量报表</a>
+                    <a ng-href="index.html#/exchangeCoupon/emptyCodeList" class="list-group-item hide">空白券进销存报表</a>
+                    <a ng-href="index.html#/exchangeCoupon/ticketStoreList" class="list-group-item hide">兑换商品列表及库存</a>
+                    <a ng-href="index.html#/exchangeCoupon/exchangeReportList" class="list-group-item hide">兑换券订单明细</a>
+                    <a ng-href="index.html#/exchangeCoupon/bandingTicket" class="list-group-item hide">批量绑定券号</a>
+                    <a ng-href="index.html#/exchangeCoupon/ticketCodeList" class="list-group-item hide">券号列表</a>
+                </div>
+                <div class="panel-heading hide" role="tab" id="operationManagement">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseOperationManagement" aria-expanded="false" aria-controls="collapseFour">
+                            B2G运营管理
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseOperationManagement" class="panel-collapse collapse" role="tabpanel" aria-labelledby="operationManagement">
+                    <a ng-href="index.html#/salesPackage/list" class="list-group-item hide">礼包销售管理</a>
+                    <a ng-href="index.html#/salesCategory/list" class="list-group-item hide">礼包分类管理</a>
+                </div>
+
+                <!--<div class="panel-heading" role="tab" id="payRefund">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#exchangeCouponForm" aria-expanded="false" aria-controls="collapseSeven">
+                            兑换券报表
+                        </div>
+                    </h4>
+                </div>
+                <div id="exchangeCouponForm" class="panel-collapse collapse" role="tabpanel" aria-labelledby="operation">
+                    <a ng-href="index.html#/exchangeCouponForm/exchangeCouponList" class="list-group-item">券进销存报表</a>
+                    <a ng-href="index.html#/exchangeCouponForm/buildCouponList" class="list-group-item">券数量总表</a>
+                    <a ng-href="index.html#/exchangeCouponForm/inStockList" class="list-group-item">出库券兑换明细表</a>
+                </div>-->
+<!--
+                
+                <div class="panel-heading hide" role="tab" id="payReport">
+
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapsePayReport" aria-expanded="false" aria-controls="collapseSeven">
+                            在线充值查询报表
+                        </div>
+                    </h4>
+                </div>
+
+                <div id="collapsePayReport" class="panel-collapse collapse" role="tabpanel" aria-labelledby="operation">
+                    <a ng-href="index.html#/detailReport/list" class="list-group-item">余额退款明细</a>
+                </div>
+
+
+                <div class="panel-heading hide" role="tab" id="payOnline">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapsePayOnline" aria-expanded="false" aria-controls="collapseSeven">
+                            在线充值
+                        </div>
+                    </h4>
+                </div>
+
+
+                <div id="collapsePayOnline" class="panel-collapse collapse" role="tabpanel" aria-labelledby="operation">
+                    <a ng-href="index.html#/recharge/list" class="list-group-item">充值记录</a>
+                    <a ng-href="index.html#/recharge/detailList" class="list-group-item">充值成功清单</a>
+                    <a ng-href="index.html#/paySet/list" class="list-group-item">充值配置</a>
+                    <a ng-href="index.html#/payActSet/list" class="list-group-item">充值活动配置</a>
+                </div>
+-->
+
+
+                <div class="panel-heading" role="tab" id="operation">
+                    <h4 class="panel-title">
+                        <div class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapseOperation" aria-expanded="false" aria-controls="collapseSeven">
+                            操作
+                        </div>
+                    </h4>
+                </div>
+                <div id="collapseOperation" class="panel-collapse collapse" role="tabpanel" aria-labelledby="operation">
+                    <a ng-href="login.html" class="list-group-item">登出</a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="cms-layout-center">
+        <div ng-view></div>
+    </div>
+</div>
+
+<!-- build:js({app, .tmp}) /scripts/ulife.cms.require.js -->
+<script src="/scripts/vendor/require.js"></script>
+<!-- endbuild -->
+
+<!-- build:js({app, tmp}) /scripts/ulife.cms.base.js-->
+<script src="/scripts/base/ulife.cms.base.1.0.js"></script>
+<!-- endbuild -->
+
+
+<script src="/scripts/ulife.cms.require.config.js"></script>
+
+<!-- build:js({app, .tmp}) /scripts/ulife.cms.index.js -->
+<script src="/scripts/ulife.cms.require.config.js"></script>
+<script type="text/javascript">
+    require(['ulife.cms.page.index']);
+</script>
+<!-- endbuild -->
+
+</body>
+</html>

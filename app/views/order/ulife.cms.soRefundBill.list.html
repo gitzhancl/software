@@ -1,0 +1,321 @@
+<div ng-controller="soRefundBillListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.order.name}}</a></li>
+        <li>{{menuConfig.order.sub[3].name}}</li>
+    </ol>
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">退款单号</label>
+                        <input type="text" class=" form-control input-sm" id="refundBillNo" ng-model="searchPage.params.refundBillNo" placeholder="请输入单号"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">订单编号</label>
+                        <input type="text" class=" form-control input-sm" id="soNo" ng-model="searchPage.params.soNo" placeholder="请输入订单号"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">创建时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="startTime" ng-model="searchPage.params.createdStartTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="endTime" ng-model="searchPage.params.createdEndTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">退款渠道</label>
+                        <select class=" form-control input-sm" ng-model="searchPage.params.channel" ng-options="type.value as type.key for type in payChannel"></select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">单据状态</label>
+                        <select class=" form-control input-sm" ng-model="searchPage.params.status" ng-options="type.value as type.key for type in billStatus"></select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">退款时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="startTime" ng-model="searchPage.params.refundStartTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="endTime" ng-model="searchPage.params.refundEndTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索"  ulife-btn-au  ng-click="searchPage.search()" class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+        </div>
+    </div>
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">退款单号</th>
+                <th style="width: 50px; text-align: center">退款状态</th>
+                <th style="width: 50px; text-align: center">单据状态</th>
+                <th style="width: 50px; text-align: center">退款单类型</th>
+                <th style="width: 50px; text-align: center">订单号</th>
+                <th style="width: 50px; text-align: center">原支付方式</th>
+                <th style="width: 50px; text-align: center">原支付金额</th>
+                <th style="width: 50px; text-align: center">原交易流水号</th>
+                <th style="width: 50px; text-align: center">退款金额</th>
+                <th style="width: 50px; text-align: center">退款路径</th>
+                <th style="width: 50px; text-align: center">退款方式</th>
+                <th style="width: 50px; text-align: center">退款交易流水号</th>
+                <th style="width: 50px; text-align: center">来源</th>
+                <th style="width: 50px; text-align: center">创建人</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">退款人</th>
+                <th style="width: 50px; text-align: center">退款时间</th>
+                <th style="width: 50px; text-align: center">备注</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.items">
+                <td style="vertical-align: middle">{{page.refundBillNo}}</td>
+                <td style="vertical-align: middle">{{page.refundStatus | refundStatusDesc}}</td>
+                <td style="vertical-align: middle">{{page.status | billStatusDesc}}</td>
+                <td style="vertical-align: middle">{{page.refundType}}</td>
+                <td style="vertical-align: middle">{{page.soNo}}</td>
+                <td style="vertical-align: middle">{{page.payChannel}}</td>
+                <td style="vertical-align: middle">{{page.payAmount}}</td>
+                <td style="vertical-align: middle">{{page.txSerialNumber}}</td>
+                <td style="vertical-align: middle">{{page.refundAmount}}</td>
+                <td style="vertical-align: middle">{{page.refundWay | refundWayDesc}}</td>
+                <td style="vertical-align: middle">{{page.refundChannel}}</td>
+                <td style="vertical-align: middle">{{page.refundSerialNumber}}</td>
+                <td style="vertical-align: middle">{{page.source}}</td>
+                <td style="vertical-align: middle">{{page.createName}}</td>
+                <td style="vertical-align: middle">{{page.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">{{page.modifierName}}</td>
+                <td style="vertical-align: middle"><div ng-hide="page.modifyTime==0">{{page.modifyTime | date:'yyyy-MM-dd HH:mm:ss'}}</div></td>
+                <td style="vertical-align: middle">{{page.remark}}</td>
+                <td style="vertical-align: middle">
+                    <button type="button" class="btn btn-success btn-xs" ng-if="page.status==1" title="创建"  ulife-btn-au  ng-click="bankInfo.open(page.refundBillNo,page.name,page.bankNo,page.belongToBank,page.bankBranch,page.remark,false)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>登记退款信息</button>
+                    <button type="button" class="btn btn-success btn-xs" ng-if="page.status==50 && page.payChannel!='支付宝' && page.payChannel!='微信' && page.payChannel!='Balance' && page.payChannel!='翼支付'" title="确认"  ulife-btn-au  ng-click="bankInfo.open(page.refundBillNo,page.name,page.bankNo,page.belongToBank,page.bankBranch,page.remark,false)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改退款信息</button>
+                    <button type="button" class="btn btn-success btn-xs" ng-if="page.status==50" title="退款"  ulife-btn-au  ng-click="processBill.open(page.refundBillNo,page.payChannel,page.txSerialNumber,page.name,page.bankNo,page.belongToBank,page.bankBranch,page.remark)">退款</button>
+                    <button type="button" class="btn btn-success btn-xs" ng-if="page.status==200 && page.payChannel!='支付宝' && page.payChannel!='微信' && page.payChannel!='Balance' && page.payChannel!='翼支付'" title="完成"  ulife-btn-au  ng-click="bankInfo.open(page.refundBillNo,page.name,page.bankNo,page.belongToBank,page.bankBranch,page.remark,true)">查看退款信息</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <!--<input type="text" size="4" value="" id="goto" name="goto" ng-model="searchPage.params.pageNum" /><input type="button" ng-click="searchPage.goto()" value="GO" title="GO">-->
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="processBillModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="moduleModalLabel">是否确认退款？</h3>
+                </div>
+
+                <div ng-if="processBill.payChannel=='翼支付'">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">退款路径:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input disabled="disabled" type="text" class="form-control" value="原支付路径退">
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">退款方式:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input disabled="disabled" type="text" class="form-control" value="翼支付">
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">原支付流水</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" disabled="disabled" class="form-control" ng-model="processBill.txSerialNumber"/>
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">退款银行流水</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-model="processBill.params.refundBankSerialNumber" placeholder="退款银行流水"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="processBill.payChannel!='支付宝' && processBill.payChannel!='微信'&& processBill.payChannel!='Balance' && processBill.payChannel!='翼支付'">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">退款路径:</label>
+                        </div>
+                        <div class="col-lg-4" style="text-align: left">
+                            <input disabled="disabled" type="text" class="form-control" value="退银行卡">
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">开户人:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input disabled="disabled" type="text" class="form-control" ng-model="processBill.name">
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">卡/账号:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input disabled="disabled" type="text" class="form-control" ng-model="processBill.bankNo"/>
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">所属银行:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input disabled="disabled" type="text" class="form-control" ng-model="processBill.belongToBank"/>
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">开户支行:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input disabled="disabled" type="text" class="form-control" ng-model="processBill.bankBranch" placeholder="上海开户可不填,外地卡必须填"/>
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">退款流水号:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-model="processBill.params.refundBankSerialNumber" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">备注:</label>
+                    </div>
+                    <div class="col-lg-6" style="text-align: left">
+                        <textarea  class="form-control" disabled="disabled" ng-model="processBill.remark" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="processBill.process()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- addBankInfo Modal -->
+    <div class="modal bs-example-modal-lg" id="addBankInfo" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h3 class="modal-title">客户银行信息</h3>
+                </div>
+                <div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">开户人:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-disabled="bankInfo.isShow" ng-model="bankInfo.params.name" placeholder="开户人">
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">卡/账号:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-disabled="bankInfo.isShow" ng-model="bankInfo.params.bankNo" placeholder="卡/账号">
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">所属银行:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-disabled="bankInfo.isShow" ng-model="bankInfo.params.belongToBank" placeholder="所属银行"/>
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">开户支行:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-disabled="bankInfo.isShow" ng-model="bankInfo.params.bankBranch" placeholder="上海开户可不填,外地卡必须填"/>
+                        </div>
+                    </div>
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">备注:</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <textarea  class="form-control" ng-disabled="bankInfo.isShow" ng-model="bankInfo.params.remark" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" ng-if = "!bankInfo.isShow">
+                    <button type="button" class="btn btn-primary" ng-click="bankInfo.addBankInfo()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

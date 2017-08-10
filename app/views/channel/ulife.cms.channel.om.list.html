@@ -1,0 +1,212 @@
+<div ng-controller="ChannelOMListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.channel.sub[1].link}}">{{menuConfig.channel.name}}</a></li>
+        <li class="active">{{menuConfig.channel.sub[2].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-md-4">
+                    <label class="control-label">渠道</label>
+                    <select ng-model="parentChannelSelected" class="form-control" ng-options="parentChannel.name for parentChannel in parentChannels" ng-change="getChildChannel()">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">子渠道</label>
+                    <select ng-model="childChannelSelected" class="form-control" ng-options="childChannel.name for childChannel in childChannels" >
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">终端</label>
+                    <select ng-model="terminalSearchSelected"  class="form-control" ng-options="terminal.label for terminal in terminalType" >
+                        <option value="">全部</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-md-4">
+                    <label class="control-label">发货仓</label>
+                    <select ng-model="deliverSearchSelected" class="form-control" ng-options="deliver.label for deliver in deliverType">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">OM渠道</label>
+                    <input type="text" class="form-control" ng-model="searchPage.params.om" placeholder="请输入OM渠道"/>
+                </div>
+            </div>
+
+
+        </form>
+        <div class="pull-right">
+            <button title="搜索"  ulife-btn-au  ng-click="searchPage.search()" class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+            <button title="创建"   ulife-btn-au  ng-click="addChannelPageModal.open()" class="btn btn-success btn-sm ng-scope">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>创建</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">渠道</th>
+                <th style="width: 50px; text-align: center">子渠道</th>
+                <th style="width: 50px; text-align: center">终端</th>
+                <th style="width: 50px; text-align: center">销售部门</th>
+                <th style="width: 50px; text-align: center">发货类型</th>
+                <th style="width: 50px; text-align: center">OM渠道</th>
+                <th style="width: 50px; text-align: center">备注</th>
+                <th style="width: 50px; text-align: center">编辑</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="channelOm in renderObj">
+                <td style="vertical-align: middle">{{channelOm.parentName}}</td>
+                <td style="vertical-align: middle">{{channelOm.childName}}</td>
+                <td style="vertical-align: middle">{{channelOm.terminalString}}</td>
+                <td style="vertical-align: middle">{{channelOm.deptString}}</td>
+                <td style="vertical-align: middle">{{channelOm.deliverString}}</td>
+                <td style="vertical-align: middle">{{channelOm.omName}}</td>
+                <td style="vertical-align: middle">{{channelOm.remarks}}</td>
+                <td style="vertical-align: middle">
+                    <button ng-click="addChannelOmModal.open(channelOm)" title="修改"  ulife-btn-au >
+                        <span class="glyphicon glyphicon-edit" ></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+
+    <!-- addChannelPageModal Modal -->
+    <div class="modal bs-example-modal-lg" id="addChannelPageModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">添加渠道</h3>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">渠道</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <select ng-model="addChannelPageModal.parentChannelSelected" class="form-control" ng-options="parentChannel.name for parentChannel in parentChannels" ng-change="addChannelPageModal.getChildChannel()">
+                        </select>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">子渠道</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <select ng-model="addChannelPageModal.childChannelSelected" class="form-control" ng-options="childChannel.name for childChannel in addChannelPageModal.childChannels" >
+                        </select>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">终端</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left" ng-if="addChannelPageModal.parentChannelSelected.id == 1">
+                        <select ng-model="addChannelPageModal.terminalSelected" class="form-control" ng-options="terminal.label for terminal in terminalType" >
+                        </select>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">发货仓</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <select ng-model="addChannelPageModal.deliverSelected" class="form-control" ng-options="deliver.label for deliver in deliverType">
+                        </select>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">销售部门</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <select ng-model="addChannelPageModal.deptSelected" class="form-control" ng-options="dept.name for dept in deptObj">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="addChannelPageModal.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- addChannelOmModal Modal -->
+    <div class="modal bs-example-modal-lg" id="addChannelOmModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">编辑渠道</h3>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">中台渠道</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <input type="text" class="form-control" ng-model="addChannelOmModal.combination" disabled/>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">OM渠道</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <input type="text" class="form-control" ng-model="addChannelOmModal.params.om" />
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">OM渠道列表</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <select ng-model="omChannelSelected" class="form-control" ng-options="omChannel.name for omChannel in omChannels | filter : addChannelOmModal.params.om" ng-change="addChannelOmModal.change()">
+                        </select>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">备注</label>
+                    </div>
+                    <div class="col-lg-7"  style="text-align: left">
+                        <textarea  class="form-control" ng-model="addChannelOmModal.params.remarks" placeholder="请输入备注"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="addChannelOmModal.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

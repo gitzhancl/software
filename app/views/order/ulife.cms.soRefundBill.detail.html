@@ -1,0 +1,96 @@
+<div ng-controller="SoRefundBillDetailCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.order.name}}</li>
+        <li class="active">订单退款单据详情</li>
+    </ol>
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <!--订单退款单据详情-->
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th colspan="8">
+                    订单退款单据详情
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--姓名 -->
+            <tr>
+                <td>
+                    <label class="control-label">订单退款单据号</label>
+                </td>
+                <td>
+                    {{soRefundBill.refundBillNo}}
+                </td>
+                <td>
+                    <label class="control-label">订单号</label>
+                </td>
+                <td>
+                     {{soRefundBill.soNo}}
+                </td>
+                <td>
+                    <label class="control-label">退款状态</label>
+                </td>
+                <td>
+                     {{soRefundBill.refundStatus}}
+                </td>
+                <td>
+                    <label class="control-label">退款金额</label>
+                </td>
+                <td>
+                    {{soRefundBill.refundAmount}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="control-label">退款路径</label>
+                </td>
+                <td>
+                    {{soRefundBill.refundWay}}
+                </td>
+                <td>
+                    <label class="control-label">退款渠道</label>
+                </td>
+                <td>
+                     {{soRefundBill.refundChannel}}
+                </td>
+                <td>
+                    <label class="control-label">退款流水号</label>
+                </td>
+                <td>
+                     {{soRefundBill.refundSerialNumber}}
+                </td>
+
+                <td>
+                    <label class="control-label">退款银行流水号</label>
+                </td>
+                <td>
+                     {{soRefundBill.refundBankSerialNumber}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="control-label">退款类型</label>
+                </td>
+                <td>
+                    {{soRefundBill.refundType}}
+                </td>
+                <td>
+                    <label class="control-label">订单支付Id</label>
+                </td>
+                <td>
+                    {{soRefundBill.soPayId}}
+                </td>
+                <td>
+                    <label class="control-label">备注</label>
+                </td>
+                <td colspan="3">
+                     {{soRefundBill.remark}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

@@ -1,0 +1,103 @@
+<div ng-controller="FuncsH5Module">
+
+    <div class="cms-moduleEdit">
+
+        <ol class="breadcrumb">
+            <li><a ng-href="{{menuConfig.content.sub[0].link}}">{{menuConfig.content.name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].link}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].link}}{{editModule.pageInfo.pageId}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].name}}</a></li>
+            <li class="active">H5功能项：{{editModule.moduleInfo.name}}</li>
+
+            <div class="pull-right">
+                <div class="btn-group" role="group">
+                    <button title="增加功能项" ng-click="editContent.add()" class="btn btn-success btn-xs" >
+                        <span>增加功能项</span>
+                    </button>
+                </div>
+            </div>
+        </ol>
+
+
+        <div class="cms-panel">
+            <p><small>可上下拖动更换排序</small></p>
+            <div ulife-content-sortable="[ng-repeat]" class="cms-moduleList" >
+                <div class="panel panel-warning"  ng-repeat="item in  editModule.moduleInfo.content">
+                    <div class="panel-heading">
+                        {{item.iconName}}
+                        <div class="pull-right">
+                            <button type="button" ng-click="editContent.edit($index)" title="修改" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-edit" ></span>
+                            </button>
+                            <button ng-click="editContent.delete($index)" title="删除" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-trash" ></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Content Modal -->
+    <div class="modal bs-example-modal-lg" id="contentModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="activityModalLabel">{{editModule.contentHandle.action == "add" ? "添加功能项" : "修改功能项"}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="contentForm">
+                        <div class="form-group" ng-class="{'has-error' : contentForm.iconName.$dirty && contentForm.iconName.$invalid}">
+                            <label class="col-sm-2 control-label"><span class='text-danger'>*</span>icon名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="icon名称" name="iconName" ng-model="editModule.contentHandle.content.iconName" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : contentForm.image.$dirty && contentForm.image.$invalid}">
+                            <label class="col-sm-2 control-label"><span class='text-danger'>*</span>显示图片</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="显示图片" name="image" ng-model="editModule.contentHandle.content.image" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : contentForm.h5Url.$dirty && contentForm.h5Url.$invalid}">
+                            <label class="col-sm-2 control-label"><span class='text-danger'>*</span>H5链接</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="H5链接" name="h5Url" ng-model="editModule.contentHandle.content.h5Url" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">IOS链接</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="IOS链接" ng-model="editModule.contentHandle.content.iosUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Android链接</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="Android链接" ng-model="editModule.contentHandle.content.AndroidUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">IOSParams</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="IOSParams" ng-model="editModule.contentHandle.content.IOSParams">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">AndroidParams</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="AndroidParams" ng-model="editModule.contentHandle.content.AndroidParams">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="editContent.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

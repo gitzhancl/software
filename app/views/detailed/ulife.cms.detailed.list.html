@@ -1,0 +1,115 @@
+<div ng-controller="cmsSkuSaleListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.detailed.name}}</li>
+        <li class="active"><a ng-href="{{menuConfig.detailed.sub[1].link}}">{{menuConfig.detailed.sub[1].name}}</a></li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">skuId</label>
+                        <input type="text" class=" form-control input-sm" id="skuId" ng-model="searchPage.params.id"
+                               placeholder="请输入skuId"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">skuCode</label>
+                        <input type="text" class=" form-control input-sm" id="skuCode"
+                               ng-model="searchPage.params.productCode"
+                               placeholder="请输入skuCode"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">SKU名称</label>
+                        <input type="text" class=" form-control input-sm" id="name" ng-model="searchPage.params.name"
+                               placeholder="请输入SKU名称"/>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">CMS状态</label>
+                        <select class="form-control" ng-model="searchPage.params.status"
+                                ng-options="type.value as type.key for type in status"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right">
+
+                <button title="导出" ng-href="index.html#/hotkeys/create/0" ulife-btn-au class="btn btn-success btn-sm"
+                        ng-click="userEmailExport.open()">
+                    <span class="glyphicon glyphicon-save">导出</span>
+                </button>
+
+                <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <span>搜索</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">SKU ID</th>
+                <th style="width: 50px; text-align: center">SKU CODE</th>
+                <th style="width: 50px; text-align: center">SKU名称</th>
+                <th style="width: 50px; text-align: center">OM是否可售</th>
+                <th style="width: 50px; text-align: center">CMS状态</th>
+            </tr>
+            </thead>
+            <tbody>
+                <H4 style="color:#ff0000;">{{renderObj.rs.res}}</H4>
+                <tr ng-repeat="page in renderObj" ng-if="!renderObj.rs.res">
+                    <td style="vertical-align: middle">{{page.skuId}}</td>
+                    <td style="vertical-align: middle">{{page.skuCode}}</td>
+                    <td style="vertical-align: middle">{{page.skuName}}</td>
+                    <td style="vertical-align: middle">{{page.skuStatus}}</td>
+                    <td style="vertical-align: middle">{{page.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-model="searchPage.params.userEmail"
+                                   placeholder="请输入邮箱"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="userEmailExport.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

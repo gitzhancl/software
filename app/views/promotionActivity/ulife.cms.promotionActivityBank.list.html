@@ -1,0 +1,98 @@
+<div ng-controller="PromotionActivityBankListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.promoact.sub[4].link}}">{{menuConfig.promoact.name}}</a></li>
+        <li class="active">{{menuConfig.promoact.sub[4].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="col-md-3">
+                <label class="control-label">活动名</label>
+                <input type="text" class="form-control" id="promotionName" ng-model="searchPage.params.name" placeholder="请输入名称"/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">活动ID</label>
+                <input type="text" class="form-control" id="promotionId" ng-model="searchPage.params.id" placeholder="请输入名称或ID"/>
+            </div>
+            <div class="col-md-6 form-inline">
+                <label class="control-label">适用日期</label>
+                <input type="text" class="form-control"  ng-model="searchPage.params.start_date" placeholder="yyyy-mm-dd" ulife-datepicker ulife-date-format/>
+                <input type="text" class="form-control"  ng-model="searchPage.params.end_date" placeholder="yyyy-mm-dd" ulife-datepicker ulife-date-format/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">活动状态</label>
+                <select class="form-control" ng-model="searchPage.params.status" ng-options="type.deviceId as type.key for type in status"></select>
+            </div>
+        </form>
+        <form class="form-group-sm form-inline">
+            <div class="col-md-3">
+                <label class="control-label">应用终端</label>
+                <select class="form-control"  ng-model="searchPage.params.terminal" ng-options="type.deviceId as type.key for type in terminalType"></select>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+            <a title="创建" ng-href="index.html#/promotionActivityBank/create/0" ulife-btn-au class="btn btn-success btn-sm" >
+                <span class="glyphicon glyphicon-plus" ></span>
+                <span>创建</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">活动ID</th>
+                <th style="width: 50px; text-align: center">活动名称</th>
+                <th style="width: 50px; text-align: center">适用日期</th>
+                <th style="width: 50px; text-align: center">优惠使用总数</th>
+                <th style="width: 50px; text-align: center">已使用次数</th>
+                <th style="width: 50px; text-align: center">今日已使用</th>
+                <th style="width: 50px; text-align: center">每用户可使用次数</th>
+                <th style="width: 50px; text-align: center">应用终端</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">状态</th>
+                <th style="width: 50px; text-align: center">操作</th>
+                <!--<th style="width: 50px; text-align: left">详细配置</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.promoActivity">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.title}}</td>
+                <td style="vertical-align: middle">{{page.startTime|date:"yyyy-MM-dd  HH:mm:ss"}}<BR>{{page.endTime|date:"yyyy-MM-dd  HH:mm:ss"}}</td>
+                <td style="vertical-align: middle">{{page.count}}</td>
+                <td style="vertical-align: middle">{{page.receiveCount}}</td>
+                <td style="vertical-align: middle">{{page.receiveCountByDay}}</td>
+                <td style="vertical-align: middle">{{page.perLimit}}</td>
+                <td style="vertical-align: middle">{{page.terminal|terminalType}}</td>
+                <td style="vertical-align: middle">{{page.createTime|date:"yyyy-MM-dd  H:mm:ss"}}</td>
+                <td style="vertical-align: middle">{{page.status|status}}</td>
+                <td style="vertical-align: middle">
+                    <a ng-href="index.html#/promotionActivityBank/create/{{page.id}}" title="查看" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    </a>
+                    <!--<button ng-click="addPage.open()" title="数据分析" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">-->
+                    <!--<span class="glyphicon glyphicon-book" aria-hidden="true"></span>-->
+                    <!--</button>-->
+                </td>
+                <!--<td style="width: 50px; text-align: left">{{page.cartPackage}}</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+</div>

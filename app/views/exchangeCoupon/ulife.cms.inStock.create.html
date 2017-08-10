@@ -1,0 +1,177 @@
+<div ng-controller="inSrockCreate" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.exchangeCoupon.sub[1].link}}">{{menuConfig.exchangeCoupon.name}}</a></li>
+        <li class="active"><a ng-href="{{menuConfig.exchangeCoupon.sub[3].link}}">{{menuConfig.exchangeCoupon.sub[3].name}}</a></li>
+        <li class="active">{{titleValue}}</li>
+    </ol>
+    <div class="border">
+        <div class="clearfix cms-workarea">
+            <form class="form table-bordered">
+                <div class=" form-inline cms-workarea " style="margin-bottom: 0;">
+                    <div class="form-group">
+                        <label class="control-label">券号生成单号{{showBtn.queryBtn}}</label>
+                        <input type="text" class="form-control" id="itemNo" ng-model="codeNum" placeholder="券号生成单号" ng-readonly="!showBtn.isQueryEdit"/>
+                    </div>
+                    <div class="form-group" style="padding-left:50px;">
+                        <button type="button" class="btn btn-primary" ng-click="btn.getByCodeNum()" ng-if="showBtn.isQueryEdit">查询</button>
+                    </div>
+                </div>
+                <div class=" clearfix">
+                    <div class="cms-workarea clearfix" style="border-top: none; padding:0;">
+                            <div class="col-md-3">
+                                <label class="control-label">入库单号</label>
+                                <input type="text" class="form-control" id="name" ng-model="codeDetail.codeNo" placeholder="" readonly/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">前缀字母</label>
+                                <input type="text" class="form-control" id="depend" ng-model="codeDetail.codePrefix" placeholder="" readonly/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">券系统id</label>
+                                <input type="text" class="form-control" id="user" ng-model="codeDetail.ticketId" placeholder="" readonly/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">券名称</label>
+                                <input type="text" class="form-control input-group-sm" id="num" ng-model="codeDetail.codeName" placeholder="" readonly/>
+                            </div>
+                    </div>
+                    <div class="cms-workarea clearfix" style="border-top: none; padding:0;">
+                        <div class="col-md-3">
+                            <label class="control-label">申请部门</label>
+                            <getdeport isedit='true'></getdeport>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">申请人</label>
+                            <input type="text" class="form-control input-group-sm" id="num" ng-model="codeDetail.demandMan" placeholder="" readonly/>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">生成数量</label>
+                            <input type="text" class="form-control input-group-sm" id="num" ng-model="codeDetail.createCount" placeholder="" readonly/>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">已入数量</label>
+                            <input type="text" class="form-control input-group-sm" id="num" ng-model="codeDetail.inStoreCount" placeholder="" readonly/>
+                        </div>
+                    </div>
+
+                    <div class="form-group pull-right" style="margin-right:20px" ng-if="codeDetail.codeNo">
+                        <button type="button" class="btn btn-primary" ng-click="btn.instoreCreate()" ng-if="showBtn.createInstoreBtn">生成入库单</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="clearfix cms-workarea" ng-if="showlist">
+            <form class="form">
+                <div class=" form-inline cms-workarea table-bordered" style="margin-bottom: 0;">
+                    <button title="导入" class="btn btn-primary btn-sm" ngf-select="btn.instoredetailImport($file)" ng-if="showBtn.importBtn">
+                        <span class="glyphicon glyphicon-open"></span>
+                        <span>导入</span>
+                    </button>
+                    <div class="form-group">
+                        <button type="button" ng-click="btn.instoredetailImportManual.open()" class="btn btn-primary" ng-if="showBtn.importManual">手工录入添加</button>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <button type="button" class="btn btn-primary" ng-if="showBtn.exportBtn" ng-click="btn.userEmailExport.open()">导出</button>
+                    </div>
+                    <div class="form-group" style="padding-left:50px;">
+                        <a href="/docs/Import_inStoreCode.xls" type="button" class="btn btn-primary" ng-if="showBtn.downLoadBtn">下载导入表格</a>
+                    </div>
+                </div>
+                <div class=" form-inline  cms-workarea table-bordered" style="border-top: none;">
+                    <div class="clearfix">
+                        <div class="pull-left col-lg-1">本次入库券号</div>
+                        <div class="pull-left col-lg-6">
+                            <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                                <thead>
+                                <tr>
+                                    <th style="width: 50px; text-align: center">序号</th>
+                                    <th style="width: 50px; text-align: center">券号</th>
+                                    <th style="width: 50px; text-align: center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="page in detailList">
+                                    <td style="vertical-align: middle">{{page.id}}</td>
+                                    <td style="vertical-align: middle">{{page.code}}</td>
+                                    <td style="vertical-align: middle">
+                                        <button title="删除"  ng-click="btn.deleteItem(page.id)"  class="btn  btn-danger btn-xs" ng-if="showBtn.deleteItem">
+                                            <span>删除</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <nav style="text-align: center;">
+                        <ul class="pager">
+                            <li><a href="javascript:void(0);" ng-click="status.instoreDetailList.pre()">上一页</a></li>
+                            <li><a href="javascript:void(0);" ng-click="status.instoreDetailList.next()">下一页</a></li>
+                            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{status.instoreDetailList.pageNum}}页</a>
+                            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{status.instoreDetailList.pageTotal}}页</a>
+
+                        </ul>
+                    </nav>
+                </div>
+
+                    
+            </form>
+        </div>
+    </div>
+
+    <div class="modal bs-example-modal-lg" id="addItemsModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">手工导入券号</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label"></label>
+                        </div>
+                        <div class="col-lg-6"  style="text-align: left">
+                            <textarea rows="6" style="width: 100%" ng-model="needImportIds"></textarea>
+                        </div>
+                    </div>
+                    <span class="help-block">多个券号使用","隔开，最多支持100个券号</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="btn.instoredetailImportManual.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-model="exportUserEmail"
+                                   placeholder="请输入邮箱"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="btn.userEmailExport.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

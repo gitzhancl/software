@@ -1,0 +1,75 @@
+<div ng-controller="PromotionActivitySendListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.coupon.sub[4].link}}">{{menuConfig.coupon.name}}</a></li>
+        <li class="active">{{menuConfig.coupon.sub[4].sub[0].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <h4><strong>注意事项：</strong></h4>
+        <ol>
+            <li><small>请选择要导入的Excel文件，文件格式为.xls；</small></li>
+            <li><small>导入条目数限制为每次1w条，请注意导入数量；</small></li>
+            <li><small>请保证导入Excel的表头顺序及名称一致；</small></li>
+            <li><small>用户ID、登录手机号或邮箱为必填；</small></li>
+            <li><small>导入如果提示校验不通过，请检查对应行：必填字段是否填写、格式是否准确无误！</small></li>
+        </ol>
+    </div>
+
+    <hr>
+    <div id="confirmRule" class=" clearfix cms-workarea">
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                选择导入文件：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <button title="导入" ulife-btn-au class="btn btn-default btn-sm" ngf-select="upload($file)">
+                    <span class="glyphicon glyphicon-open" ></span>
+                    <span>导入(请选择.XLS文件批量)</span>
+                </button>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="text-warning">格式为.XLS</label>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <a title="下载" href="/docs/Import_BatchUser.xls" class="btn btn-default btn-sm" >
+                    <span class="glyphicon glyphicon-save" ></span>
+                    <span>下载Excel导入模板</span>
+                </a>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                导入校验结果：
+            </div>
+            <div class="col-lg-4 cms-workarea1 bg-info">
+                <label class="text-success">{{importMsg}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>优惠券活动ID：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <input type="text" class="form-control" ng-model="actid"/>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 col-lg-offset-1 cms-workarea1" style="text-align: left">
+                <button title="开始批量投放" ng-click="beachSend()" ulife-btn-au class="btn btn-success btn-sm" >
+                    <span>开始批量投放</span>
+                </button>
+            </div>
+        </div>
+        <hr>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                批量投放结果：
+            </div>
+            <div class="col-lg-4 cms-workarea1 bg-info">
+                <label class="text-success">{{sendMsg}}</label>
+            </div>
+        </div>
+    </div>
+
+</div>

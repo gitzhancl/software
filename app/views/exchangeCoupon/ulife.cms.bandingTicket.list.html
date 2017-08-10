@@ -1,0 +1,56 @@
+<div ng-controller="CmsBandingEdit" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.exchangeCoupon.name}}</li>
+        <li class="active"><a ng-href="{{menuConfig.exchangeCoupon.sub[13].link}}">{{menuConfig.exchangeCoupon.sub[13].name}}</a></li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>券ID</label>
+            </div>
+            <div class="col-sm-3" style="text-align: left">
+                <input type="text" class="form-control input-sm"  ng-model="banding.id"
+                       placeholder="请输入券ID"  required>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-3 cms-workarea1">
+            <button title="导入"  ulife-btn-au  class="btn btn-default btn-sm" ngf-select="upload($file)">
+                <span class="glyphicon glyphicon-export">导入</span>
+            </button>
+        </div>
+        <a title="下载" href="/docs/ExchangeBindingTemplate.xls" class="btn btn-default btn-sm" >
+            <span class="glyphicon glyphicon-save" >下载Excel导入模板</span>
+        </a>
+    </div>
+    <hr/>
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 校验结果：</label>
+        </div>
+        <div class="col-lg-4 cms-workarea1 bg-info">
+            <label class="text-success">{{banding.valids}}</label>
+        </div>
+    </div>
+    <hr/>
+    <div class="row show-grid cms-workarea1" ng-hide="banding.hide">
+        <div class="col-lg-2 cms-workarea1">
+            <button title="批量绑定"   ng-click="uploads()" >
+                <span>开始批量绑定</span>
+            </button>
+        </div>
+    </div>
+    <hr/>
+    <div class="row show-grid cms-workarea1" ng-hide="banding.hide">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 绑定结果：</label>
+        </div>
+        <div class="col-lg-4 cms-workarea1 bg-info">
+            <label class="text-success">{{banding.message}}</label>
+        </div>
+    </div>
+</div>

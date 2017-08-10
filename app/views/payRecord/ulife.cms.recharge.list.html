@@ -1,0 +1,206 @@
+<div ng-controller="RechargeList" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.payRefund.name}}</a></li>
+        <li>{{menuConfig.payRefund.sub[3].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">下单时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="start_begin_time"
+                                   ng-model="searchPage.params.orderStartTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="start_end_time"
+                                   ng-model="searchPage.params.orderEndTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">下单人</label>
+                        <input type="text" class=" form-control input-sm" ng-model="searchPage.params.rechargeUser"
+                               placeholder="请输入下单人"/>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">状态</label>
+
+                        <select class="form-control"  ng-model="searchPage.params.rechargeStatus" ng-options="type.value as type.key for type in rechargeStatus"></select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">支付时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="start_begin_time"
+                                   ng-model="searchPage.params.payStartTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="start_end_time"
+                                   ng-model="searchPage.params.payEndTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">支付流水号</label>
+                        <input type="text" class=" form-control input-sm" ng-model="searchPage.params.paySerialNo"
+                               placeholder="请输入支付流水号"/>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">支付方式</label>
+                        <select class="form-control" ng-model="searchPage.params.payChannel"  ng-options="type.value as type.key for type in payChannels"></select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">充值时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="start_begin_time"
+                                   ng-model="searchPage.params.rechargeStartTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="start_end_time"
+                                   ng-model="searchPage.params.rechargeEndTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">支付金额</label>
+                        <input type="text" class=" form-control input-sm" ng-model="searchPage.params.payAmount"
+                               placeholder="请输入支付金额"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="pull-right">
+            <!-- -->
+            <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-search"></span>
+                <span>查询</span>
+            </button>
+            <button title="导出" ng-click="download.open()" ulife-btn-au class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-export"></span>
+                <span>导出</span>
+            </button>
+        </div>
+    </div>
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 100px; text-align: center">单号</th>
+                <th style="width: 100px; text-align: center">充值金额</th>
+                <th style="width: 100px; text-align: center">支付金额</th>
+                <th style="width: 100px; text-align: center">优惠金额</th>
+                <th style="width: 100px; text-align: center">支付方式</th>
+                <th style="width: 100px; text-align: center">状态</th>
+                <th style="width: 100px; text-align: center">支付流水号</th>
+                <th style="width: 100px; text-align: center">下单人</th>
+                <th style="width: 100px; text-align: center">优惠活动名称</th>
+                <th style="width: 100px; text-align: center">下单时间</th>
+                <th style="width: 100px; text-align: center">支付时间</th>
+                <th style="width: 100px; text-align: center">充值时间</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.recharge_amount}}</td>
+                <td style="vertical-align: middle">{{page.pay_amount}}</td>
+                <td style="vertical-align: middle">{{page.discount_amount}}</td>
+                <td style="vertical-align: middle">{{page.pay_channel|zhifufangshi}}</td>
+                <td style="vertical-align: middle">{{page.recharge_status}}</td>
+                <td style="vertical-align: middle">{{page.pay_serial_no}}</td>
+                <td style="vertical-align: middle">{{page.recharge_user}}</td>
+                <td style="vertical-align: middle">{{page.discount_name}}</td>
+                <td style="vertical-align: middle"><div ng-hide="page.create_time==0">{{page.create_time | date:'yyyy-MM-dd HH:mm:ss'}}</div></td>
+                <td style="vertical-align: middle"><div ng-hide="page.pay_time==0">{{page.pay_time | date:'yyyy-MM-dd HH:mm:ss'}}</div></td>
+                <td style="vertical-align: middle"><div ng-hide="page.recharge_time==0">{{page.recharge_time | date:'yyyy-MM-dd HH:mm:ss'}}</div></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6"  style="text-align: left">
+                            <input type="text" class="form-control" ng-model="searchPage.params.userEmail" placeholder="请输入邮箱" max="3000000" />
+                        </div>
+                        <div class="col-sm-6 cms-workarea1">
+                            <label style="color:red">最大只能导出10000条数据！</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="download.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,146 @@
+<div ng-controller="PaySetCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.payRefund.name}}</a></li>
+        <li>{{menuConfig.payRefund.sub[5].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <div class="pull-left">
+            <button title="创建" ng-click="btns.open()" ulife-btn-au class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>新增</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 100px; text-align: center">编号</th>
+                <th style="width: 100px; text-align: center">充值额度</th>
+                <th style="width: 100px; text-align: center">终端</th>
+                <th style="width: 100px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.rechargeAmountList">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.amount | currency : ''}}</td>
+                <td style="vertical-align: middle">{{page.terminal}}</td>
+                <td style="vertical-align: middle">
+                    <button title="修改" ng-click="btns1.open(page.id,page.isApp,page.isH5,page.isPc,page.amount)" ulife-btn-au class="btn btn-success btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span>编辑</span>
+                    </button>
+                    <button title="删除" ng-click="btns1.delete(page.id)" ulife-btn-au class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span>删除</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:666px;">
+            <div class="modal-content text-center">
+                <div  class="clearfix cms-workarea" >
+                    <form class="form-horizontal" name="addPayFrom">
+
+                        <div><div class="modal-header">
+                            <H4 class="modal-title" >新增面额</H4>
+                        </div>
+
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>面额</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="number" class="form-control input-sm"   ng-model="btns.tem.amount" max="1000"  placeholder="请输入面额" name="面额" required>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>应用终端</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="checkbox"  name="终端"  ng-model="btns.tem.is_app" />APP&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox"  name="终端" ng-model="btns.tem.is_h5" />H5&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox"  name="终端" ng-model="btns.tem.is_pc" />PC
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button title="保存" ng-click="btns.save()"  class="btn btn btn-primary">
+                                    <span>保存</span>
+                                </button>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal bs-example-modal-lg" id="editMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:666px;">
+            <div class="modal-content text-center">
+                <div  class="clearfix cms-workarea" >
+                    <form class="form-horizontal" name="editPayFrom">
+
+                        <div><div class="modal-header">
+                            <H4 class="modal-title" >修改面额</H4>
+                        </div>
+
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">面额</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="number" class="form-control input-sm"   ng-model="btns1.tem.amount" max="1000"  placeholder="请输入面额" name="面额"  ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>应用终端</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="checkbox"  name="终端"  ng-model="btns1.tem.is_app" />APP&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox"  name="终端" ng-model="btns1.tem.is_h5" />H5&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox"  name="终端" ng-model="btns1.tem.is_pc" />PC
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button title="保存" ng-click="btns1.save()"  class="btn btn btn-primary">
+                                    <span>保存</span>
+                                </button>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,127 @@
+<style type="text/css">
+	input.ng-invalid-required{border:1px solid red;}
+</style>
+<div ng-controller="ProductCategoryEditCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+
+		<form class="form-horizontal" name="myForm" novalidate>
+
+			<div class="form-group">
+				<label for="parentInfo" class="col-sm-2 control-label">父类目信息</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="parentInfo" disabled="disabled" placeholder="父类目信息" value="{{CategoryDetail.parentCategory}}">
+				</div>
+			</div>
+
+			<div class="form-group">
+		    	<label for="parentId" class="col-sm-2 control-label">父类目ID</label>
+		    	<div class="col-sm-6">
+		      		<input type="text" class="form-control" id="parentId" placeholder="父类目ID" disabled="disabled" value="{{CategoryDetail.parentId || 0}}">
+		    	</div>
+			</div>
+		  <div class="form-group">
+		    <label for="levelId" class="col-sm-2 control-label">类目层级</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" id="levelId" placeholder="类目层级" disabled="disabled" ng-model="level">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="terminalInfo" class="col-sm-2 control-label">适用终端</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" id="terminalInfo" placeholder="适用终端" disabled="disabled" value="{{CategoryDetail.terminalDesc || terminal}}">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="nameInfo" class="col-sm-2 control-label">*类目名称</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" ng-model="CategoryDetail.name" placeholder="类目名称" name='CategoryName'  required>		      
+		    </div>
+		    <span class="text-danger" ng-show="myForm.CategoryName.$error.required">必填项</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="sortInfo" class="col-sm-2 control-label">*排序</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" name="sortInfo" placeholder="排序" ng-model="CategoryDetail.sort" required>
+		    </div>
+		    <span class="text-danger" ng-show="myForm.sortInfo.$error.required">必填项</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="iconInfo" class="col-sm-2 control-label">*ICON</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" name="iconInfo" placeholder="ICON" ng-model="CategoryDetail.icon">
+		    </div>
+		    <span>移动端APP/h5为必填项</span>
+		  </div>
+		  <div class="form-group">
+		    <label for="keyWordsInfo" class="col-sm-2 control-label"><span class="text-danger">*</span>关键词</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" name="keyWordsInfo" placeholder="关键词" ng-model="CategoryDetail.keywordStr" required>
+		    </div>
+		    <span><span ng-show="myForm.keyWordsInfo.$error.required" class="text-danger">不能为空</span>多个关键词之间用英文的逗号隔开</span>
+		  </div>
+
+		  <hr/>
+
+		  <div class="form-group baseicInfo_box" ng-repeat="items in CategoryDetail.basicCategories">
+		    <label class="col-sm-2 control-label">后台类目关联</label>
+		    <div class="col-sm-3">
+		      <input type="text" class="form-control baseicInfo"  placeholder="关键词" basicCategoryId="{{items.basicCategoryId}}" value="{{items.basicCategoryName}}" disabled="disabled">
+		    </div>
+		    	<button type="submit" class="btn btn-danger" ng-click="removeBase(items)">删除</button>
+		  </div>
+		<hr/>
+		<div class="form-group add_baseic">
+			<label class="col-sm-2 control-label">后台类目关联</label>
+		    <div class="col-sm-3">
+		      <input type="text" ng-model="selectedName.basicCategoryName" class="form-control add_baseic"  placeholder="关键词"   disabled="disabled">
+		    </div>
+		    	<button type="submit" ng-model="selectedName" class="btn btn-success" ng-click="addBase(selectedName)">添加</button>
+		  </div>
+
+		
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">选择后台类目关联</label>
+		    <div class="col-sm-3">
+		      <select class="form-control" ng-options="node.basicCategoryName for node in BasicFirstCategory"  ng-model="selectedName" ng-change="firstBasicCate(selectedName)">
+		      	
+		      </select>
+		    </div>
+		    <div class="col-sm-3">
+		      <select class="form-control" ng-options="node.basicCategoryName for node in BasicSecondCategory" ng-model="selectedName" ng-change="SecondBasicCate(selectedName)">
+		      	
+		      </select>
+		    </div>
+		    <div class="col-sm-3">
+		      <select class="form-control" ng-options="node.basicCategoryName for node in BasicThirdCategory" ng-model="selectedName" name="" id="">
+		      	
+		      </select>
+		    </div>
+		  </div>
+		  <div class="table-responsive">
+        	<table class="table table-bordered table-hover"  style="text-align: center">
+        		<thead>
+		            <tr class="bg-primary">
+		                <th>商品ID</th>
+		                <th>商品名字</th>
+		                <th>商品售价</th>
+		            </tr>
+            	</thead>
+            	<tbody>
+	                <tr ng-repeat="items in percolateService ">
+		                <td>{{items.id}}</td>
+		                <td>{{items.title}}</td>
+		                <td>{{items.retailPrice}}</td>
+	                </tr>
+	             </tbody>
+        	</table>
+        </div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-4 col-sm-2">
+				<button type="submit" class="btn btn-success" ng-click="viewProduct()">预览前台关联商品</button>
+			</div>
+			<div class=" col-sm-2">
+				<button type="submit" title="保存" class="btn btn-success" ng-click="save()">保存</button>
+			</div>
+		</div>
+	</form>
+</div>

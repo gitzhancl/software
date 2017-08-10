@@ -1,0 +1,44 @@
+<div ng-controller="paymentIsEdit" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.sku.name}}</li>
+        <li><a ng-href="{{menuConfig.sku.sub[3].link}}">{{menuConfig.sku.sub[3].name}}</a></li>
+        <li class="active">修改支付方式</li>
+    </ol>
+
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="paymentForm">
+            <div class="">
+                <div class="col-sm-2">
+                    <label class="control-label">ITEM ID：</label>
+                    <input type="text" class=" form-control input-sm"  ng-model="payment.itemId"
+                           ng-disabled="true"/>
+                </div>
+                <div class="col-sm-2">
+                    <label class="control-label">状态</label>
+                    <select class="form-control " ng-model="payment.status"
+                            ng-options="type.value as type.key for type in itemStatus"></select></div>
+
+                &nbsp;&nbsp;<br/><br/><br/><br/>
+                <ul ng-repeat="payType in paytypes">
+                    <input type="checkbox" ng-model="payType.isSelect" value="" ng-hide="payType.ishavePayChannel">&nbsp;&nbsp;
+                    <label class="text-warning" >{{payType.name}}</label>
+                    <div ng-repeat="pp in payType.payChannelList" style="margin-left:40px">
+                        <input type="checkbox" value="{{pp.paymentType}}" id="{{pp.channelNo}}" ng-model="pp.isSelect"/>{{pp.channelName}}
+                        <label style="color:red"> 支持终端：{{pp.display|displays}}</label>
+                        <label>、描述：{{pp.description}}</label>
+
+                    </div>
+                </ul>
+            </div>
+        </form>
+        <hr/>
+
+
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+            <button title="保存" ng-click="btns.save()" class="btn btn-primary">
+                <span>保存</span>
+            </button>
+        </div>
+    </div>
+</div>
+

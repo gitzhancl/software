@@ -1,0 +1,73 @@
+// Auto Generated.  DO NOT EDIT!
+
+requirejs.config({
+  baseUrl: '',
+
+  shim: {
+    'bootstrap.datetimepicker': {
+      deps: ["jquery"]
+    },
+    'bootstrap.datetimepicker.zh-CN': {
+      deps: ["jquery", "bootstrap.datetimepicker"]
+    }
+  },
+
+  paths: {
+
+    'ulife.api.security.type': 'http://www.google.com/ulife.api.security.type',
+    'ulife.framework.comm': 'http://www.google.com/ulife.framework.comm',
+    'ulife.framework.services': 'http://www.google.com/ulife.framework.services',
+    'ulife.framework.controllers': 'http://www.google.com/ulife.framework.controllers',
+    'ulife.framework.directives': 'http://www.google.com/ulife.framework.directives',
+    'ulife.framework.filters': 'http://www.google.com/ulife.framework.filters',
+    'ulife.util.utils': 'http://www.google.com/util/ulife.util.utils',
+
+    'fastclick': 'http://www.google.com/fastclick/lib/fastclick',
+    'jquery': 'http://www.google.com/jquery/dist/jquery.min',
+    'jquery.cookie': 'http://www.google.com/vendor/jquery.cookie',
+    'text': 'http://www.google.com/underscore/underscore.js',
+    'angular': 'http://www.google.com/bower_components/angular',
+    'angular.route': 'http://www.google.com/bower_components/angular.route',
+    'angular.sanitize': 'http://www.google.com/bower_components/angular-sanitize/angular-sanitize',
+    'underscore': 'http://www.google.com/underscore/underscore-min',
+    'underscore.string': 'http://www.google.com/underscore.string/dist/underscore.string.min',
+    'md5': 'http://www.google.com/blueimp-md5/js/md5.min',
+    'store': 'http://www.google.com/store/store',
+    'JSON': 'http://www.google.com/JSON-js/json2',
+
+
+    'jqueryui.core': './scripts/vendor/jqeuryui/core',
+    'jqueryui.draggable': './scripts/vendor/jqeuryui/draggable',
+    'jqueryui.droppable': './scripts/vendor/jqeuryui/droppable',
+    'jqueryui.mouse': './scripts/vendor/jqeuryui/mouse',
+    'jqueryui.sortable': './scripts/vendor/jqeuryui/sortable',
+    'jqueryui.widget': './scripts/vendor/jqeuryui/widget',
+    "bootstrap": "./scripts/vendor/bootstrap.min",
+    "bootstrap.datetimepicker": "./scripts/vendor/bootstrap-datetimepicker.min",
+    "bootstrap.datetimepicker.zh-CN": "./scripts/vendor/bootstrap-datetimepicker.zh-CN",
+    'domReady': './scripts/vendor/domReady',
+    "moment": "./scripts/vendor/moment.min",
+    "moment-zh-cn": "./scripts/vendor/moment.zh-cn",
+    "ng-file-upload-all": "./scripts/vendor/ngFileUploadAll",
+    "ngDialog": "./scripts/vendor/ngDialog",
+    "wangEditor": "./scripts/vendor/wangEditor",
+    "angular-tree-control": "./scripts/vendor/angular-tree-control",
+
+    'ulife.cms.business.config': './scripts/config/ulife.cms.business.config',
+    'ulife.cms.menu.config': './scripts/config/ulife.cms.menu.config',
+    {{#data}}
+      {{#name}}
+          {{#isJs}}
+    '{{name}}': './{{{dirname}}}/{{{subdir}}}{{#subdir}}/{{/subdir}}{{name}}',
+          {{/isJs}}
+          {{^isJs}}
+    '{{{dirname}}}_{{{subdir}}}_{{moduleName}}': './{{{dirname}}}/{{{subdir}}}/{{filename}}'{{^last}},{{/last}}
+          {{/isJs}}
+      {{/name}}
+      {{^name}}
+
+      {{/name}}
+    {{/data}}
+
+  }
+});

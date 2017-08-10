@@ -1,0 +1,102 @@
+<div ng-controller="BannersPCModule">
+
+    <div class="cms-moduleEdit">
+
+        <ol class="breadcrumb">
+            <li><a ng-href="{{menuConfig.content.sub[0].link}}">{{menuConfig.content.name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].link}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].link}}{{editModule.pageInfo.pageId}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].name}}</a></li>
+            <li class="active">PC banner：{{editModule.moduleInfo.name}}</li>
+
+            <div class="pull-right">
+                <div class="btn-group" role="group">
+                    <button title="增加 banner" ng-click="editContent.add()" class="btn btn-success btn-xs" >
+                        <span>增加 banner</span>
+                    </button>
+                </div>
+            </div>
+        </ol>
+
+
+        <div class="cms-panel">
+            <p><small>可上下拖动更换排序</small></p>
+            <div ulife-content-sortable="[ng-repeat]" class="cms-moduleList" >
+                <div class="panel panel-warning"  ng-repeat="item in  editModule.moduleInfo.content">
+                    <div class="panel-heading">
+                        {{item.name}}
+                        <div class="pull-right">
+                            <button type="button" ng-click="editContent.edit($index)" title="修改" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-edit" ></span>
+                            </button>
+                            <button ng-click="editContent.delete($index)" title="删除" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-trash" ></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Banner Modal -->
+    <div class="modal bs-example-modal-lg" id="contentModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="activityModalLabel">{{editModule.contentHandle.action == "add" ? "添加banner" : "修改banner"}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="contentForm">
+                        <div class="form-group" ng-class="{'has-error' : contentForm.startTime.$dirty && contentForm.startTime.$invalid ||(contentForm.endTime.$dirty && contentForm.endTime.$invalid) }">
+                            <label class="col-sm-2 control-label"><span class="text-danger"></span>上下架时间</label>
+                            <div class="col-sm-5">
+                                <div class="input-group date" ulife-tooltip="上架时间" ulife-datetimepicker>
+                                    <input type="text" class="form-control input-sm" placeholder="下架时间" name="startTime" ng-model="editModule.contentHandle.content.startTime" ulife-date-format >
+                                    <span class="input-group-btn add-on">
+                                        <button class="btn btn-default btn-sm icon-th" type="button">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                                    <input type="text" class="form-control input-sm" placeholder="结束时间" name="endTime" ng-model="editModule.contentHandle.content.endTime" ulife-date-format >
+                                    <span class="input-group-btn add-on">
+                                        <button class="btn btn-default btn-sm icon-th" type="button">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : contentForm.name.$dirty && contentForm.name.$invalid}">
+                            <label class="col-sm-2 control-label"><span class='text-danger'>*</span>名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" ulife-tooltip="名称：只用于后台系统展示" class="form-control input-sm" placeholder="名称" name="name" ng-model="editModule.contentHandle.content.name" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : contentForm.image.$dirty && contentForm.image.$invalid}">
+                            <label class="col-sm-2 control-label"><span class='text-danger'>*</span>图片地址url</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="图片地址url" name="image" ng-model="editModule.contentHandle.content.image" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : contentForm.url.$dirty && contentForm.url.$invalid}">
+                            <label class="col-sm-2 control-label"><span class='text-danger'>*</span>跳转地址url</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="跳转地址url" name="url" ng-model="editModule.contentHandle.content.url" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="editContent.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

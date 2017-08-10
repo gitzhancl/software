@@ -1,0 +1,61 @@
+// Auto Generated.  DO NOT EDIT!
+/**
+* @class  ulife.api.user.login
+* @param  {angular.Module} SecurityType
+* @param  {Object} SecurityType
+* @param  {Object} Comm
+* @return {angular.Module}
+*/
+define(
+  'ulife.api.{{methodName}}',
+  [
+    'ulife.framework.services',
+    'ulife.api.security.type',
+
+    'ulife.framework.comm'
+  ],
+function(services, SecurityType, Comm) {
+  'use strict';
+
+
+  var constructor = ['$q',
+    function($q) {
+      return new Comm($q, {
+      METHOD_NAME: '{{methodName}}',
+      SECURITY_TYPE: {{securityType}}.name,
+      REQUIRED: [
+      {{#requiredList}}
+        '{{name}}'{{^last}},{{/last}}
+      {{/requiredList}}
+      ],
+      PARAMETERS: {
+      {{#parameterInfoList}}
+        '{{name}}': '{{type}}'{{^last}},{{/last}}
+      {{/parameterInfoList}}
+      },
+      VERIFY:{
+      {{#validList}}
+        '{{name}}': {
+          {{#value}}
+          {{key}}: {{value}}{{^last}},{{/last}}
+          {{/value}}
+        }{{^last}},{{/last}}
+      {{/validList}}
+      },
+      ERROR_CODE: {
+      {{#errorCodeList}}
+      '{{code}}': '{{desc}}'{{^last}},{{/last}}
+      {{/errorCodeList}}
+      }{{#mockReturnObject}},
+      MOCK_RETURN_OBJECT: {{{mockReturnObject}}}
+      {{/mockReturnObject}}
+
+    });
+  }];
+
+  return {
+    injectTo: function(app){
+      app.factory('{{{serviceName}}}Service', constructor);
+    }
+  }
+});

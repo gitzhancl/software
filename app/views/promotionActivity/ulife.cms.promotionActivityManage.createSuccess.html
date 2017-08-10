@@ -1,0 +1,242 @@
+<div ng-controller="PromotionActivityManageCreateSuccessCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.promoact.sub[3].link}}">{{menuConfig.promoact.name}}</a></li>
+        <li><a ng-href="{{menuConfig.promoact.sub[3].link}}">{{menuConfig.promoact.sub[3].name}}</a></li>
+        <li class="active">创建优惠活动-{{renderObj.promoRule.type|promotionType}}</li>
+    </ol>
+
+    <ul class="nav nav-justified" id="navBar">
+        <li role="presentation" class="active label-success"><a href="javascript:void(0)">1、选择活动类型</a></li>
+        <li role="presentation" class="active label-success"><a href="javascript:void(0)">2、确认活动规则</a></li>
+        <li role="presentation" class="active label-success"><a href="javascript:void(0)">3、添加活动商品</a></li>
+        <li role="presentation" class="active label-success"><a href="javascript:void(0)">4、创建完成</a></li>
+    </ul>
+
+    <h1 class="text-center" ng-show="renderObj.status==1">恭喜您，发布成功！</h1>
+    <h1 class="text-center" ng-show="renderObj.status==0">恭喜您，创建成功！</h1>
+
+    <div id="confirmRule" class=" clearfix cms-workarea">
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>活动类型：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.promoRule.type|promotionType}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>活动商品类型：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.productFrom|productFrom}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>优惠活动组：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.groupNmae}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>活动名称：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.title}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>活动ID：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.id}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>促销标签：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.tag}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>移动端显示名称：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.mobileTitle}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>PC端显示名称：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.pcTitle}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>活动时间：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">开始{{renderObj.startTime|date:"yyyy-MM-dd H:mm"}}结束{{renderObj.endTime|date:"yyyy-MM-dd H:mm"}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>需求部门：
+            </div>
+            <div class="col-lg-1 cms-workarea1">
+                <label class="control-label">{{renderObj.departmentId|departmentType}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>需求发起人：
+            </div>
+            <div class="col-lg-1 cms-workarea1">
+                <label class="control-label">{{renderObj.demandMan}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                活动URL（web）：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.pcUrl}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                活动URL（h5）：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.mobileUrl}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                总使用次数：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.count}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                已使用次数：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.receiveCount}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>应用终端：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.terminal|terminalType}}</label>
+            </div>
+        </div>
+        <!--<div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>参与活动商品ID：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">导出到本地</label>
+            </div>
+        </div>-->
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>活动状态：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.status|status}}</label>
+            </div>
+        </div>
+        <!--<div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>创建人：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.id}}</label>
+            </div>
+        </div>-->
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>创建时间：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{renderObj.createTime|date:"yyyy-MM-dd H:mm"}}</label>
+            </div>
+        </div>
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-2 cms-workarea1" style="text-align: right">
+                添加备注：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <textarea class="form-control">{{renderObj.remarks}}</textarea>
+            </div>
+        </div>
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-5 col-lg-offset-2 cms-workarea1" style="text-align: left">
+                <a title="修改活动信息" ng-href="index.html#/promotionActivityManage/create/{{renderObj.id}}" class="btn btn-primary " ng-hide="renderObj.status==-1">
+                    <span>修改活动规则</span>
+                </a>
+                <a title="修改活动商品ID" ng-href="index.html#/promotionActivityManage/createSubmit/{{renderObj.id}}"
+                   class="btn btn-primary " ng-hide="renderObj.status==-1||renderObj.promoRule.type == 'PIECEGIVE'||renderObj.promoRule.type == 'PIECEREDUCE'">
+                    <span>修改活动商品ID</span>
+                </a>
+                <button title="确认发布活动" ng-click="activity.publishOpen()" class="btn btn-primary " ng-hide="renderObj.status==-1 || renderObj.status==1">
+                    <span>确认发布活动</span>
+                </button>
+                <button title="取消活动" ng-click="activity.cancelOpen()" class="btn btn-primary " ng-hide="renderObj.status==-1">
+                    <span>取消活动</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publish Module Modal -->
+    <div class="modal fade bs-example-modal-sm" id="publishModuleModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span >&times;</span></button>
+                    <h4 class="modal-title">确认发布</h4>
+                </div>
+                <!-- <div class="modal-body"></div> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="activity.publish(activityId)">发布活动</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publish Module Modal -->
+    <div class="modal fade bs-example-modal-sm" id="cancelModuleModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span >&times;</span></button>
+                    <h4 class="modal-title">确认取消</h4>
+                </div>
+                <!-- <div class="modal-body"></div> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="activity.cancel(activityId)">取消活动</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

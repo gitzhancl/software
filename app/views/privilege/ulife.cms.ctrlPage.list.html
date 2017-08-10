@@ -1,0 +1,124 @@
+<style type="text/css">
+    .deptSetTree .a6:hover .btn-xs {display: inline !important;}
+    .deptSetTree .a5:hover .btn-xs {display: inline !important;}
+</style>
+<div ng-controller="pageCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li> {{menuConfig.privilege.name}}</li>
+        <li><a ng-href="{{menuConfig.privilege.sub[4].link}}">{{menuConfig.privilege.sub[4].name}}</a></li>
+    </ol>
+
+    <div id="left" style=" width: 270px; height: 450px;float: left;height: 100%;">
+        <label>所有页面列表</label>
+        <!--<hr style="height:1px;border:none;border-top:1px solid #555555;"/>-->
+        <table border="1" style="width: 270px; height:450px; ">
+            <tr>
+                <td>
+                    <treecontrol
+                            class="tree-classic deptSetTree"
+                            tree-model="menuTheTree"
+                            options="treeOptions"
+                            on-selection="showSelected(node, selected)"
+                            selected-node="node1"
+                            expanded-nodes="expandedNodes">
+                        {{node.name}}  <!--{{node.isDelete}}-->
+                        <button  class=" btn-success btn-xs hide"  ng-if="node.isDelete===0&&node.layer===2"  title="配置" ng-click="btns.accredit(node.id,node.name)">配置</button>
+
+                    </treecontrol>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="last1" style=" width: 350px; height: 300px;float: left;height: 100%; margin-left: 10px;">
+        <label>控件设置</label>
+        <div style="width: 300px; height:430px; ">
+
+
+            <!--<button  ng-click="btns.open()">创建</button>-->
+            <table border="1" class="table table-condensed table-bordered table-hover">
+
+                <thead>
+                <tr>
+                    <th style="width: 50px; text-align: center">可用</th>
+                    <th style="width: 50px; text-align: center">控件类型</th>
+                    <th style="width: 50px; text-align: center">控件名称</th>
+                    <th style="width: 50px; text-align: center">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="page in roleControlList">
+                    <td style="vertical-align: middle"><input name="groupCheckbox" type="checkbox"
+                                                        ng-model="page.selected"
+                                                              class="clientList"></td>
+                    <td>{{page.typeName}}</td>
+                    <td>{{page.buttonName}}</td>
+                    <td>{{page.isDelete|isDelete}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <button title="可用确认" ng-click="btns.save()">
+                <span>可用确认</span>
+            </button>
+            <button title="重置" ng-click="btns.reset()">
+                <span>重置</span>
+            </button>
+           <!-- <button title="删除" ng-click="btns.delete()">
+                <span>删除</span>
+            </button>-->
+
+        </div>
+    </div>
+<div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:500px;">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <H4 class="modal-title" id="moduleModalLabel">控件设置</H4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">控件类型</label>
+                    </div>
+                    <div class="col-sm-5" style="text-align: left">
+                        <input type="text" class="form-control input-sm" id="skus.subtitle" ng-model="skus.subtitle"
+                               placeholder="请输入控件类型">
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">控件名称</label>
+                    </div>
+                    <div class="col-sm-5" style="text-align: left">
+                        <input type="text" class="form-control input-sm" id="skus.3333333" ng-model="skus.subtitle"
+                               placeholder="请输入控件名称">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="btns1.save()">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--删除信息-->
+<div class="modal fade bs-example-modal-lg" id="delModal" tabindex="1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <label class="text-warning">确认删除当前按钮吗？</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="btns1.reload()">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

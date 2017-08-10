@@ -1,0 +1,231 @@
+<div ng-controller="shareBuyGetCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.group.name}}</a></li>
+        <li><a ng-href="{{menuConfig.group.sub[2].link}}">{{menuConfig.group.sub[2].name}}</a></li>
+        <li class="active">查看分享购详情--&nbsp;&nbsp;{{group.activityName}}</li>
+    </ol>
+
+
+    <!-- 2、确认活动规则 -->
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="groupForm">
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 分享购活动名称：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label"> {{group.activityName}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 微信分享标题：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.wechatTitle}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 微信分享图片：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.wechatImages}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 微信分享文案：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label"> {{group.wechatCopy}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 商品itemId：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.itemId}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 商品原价：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.price}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 商品分享价：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.sharePrice}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 主图片：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.mainUrl}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 列表图片：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.listImages}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 新用户优惠券码：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.newCode}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 老用户优惠券码：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.oldCode}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 活动规则：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label"> {{group.activityRule}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 需求部门：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label"> {{group.departmentId|deptType}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 需求发起人：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">  {{group.demandPerson}}</span>
+
+                </div>
+
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 活动时间：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">    {{group.startTime | date:'yyyy-MM-dd HH:mm:ss'}} -- {{group.endTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 列表显示：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.viewStartTime | date:'yyyy-MM-dd HH:mm:ss'}} -- {{group.viewEndTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 状态：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label"> {{group.status|groupStatus}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 排序：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">{{group.sort}}</span>
+
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 创建时间：</label>
+
+                </div>
+                <div class="col-sm-5 cms-workarea1" style="text-align: left">
+                    <span class="control-label">   {{group.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+
+                </div>
+            </div>
+
+    </form>
+
+       <div class=" clearfix cms-workarea1 form-inline text-center">
+           <a ng-href="{{menuConfig.group.sub[2].link}}">回列表页</a>
+       </div>
+</div>
+</div>

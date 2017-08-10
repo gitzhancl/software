@@ -1,0 +1,133 @@
+<div ng-controller="adListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.content.sub[1].link}}">{{menuConfig.content.name}}</a></li>
+        <li>{{menuConfig.content.sub[3].name}}</li>
+    </ol>
+
+    <hr/>
+
+   <form class="form-horizontal" name="guideForm">
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动名称</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="tmp.activityName" ng-model="tmp.activityName" placeholder="请输入名称" size="40" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">限制40字以内（中文，字母，数字）</label>
+                </div>
+            </div>
+              <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>标题</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="tmp.title" ng-model="tmp.title" placeholder="请输入名称" size="40" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">活动的标题</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动图片</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="tmp.imgUrl" placeholder="活动图片" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+             <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">android链接</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="tmp.activityAndUrl" placeholder="android链接" >
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+                        <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">iOS链接</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="tmp.activityUrl" placeholder="iOS链接" >
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">android参数</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="tmp.paramsAnd" placeholder="android参数" >
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+             <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">iOS参数</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="tmp.params" placeholder="iOS参数" >
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动时间</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="开始时间">
+                        <input type="text" class="form-control input-sm" placeholder="开始时间" ng-model="tmp.startDate" ulife-datetimepicker ulife-date-format ng-disabled="" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                </div>
+             
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="结束时间" >
+                        <input type="text" class="form-control input-sm" placeholder="结束时间" ng-model="tmp.endDate" ulife-datetimepicker ulife-date-format ng-disabled="" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动状态</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <select class="form-control input-sm" ng-model="tmp.status" ng-options="gt.value as gt.key for gt in status" ng-disabled="false"></select>
+                </div>
+            </div></form>
+
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+            <button title="保存" ng-click="btns.save()" class="btn btn-primary" ulife-btn-au>
+                <span>保存</span>
+            </button>
+        </div>
+    <hr/>
+</div>

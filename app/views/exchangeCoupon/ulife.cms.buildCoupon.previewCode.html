@@ -1,0 +1,87 @@
+<div ng-controller="buildCouponPreview" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.exchangeCoupon.sub[1].link}}">{{menuConfig.exchangeCoupon.name}}</a></li>
+        <li class="active"><a ng-href="{{menuConfig.exchangeCoupon.sub[2].link}}">{{menuConfig.exchangeCoupon.sub[2].name}}</a></li>
+        <li class="active">查看券号</li>
+    </ol>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center"></th>
+                <th style="width: 50px; text-align: center">卡券名称</th>
+                <th style="width: 50px; text-align: center">卡券ID</th>
+                <th style="width: 50px; text-align: center">卡券号码</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in codelist track by $index">
+                <td style="vertical-align: middle">{{page.indexId + 1}}</td>
+                <td style="vertical-align: middle">{{page.ticketName}}</td>
+                <td style="vertical-align: middle">{{page.ticketId}}</td>
+                <td style="vertical-align: middle">{{page.ticketCode}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+            &nbsp;&nbsp; 跳转至： <input type="number" style="width:50px;height:25px" ng-model="searchPage.gotoNumber"
+                                     placeholder="GO"/>
+            <button title="搜索" ng-click="searchPage.goto()" ulife-btn-au>
+                <span>跳转</span>
+            </button>
+
+        </ul>
+
+    </nav>
+
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-model="searchPage.params.userEmail"
+                                   placeholder="请输入邮箱" max="3000000"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="createActivity.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg" id="delMJModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 400px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">是否删除此兑换单？</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="btns1.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

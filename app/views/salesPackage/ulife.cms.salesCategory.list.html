@@ -1,0 +1,147 @@
+<div ng-controller="SalesCategoryListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.operationManagement.name}}</a></li>
+        <li>{{menuConfig.operationManagement.sub[2].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <div class="pull-right">
+            <a title="创建" ng-href="index.html#/salesCategory/create" ulife-btn-au class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>创建新类目</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">类目ID</th>
+                <th style="width: 50px; text-align: center">类目名称</th>
+                <th style="width: 50px; text-align: center">显示端</th>
+                <th style="width: 50px; text-align: center">启用/禁用</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.categoryName}}</td>
+                <td style="vertical-align: middle">{{page.showH5 | categoryH5L}}/{{page.showPc | categoryPcL}}</td>
+                <td style="vertical-align: middle"><button type="button" ng-click="btn.changeStatus(page.id,$event)" ulife-btn-au class="btn btn-xs {{page.remark | showColor}} tranckBtn" title="启用/禁用">{{page.remark | showRemark}}</button></td>
+                <td style="vertical-align: middle">
+                    <a title="修改" ng-href="index.html#/salesCategory/edit/{{page.id}}" ulife-btn-au class="btn btn-success  btn-xs" >
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span>修改</span>
+                    </a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--<nav style="text-align: center;">-->
+        <!--<ul class="pager">-->
+            <!--<li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>-->
+            <!--<li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>-->
+            <!--<a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>-->
+            <!--<a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>-->
+        <!--</ul>-->
+    <!--</nav>-->
+
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="editMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:500px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <H4 class="modal-title" id="moduleModalLabel">礼品销售管理 / 编辑</H4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" name="salesPackage">
+
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-4 cms-workarea1" style="text-align: right">
+                                <label class="control-label">券名称</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+
+                                <input type="text" class="form-control input-sm" ng-model="ticketCount.name" placeholder="请输入券名称"
+                                       ng-disabled="true"   >
+                            </div>
+                            <div class="col-sm-3 cms-workarea1">
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-4 cms-workarea1" style="text-align: right">
+                                <label class="control-label">券ID</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+
+                                <input type="text" class="form-control input-sm" ng-model="ticketCount.id"
+                                       ng-disabled="true">
+                            </div>
+                            <div class="col-sm-3 cms-workarea1">
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-4 cms-workarea1" style="text-align: right">
+                                <label class="control-label"><span style="color: red"> * </span>前台主标题</label>
+                            </div>
+                            <div class="col-sm-6" style="text-align: left">
+                                <input type="text" class="form-control input-sm" ng-model="ticketCount.mainTitle"  style="width: 300px;" required>
+                            </div>
+                            <div class="col-sm-3 cms-workarea1">
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-4 cms-workarea1" style="text-align: right">
+                                <label class="control-label">前台副标题</label>
+                            </div>
+                            <div class="col-sm-6" style="text-align: left">
+                                <input type="text" class="form-control input-sm" ng-model="ticketCount.subTitle" style="width: 300px;"   >
+                            </div>
+                            <div class="col-sm-3 cms-workarea1">
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-4 cms-workarea1" style="text-align: right">
+                                <label class="control-label">商品主图</label>
+                            </div>
+                            <div class="col-sm-6" style="text-align: left">
+                                <input type="text" class="form-control input-sm" ng-model="ticketCount.mainPicUrl" style="width: 300px;"   >
+                            </div>
+                            <div class="col-sm-3 cms-workarea1">
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-4 cms-workarea1" style="text-align: right">
+                                <label class="control-label">商品详情图</label>
+                            </div>
+                            <div class="col-sm-6" style="text-align: left">
+                                <input type="text" class="form-control input-sm" ng-model="ticketCount.detailPicUrl"  style="width: 300px;"  >
+                            </div>
+                            <div class="col-sm-3 cms-workarea1">
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-5 " style="text-align: right">
+                                <label class="control-label">是否PC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="ticketCount.isPc" type="checkbox" ng-model="ticketCount.isPc" value=""
+                                                                                                      style="width: 15px;height:15px;vertical-align: middle;" /></label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+                                <label class="control-label">是否H5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="ticketCount.isH5" type="checkbox" ng-model="ticketCount.isH5" value=""
+                                                                                                      style="width: 15px;height:15px;vertical-align: middle;"/></label>   </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="save.btn()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

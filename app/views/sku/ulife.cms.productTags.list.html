@@ -1,0 +1,117 @@
+<div ng-controller="CmsItemTagsEdit" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.sku.name}}</li>
+        <li class="active"><a ng-href="{{menuConfig.sku.sub[1].link}}">{{menuConfig.sku.sub[1].name}}</a></li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <h4><strong>注意事项：</strong></h4>
+        <ol>
+            <li>
+                <small>批量导入的文件格式统一限定为：<span style="color: red">xxx.txt</span> ！</small>
+            </li>
+            <li>
+                <small>导入条目数限制为每次1W条，请注意导入数量；</small>
+            </li>
+            <li>
+                <small>标签勾选后不填 则认为清除导入商品的对应标签；</small>
+            </li>
+            <li>
+                <small>商品打标导入规则：请保证导入的txt文件每个ID一个换行；</small>
+            </li>
+        </ol>
+    </div>
+    <hr/>
+
+    <div class="row show-grid cms-workarea1">
+        <div class="col-sm-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 文字标签：</label>
+        </div>
+        <div class="col-sm-5 " style="text-align: left">
+            <input type="checkbox" ng-model="isEditDetailtag">修改文字标签
+        </div>
+
+    </div>
+
+    <div class="row show-grid cms-workarea1">
+
+        <div class="col-sm-1 cms-workarea1" style="text-align: right">
+
+            <label class="control-label"></label>
+        </div>
+        <div class="col-sm-5" style="text-align: left">
+            <input type="text" class="form-control input-sm" ng-model="detailTag" placeholder="文字标签 非必填项"
+                   ng-disabled="!isEditDetailtag">
+        </div>
+        <div class="col-sm-3 cms-workarea1">
+        </div>
+    </div>
+
+    <div class="row show-grid cms-workarea1">
+        <div class="col-sm-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 图片标签：</label>
+        </div>
+        <div class="col-sm-5" style="text-align: left">
+            <input type="checkbox" ng-model="isEditTag"> 修改图片标签
+        </div>
+        <div class="col-sm-3 cms-workarea1">
+        </div>
+    </div>
+
+
+    <div class="row show-grid cms-workarea1">
+        <div class="col-sm-1 cms-workarea1" style="text-align: right">
+            <label class="control-label"></label>
+        </div>
+        <div class="col-sm-5" style="text-align: left">
+            <input type="text" class="form-control input-sm" ng-model="tag" placeholder="图片标签 非必填项"
+                   ng-disabled="!isEditTag">
+        </div>
+        <div class="col-sm-3 cms-workarea1">
+        </div>
+    </div>
+
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 参与活动商品：</label>
+        </div>
+        <div class="col-lg-3 cms-workarea1">
+            <button title="导入" ulife-btn-au class="btn btn-default btn-sm" ngf-select="upload($file)" accept="text/plain">
+                <span class="glyphicon glyphicon-export"></span>
+                <spn>导入</spn>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label class="text-warning">上传文件格式必须为.txt</label>
+        </div>
+        <div class="col-lg-2 cms-workarea1">
+            <button title="确认添加" ng-click="beachSend()" ulife-btn-au class="btn btn-success btn-sm">
+                <span>确认添加</span>
+            </button>
+        </div>
+    </div>
+    <hr/>
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 总计：</label>
+        </div>
+        <div class="col-lg-4 cms-workarea1 bg-info">
+            <label class="text-success">{{cmsItem.total}}</label>
+        </div>
+    </div>
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 成功：</label>
+        </div>
+        <div class="col-lg-4 cms-workarea1 bg-info">
+            <label class="text-success">{{cmsItem.successTotal}}</label>
+        </div>
+    </div>
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right;width:120px">
+            <label class="control-label"> 执行结果反馈：</label>
+        </div>
+        <div class="col-lg-4 cms-workarea1 bg-danger">
+            <label class="text-success">{{cmsItem.message}}</label>
+        </div>
+    </div>
+</div>

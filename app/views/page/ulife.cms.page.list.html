@@ -1,0 +1,108 @@
+<div ng-controller="PageListCtrl" class="cms-pageList">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.content.sub[2].link}}">{{menuConfig.content.name}}</a></li>
+        <li class="active">{{menuConfig.content.sub[2].name}}</li>
+
+        <div class="pull-right">
+            <div class="btn-group" role="group">
+                <button title="创建" ng-click="addPage.open()" ulife-btn-au class="btn btn-default btn-xs" >
+                    <span class="glyphicon glyphicon glyphicon-plus" ></span>
+                    <span>创建</span>
+                </button>
+            </div>
+        </div>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <div class="pull-left text-info">
+            <div class="btn-group" data-toggle="buttons">
+                <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="searchPage.search({deviceId: 1})">
+                    <span class="glyphicon glyphicon-modal-window glyphicon-align-left" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="searchPage.search({deviceId: 2})">
+                    <span class="glyphicon glyphicon-phone glyphicon-align-left" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <div class="pull-right">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label>查找</label>
+                    <input type="number" ng-model="searchPage.params.pageId" class="form-control input-sm" style="max-width: 100px;" placeholder="页面ID">
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="searchPage.params.title" class="form-control input-sm" style="max-width: 200px" placeholder="页面标题关键字">
+                </div>
+                <button title="搜索" ng-click="searchPage.search()" target="_blank" ulife-btn-au class="btn btn-info btn-sm" >
+                    <span>搜索</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 50px">序号</th>
+                <th style="width: 50px">终端</th>
+                <th>标题</th>
+                <th style="width: 64px">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.list" ng-dblclick="gotoPageEdit(page.pageId)">
+                <td>{{page.pageId}}</td>
+                <td>{{page.deviceName}}</td>
+                <td>{{page.title}}</td>
+                <td>
+                    <a ng-href="index.html#/page/edit/{{page.pageId}}" title="修改" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    </a>
+                    <a ng-if="page.deviceId == 2" ng-href="{{previewLinks.h5channel}}{{page.pageId}}" title="预览" ulife-btn-au class="btn btn-success btn-xs" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a ng-if="page.deviceId == 1" ng-href="{{previewLinks.pcchannel}}{{page.pageId}}?preview=1" title="预览" ulife-btn-au class="btn btn-success btn-xs" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="addPageModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="moduleModalLabel">增加新页面</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">页面类型</label>
+                            <div class="col-sm-10">
+                                <select class="form-control input-sm" ng-model="addPage.page.deviceId" ng-options="type.deviceId as type.key for type in pageType" ng-disabled="false"></select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addPage.save()">增加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

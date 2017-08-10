@@ -1,0 +1,225 @@
+<div ng-controller="VideoCreateCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.video.name}}</a></li>
+        <li><a ng-href="#/video/list">{{menuConfig.video.sub[2].name}}</a></li>
+        <li>创建视频</li>
+    </ol>
+
+
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="videoForm">
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频链接</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.videoUrl" placeholder="请输入视频链接" name="视频连接" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频主标题</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.title" placeholder="请输入视频主标题" name="主标题" maxlength="14" required>
+                </div>
+                <div class="col-sm-4 cms-workarea1">
+                    <label class="text-warning">限14字以内</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频副标题</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.subTitle" placeholder="请输入视频副标题" name="副标题" maxlength="16" required>
+                </div>
+                <div class="col-sm-4 cms-workarea1">
+                    <label class="text-warning">限16字以内</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频分享图标</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.imageShareUrl" placeholder="请输入视频分享图标" name="视频分享图标" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频分享标题</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.shareTitle" placeholder="请输入视频分享标题" name="视频分享标题" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频分享内容</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.shareDesc" placeholder="请输入视频分享内容" name="请输入视频分享内容" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>腾讯视频链接</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.videoTencentUrl" placeholder="请输入腾讯视频链接" name="腾讯视频链接" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频类型</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <select class="form-control input-sm" ng-model="video.typeId" ng-options="type.value as type.key for type in videoType" style="width:200px;"></select>
+                </div>
+                <div class="col-sm-4 cms-workarea1">
+                    <label class="text-warning">类型有4个，全民食谱，做道菜，寻食记，实验室</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>标签</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.strTag" placeholder="请输入标签" name="标签"required>
+                </div>
+                <div class="col-sm-4 cms-workarea1">
+                    <label class="text-warning">限1-3个，中间用“,”(英文逗号)隔开，每个标签字数限4字以内</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频主图（老版）</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.preview" placeholder="请输入视频主图（老版）" name="视频主图（老版）" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>视频主图（新版）</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.previewSmall" placeholder="请输入视频主图（新版）" name="视频主图（新版）" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"></span>公告栏</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="video.msg" placeholder="请输入公告栏">
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>播放次数初始值</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="number" class="form-control input-sm" ng-model="video.timesWatched" placeholder="播放次数初始值" name="播放次数" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>播放时长</label>
+                </div>
+                <div class="col-sm-2"  style="text-align: left">
+                    <input type="number" class="form-control input-sm" style="display:inline-block; width:80px;" ng-model="video.playMinute" name="分" required>
+                    分
+                </div>
+                <div class="col-sm-2"  style="text-align: left; margin-left:-70px;">
+                    <input type="number" class="form-control input-sm" style="display:inline-block; width:80px;" ng-model="video.playSecond" name="秒" required>
+                    秒
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>预约上架时间</label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group date" ulife-tooltip="上架时间" ulife-datetimepicker>
+                        <input type="text" class="form-control input-sm" placeholder="上架时间" name="上架时间" ng-model="video.startDate" ulife-date-format required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" ></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>关联商品</label>
+                </div>
+
+                <div class="col-sm-5">
+                    <textarea type="text" class="form-control" ng-model="productIds" name="关联商品" placeholder="输入item id, 用','隔开，自动排序" rows="3" required></textarea>
+                    <div>
+                        <span class="btn btn-primary" ng-click="getProductList()">自动排序</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 cms-workarea1">
+                    <label class="text-warning">在文本框里输入商品item id后（自动排序），自动在下方展示列表信息，列表中的商品排序，按照文本框中的顺序显示</label>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-2 cms-workarea1">
+                   
+                </div>
+                <div class="col-sm-10">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>排序</th>
+                                <th>商品iterm id</th>
+                                <th>商品主标题</th>
+                                <th>食材类型</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in productList track by $index">
+                                <td>{{$index+1}}</td>
+                                <td><input disabled ng-model="product.itemId" /></td>
+                                <td><input disabled ng-model="product.productName" /></td>
+                                <td>
+                                    <select class="form-control input-sm" ng-model="product.material" ng-options="type.value as type.key for type in productType" style="width:200px;" ></select>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+
+        </form>
+
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+            <button title="保存" ng-click="btns.save()" class="btn btn-primary" >
+                <span>保存</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,159 @@
+<div ng-controller="ImgPCModule">
+	<div class="cms-moduleEdit">
+	    <ol class="breadcrumb">
+	      <li><a ng-href="{{menuConfig.content.sub[0].link}}">{{menuConfig.content.name}}</a></li>
+	      <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].link}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].name}}</a>
+	      </li>
+	      <li><a
+	          ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].link}}{{editModule.pageInfo.pageId}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].name}}</a>
+	      </li>
+	      <li class="active">PC多图组件：{{editModule.moduleInfo.name}}</li>
+
+	      <div class="pull-right">
+          <div class="btn-group" role="group">
+            <button title="修改" ng-click="editAttr.open()" class="btn btn-info btn-xs" >
+              <span>修改</span>
+            </button>
+          </div>
+
+	        <div class="btn-group" role="group">
+	          <button title="增加图片" ng-click="editContent.add()" target="_blank" class="btn btn-success btn-xs">
+	            <span>增加图片</span>
+	          </button>
+	        </div>
+	      </div>
+	    </ol>
+
+        <div class="cms-panel">
+            <p><small>可上下拖动更换排序</small></p>
+            <div class="cms-moduleList">
+                <div class="panel panel-warning"  ng-repeat="items in editModule.moduleInfo.content">
+                    <div class="panel-heading">
+                    	第{{$index+1}}行：<span ng-repeat="item in items.ALLSome">
+                    		图{{$index+1}}--{{item.name}}
+                    	</span>
+                        <div class="pull-right">
+                            <button type="button" ng-click="editContent.edit($index)" title="修改" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-edit" ></span>
+                            </button>
+                            <button ng-click="editContent.delete($index)" title="删除" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-trash" ></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+
+
+    <!-- 图片 Modal -->
+    <div class="modal bs-example-modal-lg" id="contentModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="activityModalLabel">{{editModule.contentHandle.action == "add" ? "添加图片" : "修改图片"}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="contentForm">
+
+                    	<div class="form-group" ng-class="{'has-error' : contentForm.gap.$dirty && contentForm.gap.$invalid}">
+                    		<label class="col-sm-2 control-label">图片间距(px):</label>
+                    		<div class="col-sm-3">
+                    			<input type="text" class="form-control input-sm" placeholder="间距" name="wGap" ng-model="editModule.contentHandle.content.wGap"  >
+                			</div>
+                            <div class="col-sm-7">
+                                <p>图片间距离计算公式：(页面宽度-图片宽度之和/(图片数量-1));</p>
+                            </div>
+                    	</div>
+
+                        <div class="form-group" ng-class="{'has-error' : contentForm.gap.$dirty && contentForm.gap.$invalid}">
+                            <label class="col-sm-2 control-label">图片行距(px):</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" placeholder="间距" name="hGap" ng-model="editModule.contentHandle.content.hGap" >
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error' : contentForm.name.$dirty && contentForm.name.$invalid}" ng-repeat="ALLSome in editModule.contentHandle.content.ALLSome">
+                            <label class="col-sm-2 control-label">图{{$index+1}}</label>
+                            <div class="col-sm-3">
+                                <input type="text" ulife-tooltip="名称：只用于后台系统展示" class="form-control input-sm" placeholder="名称" name="name" ng-model="ALLSome.name" >
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" placeholder="图片地址url" name="image" ng-model="ALLSome.image" >
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" placeholder="跳转地址url" name="url" ng-model="ALLSome.url">
+                            </div>
+                        </div>
+                    	<div>
+                    		<p>
+                    			备注：一行可以显示1-5张图片;<br/>
+                    			图片间距离计算公式：(页面宽度-图片宽度之和/(图片数量-1));
+                    		</p>
+                    	</div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="editContent.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  <!-- Edit ModuleInfo Modal -->
+  <div class="modal bs-example-modal-lg" id="attrModal" tabindex="-1" role="dialog" >
+	  <div class="modal-dialog modal-lg" role="document">
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" >&times;</span></button>
+				  <h4 class="modal-title" id="moduleModalLabel">修改组件信息</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form-horizontal" name="attrForm">
+					  <div class="form-group" ng-class="{'has-error' : attrForm.title.$dirty && attrForm.title.$invalid}">
+						  <label for="dialog-moduleInfoTitle" class="col-sm-2 control-label">主标题</label>
+						  <div class="col-sm-10">
+							  <input type="text" class="form-control input-sm" id="dialog-moduleInfoTitle" name="title" placeholder="主标题" ng-model="editModule.moduleInfo.attr.title">
+						  </div>
+					  </div>
+					  <div class="form-group" ng-class="{'has-error' : attrForm.subTitle.$dirty && attrForm.subTitle.$invalid}" ng-if="editModule.pageInfo.deviceId==1">
+						  <label for="dialog-moduleInfoSubTitle" class="col-sm-2 control-label">副标题</label>
+						  <div class="col-sm-10">
+							  <input type="text" class="form-control input-sm" id="dialog-moduleInfoSubTitle" name="subTitle" placeholder="副标题" ng-model="editModule.moduleInfo.attr.subTitle">
+						  </div>
+					  </div>
+					  <div class="form-group">
+						  <label for="dialog-moduleInfoMore" class="col-sm-2 control-label">更多</label>
+						  <div class="col-sm-10">
+							  <input type="text" class="form-control input-sm" id="dialog-moduleInfoMore" placeholder="更多" ng-model="editModule.moduleInfo.attr.moreUrl">
+						  </div>
+					  </div>
+
+					  <div class="form-group" ng-if="editModule.pageInfo.categoryId=='1'&&editModule.pageInfo.deviceId=='1'" ng-class="{'has-error' : attrForm.navName.$dirty && attrForm.navName.$invalid}">
+						  <label for="dialog-moduleInfoNavName" class="col-sm-2 control-label"><span class="text-danger" ></span>导航名称</label>
+						  <div class="col-sm-10">
+							  <input type="text" class="form-control input-sm" id="dialog-moduleInfoNavName" name="navName" placeholder="导航名称" ng-model="editModule.moduleInfo.attr.navName" >
+						  </div>
+					  </div>
+					  <div class="form-group" ng-if="editModule.pageInfo.categoryId=='1'&&editModule.pageInfo.deviceId=='1'" ng-class="{'has-error' : attrForm.navIcon.$dirty && attrForm.navIcon.$invalid}">
+						  <label for="dialog-moduleInfoNavIcon" class="col-sm-2 control-label"><span class="text-danger" ></span>导航图标</label>
+						  <div class="col-sm-10">
+							  <input type="text" class="form-control input-sm" id="dialog-moduleInfoNavIcon" name="navIcon" placeholder="导航图标" ng-model="editModule.moduleInfo.attr.navIcon" >
+						  </div>
+					  </div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				  <button type="button" class="btn btn-primary" ng-click="editAttr.save()">保存</button>
+			  </div>
+		  </div>
+	  </div>
+  </div>
+
+</div>

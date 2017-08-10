@@ -1,0 +1,117 @@
+<style type="text/css">
+    .deptSetTree .a6:hover .btn-xs {display: inline !important;}
+    .deptSetTree .a5:hover .btn-xs {display: inline !important;}
+</style>
+<div ng-controller="PageAdminCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+
+    <ol class="breadcrumb">
+        <li> {{menuConfig.privilege.name}}</li>
+        <li><a ng-href="{{menuConfig.privilege.sub[7].link}}">{{menuConfig.privilege.sub[7].name}}</a></li>
+    </ol>
+    <div id="left" style=" width: 250px; height: 450px;float: left;height: 100%;">
+        <label>页面列表</label>
+        <table border="1" style="width: 230px; height:450px; ">
+            <tr>
+                <td>
+                    <treecontrol
+                            class="tree-classic deptSetTree"
+                            tree-model="dataForTheTree"
+                            options="treeOptions"
+                            on-selection="selectedMenus(node,selected)"
+                            selected-node="selectedNodes"
+                            expanded-nodes="expandedNodes">
+                        {{node.name}}
+                        <!--<button  class=" btn-success btn-xs hide"  title="查看" ng-click="btns.accredit(node.id,node.name)">查看</button>-->
+
+                    </treecontrol>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style=" width: 250px; height: 666px;float: left;height: 100%;">
+        <label>已设置角色</label>
+        <div style="width: 240px; height:450px; ">
+            <table border="1" class="table table-condensed table-bordered table-hover">
+
+                <thead>
+                <tr>
+                    <th style="width: 50px; text-align: center">可用</th>
+                    <th style="width: 50px; text-align: center">选中部门的角色</th>
+                    <th style="width: 50px; text-align: center">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="menu in menuRoles">
+
+
+                    <td style="vertical-align: middle"><input type="radio" value="{{menu.id}}" name="roleRadio"
+                                                              ng-click="changeMenu(menu.id)"/></td>
+                    <td style="vertical-align: middle">{{menu.name}}&nbsp;</td>
+                    <td style="vertical-align: middle">{{menu.isDelete|isDelete}}</td>
+
+                </tr>
+              <!--  <button title="启用" ng-click="btns.del(0)">
+                    <span>启用</span>
+                </button>
+                <button title="不启用" ng-click="btns.del(1)">
+                    <span>不启用</span>
+                </button>
+                <button title="修改" ng-click="btns.open()">
+                    <span>修改</span>
+                </button>-->
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <div id="right"  style=" width: 450px; height: 666px;float: left;height: 100%;">
+        <label>已设置用户</label>  <br/>
+        <table width="100%" border="1" cellpadding="2" cellspacing="0">
+            <tr>
+                <td width="100%">
+                    <br/>
+                    <table border="0" cellpadding="3" cellspacing="1" width="100%" align="center" style="background-color: #b9d8f3;">
+                        <tr>
+                            <span  ng-repeat="user in pageUser" >{{user.name}}&nbsp;、&nbsp;</span>
+                        </tr>
+                        <br/>
+                        <br/>
+                    </table>
+
+                </td>
+            </tr>
+        </table>  <br/>
+        <label>已设置控件权限</label>
+
+        <div style="width: 230px; height:340px; ">
+
+                            <table border="1" class="table table-condensed table-bordered table-hover">
+
+                                <thead>
+                                <tr>
+                                    <th style="width: 50px; text-align: center">控件类型</th>
+                                    <th style="width: 50px; text-align: center">按钮名称</th>
+                                    <!--<th style="width: 50px; text-align: center">可用</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="page in pageList">
+                                    <!--<td style="vertical-align: middle"><input name="groupCheckbox" type="checkbox"
+                                                                              ng-model="page.checked"  ng-disabled="true"
+                                                                              class="clientList"></td>-->
+                                    <td style="vertical-align: middle">{{page.typeName}}</td>
+                                    <td style="vertical-align: middle">{{page.buttonName}}</td>
+                                    <!--<td style="vertical-align: middle">{{page.isDelete|isDelete}}</td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+
+
+        </div>
+
+    </div>
+
+</div>

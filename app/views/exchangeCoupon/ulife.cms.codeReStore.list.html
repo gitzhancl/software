@@ -1,0 +1,148 @@
+<div ng-controller="codeReStoreListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.exchangeCoupon.sub[2].link}}">{{menuConfig.exchangeCoupon.name}}</a></li>
+        <li class="active">{{menuConfig.exchangeCoupon.sub[8].name}}</li>
+    </ol>
+    <!--   搜索条件框    -->
+    <div class="bg-info" style="padding:10px 0">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-1">公司名称:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchPage.params.companyName"
+                        placeholder="请填写公司名称">
+                </div>
+                <label class="control-label text-nowrap col-sm-1">领用部门:</label>
+                <div class="col-sm-2">
+                    <getdeport></getdeport>
+                </div>
+                <label class="control-label text-nowrap col-sm-1">领用人:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchPage.params.userName"
+                        placeholder="领用人">
+                </div>
+                <label class="control-label text-nowrap col-sm-1">用途:</label>
+                <div class="col-sm-2">
+                    <select class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchPage.params.useage" ng-options="type.value as type.key for type in purpose"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-inline">
+                    <label class="control-label text-nowrap col-sm-1">退库时间</label>
+                    <div class="input-group date col-sm-2" ulife-tooltip="开始时间" ulife-datetimepicker="" data-original-title="" title="">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="开始时间" name="startTime"
+                            ng-model="searchPage.params.startTime" ulife-date-format required="">
+                        <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        </span>
+                    </div>
+                    <div class="input-group date col-sm-2" ulife-tooltip="结束时间" ulife-datetimepicker="" data-original-title="" title="">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="结束时间" name="endTime"
+                            ng-model="searchPage.params.endTime" ulife-date-format required="">
+                        <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="" style="padding-left:10px;">
+                <button title="查询" ulife-btn-au type="button" class="btn btn-primary" ng-click="searchPage.search()">查询</button>
+                <button title="导出" ulife-btn-au type="button" class="btn btn-primary" ng-click="searchPage.open()">导出</button>
+            </div>
+        </form>
+    </div>
+    <!--   数据展现   -->
+    <div class="table-responsive">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+                <tr>
+                    <th style="width: 50px; text-align: center">原出库单号</th>
+                    <th style="width: 50px; text-align: center">退库单号</th>
+                    <th style="width: 50px; text-align: center">类型</th>
+                    <th style="width: 50px; text-align: center">用途</th>
+                    <th style="width: 50px; text-align: center">公司名称</th>
+                    <th style="width: 50px; text-align: center">领用部门</th>
+                    <th style="width: 50px; text-align: center">领用业务员</th>
+                    <th style="width: 50px; text-align: center">券ID</th>
+                    <th style="width: 50px; text-align: center">券前缀</th>
+                    <th style="width: 50px; text-align: center">券名称</th>
+                    <th style="width: 50px; text-align: center">退库数量</th>
+                    <th style="width: 50px; text-align: center">销售额含税</th>
+                    <th style="width: 50px; text-align: center">原售价</th>
+                    <th style="width: 50px; text-align: center">实际单价</th>
+                    <th style="width: 50px; text-align: center">券税率</th>
+                    <th style="width: 50px; text-align: center">成本单价</th>
+                    <th style="width: 50px; text-align: center">销售额（未税）</th>
+                    <th style="width: 50px; text-align: center">总成本（含税）</th>
+                    <th style="width: 50px; text-align: center">总成本（未税）</th>
+                    <th style="width: 50px; text-align: center">财务记账分类</th>
+                    <th style="width: 50px; text-align: center">退库时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="items in renderObj">
+                    <td style="vertical-align: middle">{{items.order_no}}</td>
+                    <td style="vertical-align: middle">{{items.code}}</td>
+                    <td style="vertical-align: middle">{{items.TYPE}}</td>
+                    <td style="vertical-align: middle">{{items.purpose}}</td>
+                    <td style="vertical-align: middle">{{items.sale_company}}</td>
+                    <td style="vertical-align: middle">{{items.department_name}}</td>
+                    <td style="vertical-align: middle">{{items.demand_man }}</td>
+                    <td style="vertical-align: middle">{{items.ticket_id}}</td>
+                    <td style="vertical-align: middle">{{items.code_prefix}}</td>
+                    <td style="vertical-align: middle">{{items.ticket_name}}</td>
+                    <td style="vertical-align: middle">{{items.count}}</td>
+                    <td style="vertical-align: middle">{{items.amount}}</td>
+                    <td style="vertical-align: middle">{{items.retail_price}}</td>
+                    <td style="vertical-align: middle">{{items.unit_price}}</td>
+                    <td style="vertical-align: middle">{{items.tax_rate}}</td>
+                    <td style="vertical-align: middle">{{items.cost_price}}</td>
+                    <td style="vertical-align: middle">{{items.untax_total_amount}}</td>
+                    <td style="vertical-align: middle">{{items.tax_total_cost_price}}</td>
+                    <td style="vertical-align: middle">{{items.untax_total_cost_price}}</td>
+                    <td style="vertical-align: middle">{{items.account_type}}</td>
+                    <td style="vertical-align: middle">{{items.confirm_time | codeReStoreDataTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--   分页     -->
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!--   导出邮箱弹框   -->
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-model="searchPage.params.userEmail" placeholder="请输入邮箱" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="searchPage.findReport()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

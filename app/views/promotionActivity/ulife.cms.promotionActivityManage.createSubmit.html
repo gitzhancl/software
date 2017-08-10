@@ -1,0 +1,207 @@
+
+<div ng-controller="PromotionActivityManageCreateSubmitCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.promoact.sub[3].link}}">{{menuConfig.promoact.name}}</a></li>
+        <li><a ng-href="{{menuConfig.promoact.sub[3].link}}">{{menuConfig.promoact.sub[3].name}}</a></li>
+        <li class="active">创建优惠活动-{{promotionType|promotionType}}</li>
+    </ol>
+
+    <ul class="nav nav-justified" id="navBar">
+        <li role="presentation" class="active label-success"><a href="javascript:void(0)">1、选择活动类型</a></li>
+        <li role="presentation" class="active label-success"><a href="javascript:void(0)">2、确认活动规则</a></li>
+        <li role="presentation" class="active label-success"><a href="javascript:void(0)">3、添加活动商品</a></li>
+        <li role="presentation" class="disabled"><a href="javascript:void(0)">4、创建完成</a></li>
+    </ul>
+
+    <div class="bg-info clearfix cms-workarea">
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label">Item ID</label>
+            </div>
+            <div class="col-lg-2"  style="text-align: left">
+                <input type="text" class="form-control" placeholder="请输入Item ID" size="40" ng-model="searchPage.params.itemId">
+            </div>
+            <div class="col-lg-2">
+                <button title="搜索" ng-click="searchPage.search()" class="btn btn-primary btn-sm" >
+                    <span class="glyphicon glyphicon-search" ></span>
+                    <span>搜索</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 col-md-offset-1 cms-workarea1">
+            <button title="导入" class="btn btn-default btn-sm" ngf-select="upload($file)">
+                <span class="glyphicon glyphicon-open" ></span>
+                <span>导入</span>
+            </button>
+        </div>
+        <div class="col-lg-1 col-md-offset-1 cms-workarea1">
+            <button title="导出" ng-click="productEx.open()" class="btn btn-default btn-sm" >
+                <span class="glyphicon glyphicon-save" ></span>
+                <span>导出</span>
+            </button>
+        </div>
+        <div class="col-lg-1 col-md-offset-1 cms-workarea1">
+            <button title="手工录入添加" ng-click="addItemsModal.open()" class="btn btn-default btn-sm" >
+                <span class="glyphicon glyphicon-pencil" ></span>
+                <span>手工录入添加</span>
+            </button>
+        </div>
+        <div class="col-lg-1 col-md-offset-5 cms-workarea1">
+            <a title="下载" href="/docs/Import_WhitelistProduct.xls" class="btn btn-default btn-sm" >
+                <span class="glyphicon glyphicon-save" ></span>
+                <span>下载Excel导入模板</span>
+            </a>
+        </div>
+    </div>
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right">
+            <label class="control-label"><span style="color: red"> * </span>参与活动的商品</label>
+        </div>
+        <div class="col-lg-11"  style="text-align: left;">
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr class="active">
+                    <th style="text-align: center; width: 100px;">Item ID</th>
+                    <th style="text-align: center; width: 300px;">商品名称</th>
+                    <th style="text-align: center; width: 100px;">原价/元</th>
+                    <th style="text-align: center; width: 100px;">活动价/元</th>
+                    <th style="text-align: center; width: 250px;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">开始时间</th>
+                    <th style="text-align: center; width: 250px;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">结束时间</th>
+                    <th style="text-align: center; width: 100px;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">限购数量</th>
+                    <th style="text-align: center; width: 100px;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">限购库存</th>
+                    <th style="text-align: center; width: 50px;">库存</th>
+                    <th style="text-align: center; width: 100px;" ng-hide= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">>正在参加的活动</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="page in renderObj.promoWhitelistProducts">
+                    <td><input type="checkbox" id = {{page.id}}  name="prodid" ng-model="x" ng-click="chk(page.id,x)" ng-checked="master"/>{{page.itemId}}</td>
+                    <td style="text-align: center;">{{page.name}}</td>
+                    <td style="text-align: center;">{{page.originalPrice}}</td>
+                    <td style="text-align: center;">{{page.specialPrice}}</td>
+                    <td style="text-align: center;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">{{page.startTime|date:"yyyy-MM-dd  H:mm"}}</td>
+                    <td style="text-align: center;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">{{page.endTime|date:"yyyy-MM-dd  H:mm"}}</td>
+                    <td style="text-align: center;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">{{page.ulimit}}</td>
+                    <td style="text-align: center;" ng-show= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">{{page.stock}}</td>
+                    <td style="text-align: center;">{{page.snapshotStock}}</td>
+                    <td style="text-align: center;" ng-hide= "promotionType == 'SPECIAL'||promotionType == 'PANICBUY'">{{page.activityIds}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row show-grid cms-workarea1">
+        <div class="col-lg-1 col-md-offset-1 cms-workarea1">
+            <input type="checkbox" ng-model="master" ng-click="all(master,tesarry)" />全选
+        </div>
+        <div class=" clearfix cms-workarea1 form-inline text-left">
+            <button title="删除所选" ng-click="productEx.opendel()" class="btn btn-danger" >
+                <span>删除所选</span>
+            </button>
+        </div>
+        <nav style="text-align: center;">
+            <ul class="pager">
+                <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+                <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+                <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+                <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="row show-grid cms-workarea1" ng-hide="resultMsg==''">
+        <div class="col-lg-1 cms-workarea1" style="text-align: right">
+            <label class="control-label">错误信息</label>
+        </div>
+        <div class="col-lg-4"  style="text-align: left">
+            <textarea style="height:300px;width:900px;color:red;" type="" class="form-control" id="resultMsg" ng-model="resultMsg"></textarea>
+        </div>
+    </div>
+    <!--<div class=" clearfix cms-workarea1 form-inline text-center">-->
+        <!--<button title="保存" ng-click="nextItem.confirmProduct()" class="btn btn-primary" >-->
+            <!--<span>保存</span>-->
+        <!--</button>-->
+    <!--</div>-->
+    <!--<div class=" clearfix cms-workarea1 form-inline text-center">-->
+        <!--<button title="检验商品" ng-click="nextItem.checkProduct()" class="btn btn-primary" >-->
+            <!--<span>检验商品</span>-->
+        <!--</button>-->
+        <!--<button title="删除检验商品" ng-click="nextItem.deleteProduct()" class="btn btn-danger" >-->
+            <!--<span>删除检验商品</span>-->
+        <!--</button>-->
+    <!--</div>-->
+
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出商品</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6"  style="text-align: left">
+                            <input type="text" class="form-control" ng-model="exportParams.mailAdress" placeholder="请输入邮箱" max="3000000" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="productEx.export()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bs-example-modal-lg" id="addItemsModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">手工导入商品</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">itemId</label>
+                        </div>
+                        <div class="col-lg-6"  style="text-align: left">
+                            <input type="text" class="form-control" ng-model="addItemsModal.itemIds" placeholder="itemIds" max="3000000" />
+                        </div>
+                    </div>
+                    <span class="help-block">多个商品使用","隔开，最多支持100个itemId</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addItemsModal.ok()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publish Module Modal -->
+    <div class="modal fade bs-example-modal-sm" id="delModuleModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span >&times;</span></button>
+                    <h4 class="modal-title">确认删除</h4>
+                </div>
+                <!-- <div class="modal-body"></div> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="productEx.delete()">删除商品</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

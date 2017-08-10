@@ -1,0 +1,246 @@
+<div ng-controller="PageEditCtrl" class="cms-pageEdit">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.content.sub[1].link}}">{{menuConfig.content.name}}</a></li>
+        <li><a ng-href="{{menuConfig.content.sub[2].link}}">{{menuConfig.content.sub[2].name}}</a></li>
+        <li class="active">{{menuConfig.content.sub[2].sub[0].name}}：{{pageHandler.pageInfo.title}}</li>
+
+        <div class="pull-right">
+            <div class="btn-group" role="group">
+                <a href="{{pageEditBtns.view.link}}" target="_blank" class="btn btn-warning btn-xs"  ulife-tooltip="查看正式地址(非预览)" ulife-tooltip-placement="bottom">
+                    <span class="glyphicon glyphicon glyphicon-eye-open" ></span>
+                    <span>查看</span>
+                </a>
+                <button title="修改" ng-if="pageEditBtns.edit.show" ng-click="pageEditBtns.edit.dialog.open()" class="btn btn-success btn-xs" >
+                    <span class="glyphicon glyphicon glyphicon-edit" ></span>
+                    <span>修改</span>
+                </button>
+                <a title="预览" href="{{pageEditBtns.preview.link}}" target="_blank" class="btn btn-info btn-xs" >
+                    <span class="glyphicon glyphicon glyphicon-eye-open" ></span>
+                    <span>预览</span>
+                </a>
+                <button title="发布" ng-click="pageEditBtns.publish.dialog.open()" class="btn btn-default btn-xs" >
+                    <span class="glyphicon glyphicon glyphicon-floppy-disk" ></span>
+                    <span>发布</span>
+                </button>
+                <button ng-click="pageEditBtns.edit.dialog.del(pageHandler.pageInfo.pageId)" title="删除" class="btn btn-danger btn-xs" >
+                    <span class="glyphicon glyphicon glyphicon-trash" ></span>
+                    <span>删除</span>
+                </button>
+            </div>
+        </div>
+    </ol>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="panel cms-panel panel-default">
+                    <div class="panel-heading">当前页面组件</div>
+                    <div class="panel-body">
+                        <div>
+                            <p><small>可上下拖动更换排序</small></p>
+                            <div ulife-module-sortable="[ulife-module-drop]" class="cms-moduleList" >
+                                <div ng-if="pageHandler.modules.isNotExsit" class="panel panel-warning" ulife-module-drop>
+                                    <div class="panel-heading" data-sort="100">请添加一个组件</div>
+                                </div>
+
+                                <div class="panel panel-warning"  ng-repeat="module in pageHandler.modules.modules" ulife-module-drop data-databinding-id="{{module.databindingId}}">
+                                    <div class="panel-heading">
+                                        {{module.name}}
+                                        <div class="pull-right">
+                                            <button type="button" ng-click="editModule.dialog.open($index)" title="修改" class="btn btn-info btn-xs" >
+                                                <span class="glyphicon glyphicon glyphicon-edit" ></span>
+                                            </button>
+                                            <a ng-href="index.html#/module/{{module.code}}/{{module.databindingId}}?pageId={{pageHandler.pageInfo.pageId}}" title="修改内容" class="btn btn-info btn-xs" >
+                                                <span class="glyphicon glyphicon glyphicon-log-in" ></span>
+                                            </a>
+                                            <button ng-click="deleteModule.dialog.open($index)" title="删除" class="btn btn-info btn-xs" >
+                                                <span class="glyphicon glyphicon glyphicon-trash" ></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="panel cms-panel panel-default">
+                    <div class="panel-heading">所有组件</div>
+                    <div class="panel-body">
+                        <p><small>可拖动到左侧页面中添加，点击组件查看图片样式</small></p>
+                        <div id="cms-module-library" class="cms-module-library">
+                            <div ng-repeat="moduleLiItem in pageHandler.moduleLibrary" ulife-module-drag class="bg-danger pull-left cms-module" data-module-id="{{moduleLiItem.moduleId}}">{{moduleLiItem.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Module Modal -->
+    <div class="modal bs-example-modal-lg" id="moduleModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ><span>&times;</span></button>
+                    <h4 class="modal-title" id="moduleModalLabel">修改组件信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="dialog-moduleTitle" class="col-sm-2 control-label"><span class="text-danger" >*</span>组件名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-moduleTitle" placeholder="组件名称" ng-model="pageHandler.moduleHandler.data.name">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="editModule.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Page Modal -->
+    <div class="modal bs-example-modal-lg" id="pageModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</span></button>
+                    <h4 class="modal-title" id="homepageModalLabel">修改页面信息</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form class="form-horizontal" name="pageForm">
+                        <div class="form-group" ng-class="{'has-error' : pageForm.title.$dirty && pageForm.title.$invalid}">
+                            <label for="dialog-homePageTitle" class="col-sm-2 control-label"><span class="text-danger" >*</span>标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageTitle" placeholder="标题" name="title" ng-model="pageHandler.pageInfo.title" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : pageForm.keywords.$dirty && pageForm.keywords.$invalid}">
+                            <label for="dialog-homePageKeywords" class="col-sm-2 control-label"><span class="text-danger" >*</span>关键字</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageKeywords" placeholder="关键字" name="keywords" ng-model="pageHandler.pageInfo.keywords" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : pageForm.description.$dirty && pageForm.description.$invalid}">
+                            <label for="dialog-homePageDescription" class="col-sm-2 control-label"><span class="text-danger" >*</span>描述</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control input-sm" id="dialog-homePageDescription" name="description" ng-model="pageHandler.pageInfo.description" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="pageHandler.pageInfo.deviceId==2">
+                            <label for="dialog-homePageShareTitle" class="col-sm-2 control-label">分享标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageShareTitle" name="shareTitle" ng-model="pageHandler.pageInfo.shareTitle">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="pageHandler.pageInfo.deviceId==2">
+                            <label for="dialog-homePageShareContent" class="col-sm-2 control-label">分享内容</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageShareContent" name="shareContent" ng-model="pageHandler.pageInfo.shareContent">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="pageHandler.pageInfo.deviceId==2">
+                            <label for="dialog-homePageShareImage" class="col-sm-2 control-label">分享图片</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageShareImage" name="shareImage" ng-model="pageHandler.pageInfo.shareImage">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="pageHandler.pageInfo.deviceId==2">
+                            <label for="dialog-homePageShareUrl" class="col-sm-2 control-label">分享链接</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageShareUrl" name="shareUrl" ng-model="pageHandler.pageInfo.shareUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dialog-homePageShareUrl" class="col-sm-2 control-label">背景颜色</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageBgColor" name="backgroundColor" ng-model="pageHandler.pageInfo.elements.backgroundColor">
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="pageHandler.pageInfo.deviceId==1">
+                            <label for="dialog-homePageShareUrl" class="col-sm-2 control-label">背景图片</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageBgImg" name="backgroundImage" ng-model="pageHandler.pageInfo.elements.backgroundImage">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="pageHandler.pageInfo.deviceId==2">
+                            <label for="dialog-homePageShareCoupon" class="col-sm-2 control-label">分享优惠券</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageShareCoupon" name="shareCoupon" ng-model="pageHandler.pageInfo.elements.shareCoupon">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="pageHandler.pageInfo.deviceId==2">
+                            <label for="dialog-homePageShareCouponUrl" class="col-sm-2 control-label">领取优惠券后链接</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-homePageShareCoupon" name="hareCouponUrl" ng-model="pageHandler.pageInfo.elements.shareCouponUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">显隐控制</label>
+                            <div class="col-sm-10">
+                                <div class="btn-group">
+                                        <input type="checkbox" ng-model="pageHandler.pageInfo.elements.header">页头
+                                        <input type="checkbox" ng-model="pageHandler.pageInfo.elements.footer">页脚
+                                        <span ng-if="pageHandler.pageInfo.deviceId==2">
+                                            <input type="checkbox" ng-model="pageHandler.pageInfo.elements.cart" >购物车
+                                        </span>
+                                        <span ng-if="pageHandler.pageInfo.deviceId==1">
+                                            <input type="checkbox" ng-model="pageHandler.pageInfo.elements.isLargeWidth">1200像素宽
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="pageEditBtns.edit.dialog.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Module Modal -->
+    <div class="modal fade bs-example-modal-sm" id="deleteModuleModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span >&times;</span></button>
+                    <h4 class="modal-title">确认删除</h4>
+                </div>
+                <div class="modal-body">{{pageHandler.moduleHandler.data.name}}</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteModule.delete()">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publish Module Modal -->
+    <div class="modal fade bs-example-modal-sm" id="publishModuleModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span >&times;</span></button>
+                    <h4 class="modal-title">确认发布</h4>
+                </div>
+                <!-- <div class="modal-body"></div> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="pageEditBtns.publish.publish()">发布</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

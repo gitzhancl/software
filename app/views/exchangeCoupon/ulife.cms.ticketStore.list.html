@@ -1,0 +1,167 @@
+<div ng-controller="ticketStoreListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.exchangeCoupon.name}}</a></li>
+        <li class="active">{{menuConfig.exchangeCoupon.sub[11].name}}</li>
+    </ol>
+    <!--   搜索条件框    -->
+    <div class="bg-info" style="padding:10px 0">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-1">券id:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchPage.params.ticketId"
+                        placeholder="券id">
+                </div>
+                <label class="control-label text-nowrap col-sm-1">券名称:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchPage.params.ticketName"
+                        placeholder="券名称">
+                </div>
+                <label class="control-label text-nowrap col-sm-1">skuId:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchPage.params.skuId"
+                        placeholder="skuId">
+                </div>
+                <label class="control-label text-nowrap col-sm-1">itemId:</label>
+               <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchPage.params.itemId"
+                        placeholder="itemId">
+                </div>
+            </div>
+            <div class="" style="padding-left:10px;">
+                <button title="查询" type="button" ulife-btn-au class="btn btn-primary" ng-click="searchPage.search()">查询</button>
+                <!--<button title="导出" type="button" ulife-btn-au class="btn btn-primary" ng-click="searchPage.open()">导出</button>-->
+            </div>
+        </form>
+    </div>
+    <!--   数据展现   -->
+    <div class="table-responsive">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+                <tr>
+                    <th style="width: 50px; text-align: center">券id</th>
+                    <th style="width: 50px; text-align: center">券名称</th>
+                    <th style="width: 50px; text-align: center">创建时间</th>
+                    <th style="width: 50px; text-align: center">兑换截止时间类型</th>
+                    <th style="width: 50px; text-align: center">兑换截止时间</th>
+                    <th style="width: 50px; text-align: center">已售总量（出库-退库）</th>
+                    <th style="width: 50px; text-align: center">已兑换数量</th>
+                    <th style="width: 50px; text-align: center">未兑换数量</th>
+                    <th style="width: 50px; text-align: center">昨天兑换数量</th>
+                    <th style="width: 50px; text-align: center">前天兑换数量</th>
+                    <th style="width: 50px; text-align: center">券面值</th>
+                    <th style="width: 50px; text-align: center">SKUID</th>
+                    <th style="width: 50px; text-align: center">商品货号</th>
+                    <th style="width: 50px; text-align: center">商品名称</th>
+                    <th style="width: 50px; text-align: center">可售库存</th>
+                    <th style="width: 50px; text-align: center">是否礼包</th>
+                    <th style="width: 50px; text-align: center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="items in renderObj">
+                    <td style="vertical-align: middle">{{items.id}}</td>
+                    <td style="vertical-align: middle">{{items.name}}</td>
+                    <td style="vertical-align: middle">{{items.create_time | codeOutStoreDataTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td style="vertical-align: middle">{{items.end_type}}</td>
+                    <td style="vertical-align: middle">{{items.last_ex_date}}</td>
+                    <td style="vertical-align: middle">{{items.sale_out}}</td>
+                    <td style="vertical-align: middle">{{items.already_exchanged}}</td>
+                    <td style="vertical-align: middle">{{items.notyet_exchanged }}</td>
+                    <td style="vertical-align: middle">{{items.yestoday_ex}}</td>
+                    <td style="vertical-align: middle">{{items.yestoday_before_ex}}</td>
+                    <td style="vertical-align: middle">{{items.retail_price}}</td>
+                    <td style="vertical-align: middle">{{items.sku_id}}</td>
+                    <td style="vertical-align: middle">{{items.item_detail.productCode}}</td>
+                    <td style="vertical-align: middle">{{items.item_detail.name }}</td>
+                    <td style="vertical-align: middle">{{items.stock_detail.stock}}</td>
+                    <td style="vertical-align: middle">{{items.item_detail.combination | exchangeIsGift}}</td>
+                    <td style="vertical-align: middle">
+                        <button ng-if="items.item_detail.combination != 0" title="礼包详情" ng-click="giftDetail(items.sku_id)" class="btn-warning btn-xs ng-scope">
+                                        礼包详情
+                                    </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--   分页     -->
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!--   导出邮箱弹框   -->
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="text" class="form-control" ng-model="searchPage.params.userEmail" placeholder="请输入邮箱" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="searchPage.findReport()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--礼包商品详情页-->
+<div class="modal bs-example-modal-lg" id="giftDetailModel" tabindex="1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" style="width: 1024px;">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="giftClose()" data-dismiss="modal"><span>&times;</span></button>
+                <h3 class="modal-title">礼包商品详情</h3>
+            </div>
+            <div class="modal-body">
+                <div class="" style="margin-top:10px">
+                    <table class="table table-condensed table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center">skuId</th>
+                                <th style="width: 50px; text-align: center">商品货号</th>
+                                <th style="width: 50px; text-align: center">商品名称</th>
+                                <th style="width: 50px; text-align: center">商品价格</th>
+                                <th style="width: 50px; text-align: center">商品数量</th>
+                                <th style="width: 50px; text-align: center">商品状态</th>
+                                <th style="width: 50px; text-align: center">库存</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="prd in giftProductList">
+                                <td style="vertical-align: middle">{{prd.skuId}}</td>
+                                <td style="vertical-align: middle">{{prd.productCode}}</td>
+                                <td style="vertical-align: middle">{{prd.skuName}}</td>
+                                <td style="vertical-align: middle">{{prd.rrp}}</td>
+                                <td style="vertical-align: middle">{{prd.qty}}</td>
+                                <td style="vertical-align: middle">{{prd.status | exskuStatus}}</td>
+                                <td style="vertical-align: middle">{{prd.stocks}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Loading-->
+<trigger-loading ng-if="listLoading"></trigger-loading>
+</div>

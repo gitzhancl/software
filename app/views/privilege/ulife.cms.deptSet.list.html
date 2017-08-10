@@ -1,0 +1,134 @@
+<style type="text/css">
+    .deptSetTree .a6:hover .btn-xs {display: inline !important;}
+    .deptSetTree .a5:hover .btn-xs {display: inline !important;}
+</style>
+<div ng-controller="DeptsCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li> {{menuConfig.privilege.name}}</li>
+        <li><a ng-href="{{menuConfig.privilege.sub[1].link}}">{{menuConfig.privilege.sub[1].name}}</a></li>
+    </ol>
+    <table border="1" style="width: 400px; height:400px; " >
+
+        <tr>
+    <!-- as a Dom element -->
+            <button  ng-click="operate.open()">创建一级部门</button>
+            &nbsp;&nbsp;&nbsp;
+                <label style="color: red;">确保部门设置与公司组织架构相同（通讯录）</label>
+
+<td>
+    <treecontrol
+            class="tree-classic deptSetTree"
+                 tree-model="dataForTheTree"
+                 options="treeOptions"
+                 on-selection="showSelected(node)"
+                 selected-node="node1"
+            expanded-nodes="expandedNodes" >
+        {{node.name}}
+        <!--{{node.isDelete}}-->
+        <!--{{node.layer}}-->
+        <button class=" btn-primary btn-xs hide" ng-if="node.layer!='3' && node.isDelete==0"  title="创建" ng-click="operate1.open(node.id)">创建</button>
+        <button class=" btn-success btn-xs hide"    ng-if="node.isDelete===0"  title="修改" ng-click="operate2.open(node.id,node.name)" >修改</button>
+        <button  class=" btn-danger btn-xs hide"  ng-if="node.isDelete===0" title="不启用"  ng-click="operate3.delete(node.id)">不启用</button>
+        <button  class=" btn-success btn-xs hide"  ng-if="node.isDelete===1" title="启用" ng-click="operate4.start(node.id)">启用</button>
+
+    </treecontrol>
+
+</td>
+        </tr>
+
+    </table>
+
+<!--创建一级部门-->
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:500px;">
+
+            <form name="deptSet">
+                <div class="modal-content text-center">
+                    <div class="modal-header">
+                        <H4 class="modal-title" id="moduleModalLabel">创建一级部门</H4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label"><span style="color: red"> * </span>输入部门名称</label>
+                            </div>
+                            <div class="col-sm-4" style="text-align: left">
+                                <input type="text" class="form-control input-sm"
+                                       ng-model="dept.departmentName"
+                                       placeholder="请输入部门名称" name="部门名称" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="operate.openSave()">确认</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+<!--创建部门-->
+    <div class="modal bs-example-modal-lg" id="addMJModal1" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:500px;">
+
+            <form name="deptSet1">
+                <div class="modal-content text-center">
+                    <div class="modal-header">
+                        <H4 class="modal-title" >创建部门</H4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label"><span style="color: red"> * </span>输入部门名称</label>
+                            </div>
+                            <div class="col-sm-4" style="text-align: left">
+                                <input type="text" class="form-control input-sm"
+                                       ng-model="dept.departmentName"  name="部门名称"
+                                       placeholder="请输入部门名称" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="operate1.create()">确认</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<!--修改部门-->
+    <div class="modal bs-example-modal-lg" id="addMJModal2" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:500px;">
+
+            <form name="deptSet2">
+                <div class="modal-content text-center">
+                    <div class="modal-header">
+                        <H4 class="modal-title" >修改部门</H4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label"><span style="color: red"> * </span>输入部门名称</label>
+                            </div>
+                            <div class="col-sm-4" style="text-align: left">
+                                <input type="text" class="form-control input-sm"  name="部门名称"
+                                       ng-model="dept.departmentName"
+                                       placeholder="请输入部门名称" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="operate2.edit()">确认</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

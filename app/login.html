@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>光明 都市菜园</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- build:css({app, .tmp}) /styles/ulife.cms.login.css -->
+    <link href="/styles/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="/styles/ulife.cms.base.css" rel="stylesheet" type="text/css" />
+    <!-- endbuild -->
+</head>
+<body>
+<div class="">
+    <div ng-view >
+    </div>
+</div>
+
+<!--111111-->
+<!-- build:js({app, .tmp}) /scripts/ulife.cms.require.js -->
+<script src="/scripts/vendor/require.js"></script>
+<!-- endbuild -->
+
+<!-- build:js({app, tmp}) /scripts/ulife.cms.base.js-->
+<script src="/scripts/base/ulife.cms.base.1.0.js"></script>
+<!-- endbuild -->
+
+
+<script src="/scripts/ulife.cms.require.config.js"></script>
+
+<!-- build:js({app, .tmp}) /scripts/ulife.cms.login.js -->
+<script src="/scripts/ulife.cms.require.config.js"></script>
+<script type="text/javascript">
+    require(['ulife.cms.page.login']);
+</script>
+<!-- endbuild -->
+
+
+</body>
+</html>

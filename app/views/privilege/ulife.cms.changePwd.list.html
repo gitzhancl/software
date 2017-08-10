@@ -1,0 +1,61 @@
+<div ng-controller="ChangePwdCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.privilege.name}}</li>
+        <li><a ng-href="{{menuConfig.privilege.sub[8].link}}">{{menuConfig.privilege.sub[8].name}}</a></li>
+    </ol>
+
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="pwdFrom">
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>用户名</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm"   ng-model="pwd.loginName"
+                           placeholder="请输入用户名" size="40" name="用户名" required>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>原密码</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="password" class="form-control input-sm"  ng-model="pwd.originalPwd"
+                           placeholder="请输入原密码" name="原密码" size="40" required>
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>新密码</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="password" class="form-control input-sm" ng-model="pwd.validPwd"
+                           placeholder="请输入新密码" name="新密码" size="40" required>
+                </div>
+            </div>
+
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>确认密码</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="password" class="form-control input-sm"  ng-model="pwd.validPwd1"
+                           placeholder="请确认密码" name="确认密码" size="40" required>
+                </div>
+            </div>
+
+
+        </form>
+
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+
+            <button title="确认修改" ng-click="btns.save()" class=" btn btn-primary" >
+                <span>确认修改</span>
+            </button>
+        </div>
+    </div>
+</div>

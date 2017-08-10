@@ -1,0 +1,135 @@
+<div ng-controller="VideoH5V2Module">
+
+    <div class="cms-moduleEdit">
+
+        <ol class="breadcrumb">
+            <li><a ng-href="{{menuConfig.content.sub[0].link}}">{{menuConfig.content.name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].link}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].link}}{{editModule.pageInfo.pageId}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].name}}</a></li>
+            <li class="active">{{editModule.moduleInfo.name}}</li>
+
+            <div class="pull-right">
+                <div class="btn-group" role="group">
+                    <button title="修改" ng-click="editAttr.open()" class="btn btn-info btn-xs" >
+                        <span>修改组件信息</span>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button title="增加小视频" ng-click="editContent.add()" class="btn btn-info btn-xs" >
+                        <span>增加视频</span>
+                    </button>
+                </div>
+            </div>
+        </ol>
+
+
+        <div class="cms-panel">
+            <p><small>可上下拖动更换排序</small></p>
+            <div ulife-content-sortable="[ng-repeat]" class="cms-moduleList" >
+                <div class="panel panel-warning"  ng-repeat="video in editModule.moduleInfo.content">
+                    <div class="panel-heading">
+                        视频{{$index + 1}}:{{video.title}}
+                        <div class="pull-right">
+                            <button type="button" ng-click="editContent.edit($index)" title="修改" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-edit" ></span>
+                            </button>
+                            <button ng-click="editContent.delete($index)" title="删除" class="btn btn-info btn-xs" >
+                                <span class="glyphicon glyphicon glyphicon-trash" ></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Edit ModuleInfo Modal -->
+    <div class="modal bs-example-modal-lg" id="attrModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="moduleModalLabel">修改组件信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="attrForm">
+                        <div class="form-group" ng-class="{'has-error' : attrForm.title.$dirty && attrForm.title.$invalid}">
+                            <label for="dialog-moduleInfoTitle" class="col-sm-2 control-label"><span class="text-danger"></span>主标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm"  name="title" placeholder="主标题" ng-model="editModule.moduleInfo.attr.title">
+                            </div>
+                        </div>
+                        <!-- <div class="form-group" ng-class="{'has-error' : attrForm.subTitle.$dirty && attrForm.subTitle.$invalid}">
+                            <label for="dialog-moduleInfoSubTitle" class="col-sm-2 control-label"><span class="text-danger"></span>副标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm"  name="subTitle" placeholder="副标题" ng-model="editModule.moduleInfo.attr.subTitle">
+                            </div>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="dialog-moduleInfoMore" class="col-sm-2 control-label">小图标</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="小图标url" ng-model="editModule.moduleInfo.attr.iconUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="dialog-moduleInfoMore" class="col-sm-2 control-label">楼层向上间距</label>
+                          <div class="col-sm-10">
+                              <select class="form-control input-sm"
+                                  ng-model="editModule.moduleInfo.attr.top"
+                                ng-options="item.value as item.key for item in Tops"></select>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="editAttr.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add Video Modal -->
+    <div class="modal bs-example-modal-lg" id="videoModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="activityModalLabel">添加视频 <span style="font-size:12px;">输入视频ID自动拉取相关信息</span></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="contentForm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span class='text-danger'>*</span>视频ID</label>
+                            <div class="col-sm-7" ng-class="{'has-error' : contentForm.id.$dirty && contentForm.id.$invalid}">
+                                <input type="text" class="form-control input-sm" name="视频ID" placeholder="视频ID" ng-model="editModule.contentHandle.content.id" ng-blur="editContent.getVideoDetail(editModule.contentHandle.content)" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span class='text-danger'>*</span>主标题</label>
+                            <div class="col-sm-7" ng-class="{'has-error' : contentForm.title.$dirty && contentForm.title.$invalid}">
+                                <input type="text" class="form-control input-sm" name="主标题" placeholder="主标题" ng-model="editModule.contentHandle.content.title" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span class='text-danger'>*</span>视频图片</label>
+                            <div class="col-sm-7" ng-class="{'has-error' : contentForm.previewSmall.$dirty && contentForm.previewSmall.$invalid}">
+                                <input type="text" class="form-control input-sm" name="视频图片" placeholder="视频图片" ng-model="editModule.contentHandle.content.previewSmall" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+                    <button type="button" class="btn btn-primary" ng-click="editContent.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

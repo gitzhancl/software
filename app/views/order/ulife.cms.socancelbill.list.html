@@ -1,0 +1,139 @@
+<div ng-controller="cmsBillList" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.order.name}}</a></li>
+        <li>{{menuConfig.order.sub[2].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">取消单号</label>
+                        <input type="text" class=" form-control input-sm" id="name" ng-model="searchPage.params.cancelBillNo" placeholder="请输入单号"/>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="form-group">
+                        <label class="control-label">取消时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="startTime" ng-model="searchPage.params.startTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="endTime" ng-model="searchPage.params.endTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">订单编号</label>
+                        <input type="text" class=" form-control input-sm" id="activityId" ng-model="searchPage.params.soNo" placeholder="请输入订单号"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">单据状态</label>
+                        <select class=" form-control input-sm" ng-model="searchPage.params.status" ng-options="type.value as type.key for type in billStatus"></select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">取消类型</label>
+                        <select class=" form-control input-sm" ng-model="searchPage.params.cancelType" ng-default="" ng-options="type.value as type.key for type in cancelType"></select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索"   ulife-btn-au   ng-click="searchPage.search()" class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">取消单据号</th>
+                <th style="width: 50px; text-align: center">操作类型</th>
+                <th style="width: 50px; text-align: center">单据状态</th>
+                <th style="width: 50px; text-align: center">订单号</th>
+                <th style="width: 50px; text-align: center">原订单状态</th>
+                <th style="width: 50px; text-align: center">支付渠道</th>
+                <th style="width: 50px; text-align: center">支付状态</th>
+                <th style="width: 50px; text-align: center">是否需要退款</th>
+                <th style="width: 50px; text-align: center">取消类型</th>
+                <th style="width: 50px; text-align: center">取消原因</th>
+                <th style="width: 50px; text-align: center">取消备注</th>
+                <th style="width: 50px; text-align: center">取消人</th>
+                <th style="width: 50px; text-align: center">取消时间</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.billLists">
+                <td style="vertical-align: middle">{{page.cancelBillNo}}</td>
+                <td style="vertical-align: middle">{{page.operationType | operationTypeValue}}</td>
+                <td style="vertical-align: middle">{{page.status | billStatus}}</td>
+                <td style="vertical-align: middle">{{page.soNo}}</td>
+                <td style="vertical-align: middle">{{page.orderOriginalStatus | orderStatusValue}}</td>
+                <td style="vertical-align: middle">{{page.payChannel}}</td>
+                <td style="vertical-align: middle">{{page.payStatus | payStatusValue}}</td>
+                <td style="vertical-align: middle">{{page.isNeedRefund | isNeedRefundValue}}</td>
+                <td style="vertical-align: middle">{{page.cancelType}}</td>
+                <td style="vertical-align: middle">{{page.cancelReason}}</td>
+                <td style="vertical-align: middle">{{page.cancelRemark}}</td>
+                <td style="vertical-align: middle">{{page.creatorName}}</td>
+                <td style="vertical-align: middle">{{page.createtime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">
+                    <button type="button" class="btn btn-success btn-xs" ng-if="page.status==200"  title="已完成"  ulife-btn-au disabled="disabled">（已完成）Finished</button>
+                    <button type="button" class="btn btn-info btn-xs" ng-if="page.status==100"  title="退款中"  ulife-btn-au disabled="disabled">（退款中）Refunding</button>
+                    <button type="button" class="btn btn-primary btn-xs" ng-if="page.status==1"   title="处理"  ulife-btn-au  ng-click="processBill.open(page.cancelBillNo)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>（处理）Process</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!--处理取消订单-->
+    <div class="modal fade bs-example-modal-lg" id="processBillModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 400px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">是否处理取消订单？</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="processBill.process()">处理</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

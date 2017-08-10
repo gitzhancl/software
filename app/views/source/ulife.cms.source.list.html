@@ -1,0 +1,109 @@
+<div ng-controller="PromotionSourceListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.source.sub[1].link}}">{{menuConfig.source.name}}</a></li>
+        <li class="active">{{menuConfig.source.sub[1].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline">
+            <div class="col-md-3">
+                <label class="control-label">渠道名称</label>
+                <input type="text" class="form-control" ng-model="searchPage.params.name" placeholder="请输入渠道名称"/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">渠道code</label>
+                <input type="text" class="form-control" ng-model="searchPage.params.code" placeholder="请输入渠道code"/>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+            <button title="创建" ng-click="addSourceModal.open()" ulife-btn-au class="btn btn-success btn-sm" >
+                <span class="glyphicon glyphicon-plus" ></span>
+                <span>创建</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">编号</th>
+                <th style="width: 50px; text-align: center">部门</th>
+                <th style="width: 50px; text-align: center">渠道名称</th>
+                <th style="width: 50px; text-align: center">渠道code</th>
+                <th style="width: 50px; text-align: center">创建日期</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.promoSource">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.department}}</td>
+                <td style="vertical-align: middle">{{page.sourceName}}</td>
+                <td style="vertical-align: middle">{{page.sourceCode}}</td>
+                <td style="vertical-align: middle">{{page.createTime|date:"yyyy-MM-dd  HH:mm:ss"}}</td>
+                <td style="vertical-align: middle">
+                    <button ng-click="addSourceModal.open(page.id)" title="修改" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="addSourceModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="moduleModalLabel">渠道维护</h3>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">部门</label>
+                    </div>
+                    <div class="col-lg-4"  style="text-align: left">
+                        <select class="form-control" ng-model="params.depa_id" ng-options="type.deviceId as type.key for type in deptList"></select>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">指定渠道名称</label>
+                    </div>
+                    <div class="col-lg-4"  style="text-align: left">
+                        <input type="text" class="form-control" ng-model="params.sourceName" min="0" placeholder="请输入渠道名称"/>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">指定渠道code</label>
+                    </div>
+                    <div class="col-lg-4"  style="text-align: left">
+                        <input type="text" class="form-control" ng-model="params.sourceCode" min="0" placeholder="请输入渠道code" ng-disabled="params.id != 0"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="addSourceModal.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,248 @@
+<div ng-controller="ShareBuyCreateCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.group.name}}</a></li>
+        <li><a ng-href="{{menuConfig.group.sub[2].link}}">{{menuConfig.group.sub[2].name}}</a></li>
+        <li class="active">创建分享购活动</li>
+    </ol>
+
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="shareBuyForm" novalidate>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>分享购活动名称</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.activityName" placeholder="请输入分享购活动名称" size="20" name="分享购活动名称" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning" ng-show="myForm.keyWordsInfo.$error.required">限制20字以内（中文，字母，数字）</label>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>微信分享标题</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.wechatTitle" placeholder="请输入微信分享标题" size="10" name="微信分享标题" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">限制10字以内（中文，字母，数字）</label>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>微信分享文案</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.wechatCopy" placeholder="请输入微信分享文案" size="20" name="微信分享文案" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">限制20字以内（中文，字母，数字）</label>
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>商品itemId</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.itemId" placeholder="itemId" name="商品itemId" ng-blur="getProductInfo()" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">请正确输入商品itemId</label>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>商品原价</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="number" class="form-control input-sm" ng-model="group.price" placeholder="商品原价" name="商品原价" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">仅可填写数字（支持整数与小数点后两位），不可填写中文、英文、或除.之外的其他特殊字符</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>商品分享价</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="number" class="form-control input-sm" ng-model="group.sharePrice" placeholder="商品分享价" name="商品分享价" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">仅可填写数字（支持整数与小数点后两位），不可填写中文、英文、或除.之外的其他特殊字符</label>
+                </div>
+            </div>
+
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>微信分享图片</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.wechatImages" placeholder="请输入微信分享图片" name="微信分享图片" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">图片尺寸320px，10kb以内</label>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>主图片</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.mainUrl" placeholder="请输入主图片" name="主图片" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <!--<label class="text-warning">图片尺寸320px，10kb以内</label>-->
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>列表页商品图片url</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.listImages" placeholder="列表页商品图片url" name="列表页商品图片url" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">图片尺寸根据ued最终设计效果图，图片大小限制20kb以内</label>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>需求部门</label>
+                </div>
+                <div class="col-sm-2"  style="text-align: left">
+                    <select class="form-control input-sm" ng-model="group.departmentId" ng-options="type.value as type.key for type in deptType" required name="需求部门"></select>
+                </div>
+                <div class="col-sm-1 cms-workarea1"  style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>需求发起人</label>
+                </div>
+                <div class="col-sm-2"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.demandPerson"  placeholder="请输入需求发起人" size="40" name="请输入需求发起人" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">请如实填写员工姓名</label>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动时间</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                        <input type="text" class="form-control input-sm" placeholder="开始时间" ng-model="group.startTime" ulife-date-format name="活动时间:开始时间" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label">至</label>
+                </div>
+                <!--至-->
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                        <input type="text" class="form-control input-sm" placeholder="结束时间" ng-model="group.endTime" ulife-date-format name="活动时间:结束时间" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>列表显示时间</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                        <input type="text" class="form-control input-sm" placeholder="开始时间" ng-model="group.viewStartTime" ulife-date-format name="列表显示时间:开始时间" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                </div>
+                &lt;!&ndash;至&ndash;&gt;
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                        <input type="text" class="form-control input-sm" placeholder="结束时间" ng-model="group.viewEndTime" ulife-date-format name="列表显示时间：结束时间" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>新用户优惠券公码</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.newCode" placeholder="新用户优惠券公码" name="新用户优惠券公码"   required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">优惠券活动状态必须为已发布状态</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>老用户优惠券公码</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.oldCode" placeholder="老用户优惠券公码" name="老用户优惠券公码"  required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">优惠券活动状态必须为已发布状态</label>
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">排序sort</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="group.sort" placeholder="sort">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动规则</label>
+                </div>
+                <div class="col-sm-5"  style="text-align: left">
+                    <!--<input type="text" class="form-control input-sm" ng-model="group.sort" placeholder="sort">-->
+
+                    <textarea class="form-control" ng-model="group.activityRule" rows="15" cols="66" required></textarea>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+        </form>
+
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+            <button title="创建" ng-click="addShareBuy.save()" class="btn btn-primary">
+                <span>创建</span>
+            </button>
+        </div>
+    </div>
+</div>

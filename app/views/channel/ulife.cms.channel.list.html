@@ -1,0 +1,97 @@
+<div ng-controller="ChannelListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.channel.sub[1].link}}">{{menuConfig.channel.name}}</a></li>
+        <li class="active">{{menuConfig.channel.sub[1].name}}</li>
+    </ol>
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">销售渠道</th>
+                <th style="width: 50px; text-align: center">子渠道</th>
+                <th style="width: 50px; text-align: center">终端</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="channel in renderObj">
+                <td style="vertical-align: middle">{{channel.parentName}}</td>
+                <td style="vertical-align: middle">{{channel.childName}}</td>
+                <td style="vertical-align: middle">{{channel.terminalString}}</td>
+                <td style="vertical-align: middle">
+
+                    <button ng-click="addChannelModal.open(channel,true)" ng-if = "channel.parentId != 1" title="修改" ulife-btn-au >
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                    <button ng-click="addChannelModal.open(channel,false)" ng-if = "channel.parentId != 1" title="查看" ulife-btn-au >
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="addChannelModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="moduleModalLabel"></h3>
+                </div>
+
+
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">支付方式</label>
+                    </div>
+                    <div class="col-lg-4" style="border:1px solid #ccc; text-align: left">
+                        <div ng-repeat="pay in payType">
+                            <div ng-if="!pay.hasChildPay">
+                                <input type="checkbox" name="pay" id="Pay{{pay.code}}"  ng-model="pay.isChecked">
+                                <label for="Pay{{pay.code}}">{{pay.name}}</label>
+                            </div>
+                            <div ng-if="pay.hasChildPay">
+                                &nbsp;&nbsp; &nbsp;<label>{{pay.name}}</label>
+                                <div  ng-repeat="childPay in pay.childPayment ">
+                                    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="payChannel" id="childPay{{childPay.code}}" ng-model="childPay.isChecked">
+                                    <label for="childPay{{childPay.code}}">{{childPay.name}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">订单类型</label>
+                    </div>
+                    <div class="col-lg-4"  style="border:1px solid #ccc; text-align: left;">
+                        <div ng-repeat="order in orderType" style="display: inline-block; margin-right: 20px;">
+                            <input type="checkbox" name="order" id="Order{{order.index}}" ng-model="order.isChecked" >
+                            <label for="Order{{order.index}}">{{order.label}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-show="addChannelModal.isEdit" ng-click="addChannelModal.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

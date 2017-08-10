@@ -1,0 +1,201 @@
+<div ng-controller="OrderListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.order.name}}</a></li>
+        <li>{{menuConfig.order.sub[1].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">主单号</label>
+                        <input type="text" class=" form-control input-sm" id="name" ng-model="searchPage.params.sale_no" placeholder="请输入名称"/>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="form-group">
+                        <label class="control-label">订单创建</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="startTime" ng-model="searchPage.params.start_date" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="endTime" ng-model="searchPage.params.end_date" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">收货人手机号</label>
+                        <input type="text" class=" form-control input-sm"  ng-model="searchPage.params.consignee_mobile_no" placeholder="收货人手机号"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">收货人名称</label>
+                        <input type="text" class=" form-control input-sm" ng-model="searchPage.params.consignee_name" placeholder="请输入收货人名称"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">客户账号</label>
+                        <input type="text" class=" form-control input-sm" id="activityId" ng-model="searchPage.params.login_name" placeholder="下单人账号"/>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">状态</label>
+                        <select ng-model="statusValue" class="form-control" ng-options="statusSelected.value for statusSelected in statusSelect">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">支付状态</label>
+                        <select ng-model="searchPage.params.pay_status" class="form-control" ng-options="statusSelected.key as statusSelected.value  for statusSelected in payStatus">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">支付渠道</label>
+                        <select ng-model="searchPage.params.pay_channel" class="form-control" ng-options="type.name as type.name  for type in payChannels">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">订单类型</label>
+                        <select ng-model="searchPage.params.category" class="form-control" ng-options="category.key as category.value  for category in categories">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索"  ulife-btn-au ng-click="searchPage.search()" class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+            <!--<a title="新建" ng-href="index.html#/group/create" class="btn btn-success btn-sm" >-->
+                <!--<span class="glyphicon glyphicon-plus" ></span>-->
+                <!--<span>新建</span>-->
+            <!--</a>-->
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">订单号</th>
+                <th style="width: 50px; text-align: center">下单时间</th>
+                <th style="width: 50px; text-align: center">配送日期</th>
+                <th style="width: 50px; text-align: center">订单类型</th>
+                <th style="width: 50px; text-align: center">订单状态</th>
+                <th style="width: 50px; text-align: center">支付状态</th>
+                <th style="width: 50px; text-align: center">支付类型</th>
+                <th style="width: 50px; text-align: center">支付渠道</th>
+                <th style="width: 50px; text-align: center">订单金额</th>
+                <th style="width: 50px; text-align: center">已支付金额</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.orders">
+                <td style="vertical-align: middle">{{page.saleNo}}</td> <!--订单号-->
+                <td style="vertical-align: middle">{{page.orderTime | date:'yyyy-MM-dd HH:mm:ss'}}</td> <!--下单时间-->
+                <td style="width: 50px; text-align: center">{{page.shipDate | date:'yyyy-MM-dd'}}</td> <!--预计配送日期-->
+                <td style="width: 50px; text-align: center">{{page.orderCategory}}</td> <!--订单类型-->
+                <td style="width: 50px; text-align: center">{{page.status | orderStatusValue}}</td> <!--订单状态-->
+                <td style="width: 50px; text-align: center">{{page.payStatus | orderPayStatus}}</td><!--支付状态-->
+                <td style="width: 50px; text-align: center">{{page.payType}}</td> <!--支付类型-->
+                <td style="width: 50px; text-align: center">{{page.payChannel}}</td> <!--支付渠道-->
+                <td style="width: 50px; text-align: center">{{page.totalAmount}}</td> <!--订单金额-->
+                <td style="width: 50px; text-align: center">{{page.paidAmount}}</td> <!--已支付金额-->
+                <td style="vertical-align: middle">
+                    <a ng-href="index.html#/order/detail/{{page.saleNo}}" title="查看"  ulife-btn-au  class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        <span>查看详情</span>
+                    </a>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+
+
+    <!--&lt;!&ndash; addPage Modal &ndash;&gt;-->
+    <!--<div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">-->
+        <!--<div class="modal-dialog modal-lg" role="document" style="width: 666px;height:500px;">-->
+            <!--<div class="modal-content text-center">-->
+                <!--<div class="modal-header">-->
+                    <!--<H4 class="modal-title" id="moduleModalLabel">参成团订单计算</H4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+
+                    <!--<table class="table table-condensed table-bordered table-hover" style="text-align: center">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--&lt;!&ndash;<th style="width: 50px; text-align: center">参团订单数</th>&ndash;&gt;-->
+                            <!--<th style="width: 50px; text-align: center">成团订单数</th>-->
+                            <!--&lt;!&ndash;<th style="width: 50px; text-align: center">参团数</th>&ndash;&gt;-->
+                            <!--<th style="width: 50px; text-align: center">成团数</th>-->
+                            <!--<th style="width: 50px; text-align: center">每团限制人数</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--&lt;!&ndash;<td style="vertical-align: middle">{{groupCount.offeredOrder}}</td>&ndash;&gt;-->
+                            <!--<td style="vertical-align: middle">{{groupCount.clusteringOrder}}</td>-->
+                            <!--&lt;!&ndash;<td style="vertical-align: middle">{{groupCount.offered}}</td>&ndash;&gt;-->
+                            <!--<td style="vertical-align: middle">{{groupCount.clustering}}</td>-->
+                            <!--<td style="vertical-align: middle">{{groupCount.perGroupLimit}}</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>

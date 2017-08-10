@@ -1,0 +1,252 @@
+<div ng-controller="PromotionActivityBankCreateCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+<ol class="breadcrumb">
+    <li><a ng-href="{{menuConfig.promoact.sub[4].link}}">{{menuConfig.promoact.name}}</a></li>
+    <li><a ng-href="{{menuConfig.promoact.sub[4].link}}">{{menuConfig.promoact.sub[4].name}}</a></li>
+    <li class="active">创建</li>
+</ol>
+
+<!-- 活动规则 -->
+<div id="confirmRule" class="clearfix cms-workarea">
+    <form class="form-horizontal" name="attrForm">
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>银行优惠活动名称</label>
+            </div>
+            <div class="col-lg-5"  style="text-align: left">
+                <input type="text" name="银行优惠活动名称" class="form-control" ng-model="params.title" placeholder="请输入银行优惠活动名称" size="40" required/>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="text-warning">限制40字以内（中文，字母，数字）</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>PC端显示名称</label>
+            </div>
+            <div class="col-lg-5"  style="text-align: left">
+                <input type="text" class="form-control" id="promoact.pcTitle" ng-model="params.pcTitle" placeholder="请输入名称" size="25" name="PC端显示名称" required>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="text-warning">限制25字以内（中文，字母，数字）</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>移动端显示名称</label>
+            </div>
+            <div class="col-lg-5"  style="text-align: left">
+                <input type="text" class="form-control" id="promoact.mobileTitle" ng-model="params.mobileTitle" placeholder="请输入名称" size="25" name="移动端显示名称" required>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="text-warning">限制25字以内（中文，字母，数字）</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>需求部门</label>
+            </div>
+            <div class="col-lg-2"  style="text-align: left">
+                <select class="form-control" name="需求部门" ng-disabled="params.status == 1" ng-model="params.departmentId" ng-options="type.deviceId as type.key for type in deptType" required></select>
+            </div>
+            <div class="col-lg-1 cms-workarea1"  style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>需求发起人</label>
+            </div>
+            <div class="col-lg-2"  style="text-align: left">
+                <input type="text" name="需求发起人" class="form-control" ng-disabled="params.status == 1" ng-model="params.demandMan" placeholder="请输入需求发起人" size="40" required>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1"  style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>OA流程号</label>
+            </div>
+            <div class="col-lg-2"  style="text-align: left">
+                <input type="text" name="OA流程号" class="form-control" ng-model="params.oaNumber" placeholder="请输入OA流程号" size="40" required>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="text-warning">请确认该OA流程号是否正确</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>设置规则</label>
+            </div>
+            <div class="col-lg-11"  style="text-align: left">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                    <tr class="active">
+                        <th style="text-align: center; width: 50px;">优惠银行</th>
+                        <th style="text-align: center; width: 150px;">可选周期</th>
+                        <th style="text-align: center; width: 50px;">规则</th>
+                        <th style="text-align: center; width: 50px;">单日限制次数</th>
+                        <th style="text-align: center; width: 50px;">每用户日限制次数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="r in params.cartPackage">
+                        <td>
+                            <select class="form-control" name="优惠银行" ng-model="r.channelNo" ng-options="type.channelNo as type.channelName for type in paymeth" ng-disabled="params.status == 1" required></select>
+                        </td>
+                         <td>
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].monday" />星期一
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].tuesday" />星期二
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].wednesday" />星期三
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].thursday" />星期四<br/>
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].friday" />星期五
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].saturday" />星期六
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].sunday" />星期日
+                            <input type="checkbox" ng-disabled="params.status == 1"  ng-model="week[$index].all" ng-change="checkAllCycle($index)"/>全选
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon">满</span>
+                                <input type="number" class="form-control" name="满" ng-model="r.limit" placeholder="请输入限额" size="7" ng-disabled="params.status == 1" required/>
+                                <span class="input-group-addon">元</span>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">减</span>
+                                <input type="number" class="form-control" name="减" ng-model="r.preferential" placeholder="请输入减少金额" size="7" ng-disabled="params.status == 1" required/>
+                                <span class="input-group-addon">元</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="单日限制次数" ng-model="r.daylimit" placeholder="请输入单日限制次数" size="7" ng-disabled="params.status == 1" required/>
+                                <span class="input-group-addon">次</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="每用户日限制次数" ng-model="r.dayuserlimit" placeholder="请输入每用户日限制次数" size="7" ng-disabled="params.status == 1" required/>
+                                <span class="input-group-addon">次</span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right"> <span style="color: red"> * </span><label class="control-label">活动开始时间</label> </div>
+            <div class="col-lg-2"  style="text-align: left">
+                <input type="text" class="form-control" name="活动开始时间" ng-model="params.startTime" ulife-tooltip="开始时间" ulife-datetimepicker ulife-date-format required ng-disabled="params.status == 1" required/>
+            </div>
+            <div class="col-lg-1 cms-workarea1" style="text-align: center"><label class="control-label">结束时间</label> </div>
+            <div class="col-lg-2"  style="text-align: left">
+                <input type="text" class="form-control" name="活动结束时间" ng-model="params.endTime"  ulife-tooltip="结束时间" ulife-datetimepicker ulife-date-format required ng-disabled="params.status == 1" required/>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right"> <span style="color: red"> * </span><label class="control-label">投放总次数</label> </div>
+            <div class="col-lg-4"  style="text-align: left">
+                <div class="input-group">
+                    <input type="number" class="form-control" name="可以使用总次数" ng-model="params.count" placeholder="请输入银行优惠可以使用总次数" size="7" ng-disabled="params.status == 1" required/>
+                    <span class="input-group-addon">次</span>
+                </div>
+            </div>
+            <div class="col-lg-3 cms-workarea1"> <label class="text-warning">本次活动投放的总使用次数</label> </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span><label class="control-label">每会员享受次数</label>
+            </div>
+            <div class="col-lg-4"  style="text-align: left">
+                <div class="input-group">
+                    <input type="number" class="form-control" name="每会员享受次数" ng-model="params.perLimit" placeholder="请输入每会员享受次数" size="7" ng-disabled="params.status == 1" required/>
+                    <span class="input-group-addon">次</span>
+                </div>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="text-warning">活动周期内每会员享受该优惠的次数</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label"><span style="color: red"> * </span>应用终端</label>
+            </div>
+            <div class="col-lg-1 form-inline"  style="text-align: left">
+                <input type="checkbox" ng-model="terminal.app"/>APP
+            </div>
+            <div class="col-lg-1 form-inline"  style="text-align: left">
+                <input type="checkbox" ng-model="terminal.web"/>WEB
+            </div>
+            <div class="col-lg-1 form-inline"  style="text-align: left">
+                <input type="checkbox" ng-model="terminal.wap"/>H5
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label">活动URL(web)</label>
+            </div>
+            <div class="col-lg-4"  style="text-align: left">
+                <input type="text" class="form-control" ng-model="params.pcUrl" placeholder="http://" size="7">
+            </div>
+            <div class="col-lg-4 cms-workarea1">
+                <label class="text-warning">可选，请输入活动URL</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label">活动URL(h5)</label>
+            </div>
+            <div class="col-lg-4"  style="text-align: left">
+                <input type="text" class="form-control" ng-model="params.mobileUrl" placeholder="http://" size="7">
+            </div>
+            <div class="col-lg-4 cms-workarea1">
+                <label class="text-warning">可选，请输入活动URL</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <label class="control-label">备注说明</label>
+            </div>
+            <div class="col-lg-4"  style="text-align: left">
+                <textarea  type="" class="form-control" ng-model="params.remarks" ></textarea>
+            </div>
+        </div>
+
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+            <a title="创建" ng-click="createActivity.save()" class="btn btn-primary" ng-show="id==0">
+                <span>创建</span>
+            </a>
+            <a title="保存" ng-click="createActivity.save()" class="btn btn-primary" ng-show="id>0 && params.status!=-1">
+                <span>保存</span>
+            </a>
+            <button title="发布" ng-click="publishPromotion.open()" class="btn btn-primary" ng-show="id>0 && params.status == 0" >
+                <span>发布优惠</span>
+            </button>
+            <button title="作废" ng-click="cancelPromotion.open()" class="btn btn-primary" ng-show="id>0 && params.status!=-1">
+                <span>作废优惠</span>
+            </button>
+        </div>
+    </form>
+</div>
+    <div class="modal fade bs-example-modal-lg" id="publishModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">确认发布优惠吗？</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="publishPromotion.publish(id)">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" id="cancelModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">确认作废优惠吗？</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="cancelPromotion.cancel(id)">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

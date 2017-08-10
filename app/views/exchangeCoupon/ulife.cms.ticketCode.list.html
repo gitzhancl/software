@@ -1,0 +1,171 @@
+<div ng-controller="CmsTicketCodeListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.exchangeCoupon.name}}</li>
+        <li class="active"><a ng-href="{{menuConfig.exchangeCoupon.sub[14].link}}">{{menuConfig.exchangeCoupon.sub[14].name}}</a></li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="col-md-3">
+                <label class="control-label">券号</label>
+                <input type="text" class="form-control"  ng-model="searchPage.params.code" placeholder="请输入券号"/>
+            </div>
+
+
+            <div class="col-md-3">
+                <label class="control-label">券名称</label>
+                <input type="text" class="form-control"  ng-model="searchPage.params.codeName" placeholder="请输入券名称"/>
+            </div>
+
+
+            <div class="col-md-3">
+                <label class="control-label">券ID</label>
+                <input type="text" class="form-control"  ng-model="searchPage.params.codeid" placeholder="请输入券ID"/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">是否绑定客户</label>
+                <select class="form-control"  ng-model="searchPage.params.bandingStatus" ng-options="type.value as type.key for type in status"></select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="control-label">客户ID</label>
+                <input type="text" class="form-control" ng-model="searchPage.params.customerid" placeholder="请输入客户ID"/>
+            </div>
+        </form>
+        <div class="pull-right">
+                <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                    <span class="glyphicon glyphicon-search" ></span>
+                    <span>搜索</span>
+                </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">券号</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">状态</th>
+                <th style="width: 50px; text-align: center">是否已兑换</th>
+                <th style="width: 50px; text-align: center">是否绑定客户</th>
+                <th style="width: 50px; text-align: center">客户ID</th>
+                <th style="width: 50px; text-align: center">客户登录名</th>
+                <th style="width: 50px; text-align: center">绑定时间</th>
+                <th style="width: 50px; text-align: center">券ID</th>
+                <th style="width: 50px; text-align: center">券名称</th>
+                <th style="width: 50px; text-align: center">生成单号</th>
+                <th style="width: 50px; text-align: center">入库单号</th>
+                <th style="width: 50px; text-align: center">出库单号</th>
+                <th style="width: 50px; text-align: center">兑换密码错误次数</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj">
+                <td style="vertical-align: middle">{{page.code}}</td>
+                <td style="vertical-align: middle"><div ng-hide="page.create_time==undefined">{{page.create_time| bindingDataTime | date:'yyyy-MM-dd HH:mm:ss'}}</div></td>
+                <td style="vertical-align: middle">{{page.store_status |store_status}}</td>
+                <td style="vertical-align: middle">{{page.exchange_status |exchange_status}}</td>
+                <td style="vertical-align: middle">{{page.banding_status}}</td>
+                <td style="vertical-align: middle">{{page.customer_id}}</td>
+                <td style="vertical-align: middle">{{page.customer_login_name}}</td>
+                <td style="vertical-align: middle"><div ng-hide="page.banding_time==undefined">{{page.banding_time | bindingDataTime | date:'yyyy-MM-dd HH:mm:ss' }}</div></td>
+                <td style="vertical-align: middle">{{page.ticketid}}</td>
+                <td style="vertical-align: middle">{{page.name}}</td>
+                <td style="vertical-align: middle">{{page.shengcheng}}</td>
+                <td style="vertical-align: middle">{{page.no}}</td>
+                <td style="vertical-align: middle">{{page.order_no}}</td>
+                <td style="vertical-align: middle">{{page.wrong_pwd_count}}</td>
+                <td style="vertical-align: middle">
+
+                    <button title="重置" ng-show="page.banding_status=='未绑定'"
+                            ng-click="reset.open(page.id,page.wrong_pwd_count,page.code)" class="btn btn-warning btn-xs"
+                            ulife-btn-au>
+                        <span>次数重置</span>
+                    </button>
+                    <div ng-show=" page.exchange_status != 1">
+                        <button title="修改" ng-show="page.banding_status=='已绑定' "
+                                ng-click="bindingUpdate.open(page.id,page.customer_id,page.customer_login_name,page.code)"
+                                class="btn btn-success btn-xs" ulife-btn-au>
+                        <span>修改绑定客户</span>
+                    </button></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <div class="modal fade bs-example-modal-lg" id="resetModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">确定要重置错误次数吗？</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="reset.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" id="bindingUpdateModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">修改绑定客户账号</label>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                        <label class="control-label"> 原客户ID</label>
+                    </div>
+                    <div class="col-sm-3" style="text-align: left">
+                        <input type="text" class="form-control input-sm" ng-model="bindingUpdateCustomerId" placeholder="请输入原客户ID"   ng-disabled="true">
+                    </div>
+                    <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                        <label class="control-label"> 原客户登录名</label>
+                    </div>
+                    <div class="col-sm-3" style="text-align: left">
+                        <input type="text" class="form-control input-sm" ng-model="bindingUpdateCustomerLoginName" placeholder="请输入原客户登录名"     ng-disabled="true">
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                        <label class="control-label"> 客户ID</label>
+                    </div>
+                    <div class="col-sm-3" style="text-align: left">
+                        <input type="text" class="form-control input-sm" ng-model="binding.updateCustomerId" placeholder="请输入客户ID"  >
+                    </div>
+                    <div class="col-sm-3 cms-workarea1">
+                        <label  style="color: red">Id和登录名二选一填</label>
+                    </div>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-sm-2 cms-workarea1" style="text-align: right">
+                        <label class="control-label"> 或客户登录名</label>
+                    </div>
+                    <div class="col-sm-3" style="text-align: left">
+                        <input type="text" class="form-control input-sm" ng-model="binding.updateCustomerLoginName" placeholder="请输入客户登录名" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="bindingUpdate.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,44 @@
+<div ng-controller="hybridEditCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.develop.name}}</a></li>
+        <li>{{menuConfig.develop.sub[1].name}}</li>
+    </ol>
+
+
+    <div ng-repeat="item in list track by $index">
+        <h4>频道：<input ng-model="item.channel"></h4>
+        <table  class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 100px;" class="text-center">最小苹果版本</th>
+                <th style="width: 100px;" class="text-center">最小安卓版本</th>
+                <th class="text-center">下载地址</th>
+                <th class="text-center">zipVersion</th>
+                <th class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="single in item.maplist track by $index">
+                <td style="vertical-align: middle"><input ng-model="single.miniOSVersionCode" class="form-control"/></d>
+                <td style="vertical-align: middle"><input ng-model="single.minAndroidVersionCode" class="form-control"/></td>
+                <td style="vertical-align: middle"><input ng-model="single.zipUrl" class="form-control"/></td>
+                <td style="vertical-align: middle"><input ng-model="single.zipVersion" class="form-control"/></td>
+               
+                <td style="vertical-align: middle">
+                    <button type="button" class="btn btn-primary" ng-click="updateItem($parent.$index,$index)">更新</button>
+                    <button type="button" class="btn btn-danger" ng-click="delList($parent.$index,$index)" ng-show="$index == (item.maplist.length-1)">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button type="button" class="btn btn-success" ng-click="addMap($index)">增加映射</button>
+        </div>
+    </div>
+    <button type="button" class="btn btn-info" ng-click="addChannel()">增加频道</button>
+
+    <div class="text-center">
+        <button type="button" class="btn btn-warning" ng-click="submit()">提交</button>
+    </div>
+
+</div>

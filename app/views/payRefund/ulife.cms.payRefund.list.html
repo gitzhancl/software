@@ -1,0 +1,409 @@
+<div ng-controller="payRefundCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.payRefund.name}}</a></li>
+        <li>{{menuConfig.payRefund.sub[1].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">账户号 </label>
+                        <input type="text" class=" form-control input-sm" id="customer"
+                               ng-model="searchPage.params.customer" placeholder="请输入账户号"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">申请单号 </label>
+                        <input type="text" class=" form-control input-sm" id="requisition_no"
+                               ng-model="searchPage.params.requisition_no" placeholder="请输入申请单号"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">退款单号 </label>
+                        <input type="text" class=" form-control input-sm" id="refund_no"
+                               ng-model="searchPage.params.refund_no" placeholder="请输入退款单号"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">创建时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="create_start_time"
+                                   ng-model="searchPage.params.create_start_time" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        ~
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="create_end_time"
+                                   ng-model="searchPage.params.create_end_time" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">退款时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="开始时间" name="refund_start_time"
+                                   ng-model="searchPage.params.refund_start_time" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        ~
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                            <input type="text" class="form-control input-sm" placeholder="结束时间" name="refund_end_time"
+                                   ng-model="searchPage.params.refund_end_time" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">状态</label>
+                        <select class=" form-control input-sm" ng-model="searchPage.params.status"
+                                ng-options="type.value as type.key for type in payRefundStatus"></select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-search"></span>
+                <span>搜索</span>
+            </button>
+            <button title="创建" ng-click="searchPage.open()" ulife-btn-au class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>新建</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">#</th>
+                <th style="width: 50px; text-align: center">申请单号</th>
+                <th style="width: 50px; text-align: center">状态</th>
+                <th style="width: 50px; text-align: center">账户号</th>
+                <th style="width: 50px; text-align: center">可退余额</th>
+                <th style="width: 50px; text-align: center">手续费率</th>
+                <th style="width: 50px; text-align: center">退款金额</th>
+                <th style="width: 50px; text-align: center">手续费</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">退款时间</th>
+                <th style="width: 50px; text-align: center">退款单号</th>
+                <th style="width: 50px; text-align: center">创建人</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <button title="修改" ng-click="edit.open1()"  ulife-btn-au class="btn btn-warning btn-sm">
+                <span>修改费率</span>
+            </button>
+            <button title="确认" ng-click="edit.save()" ulife-btn-au class="btn btn-success btn-sm">
+                <span>确认</span>
+            </button>
+            <button title="取消" ng-click="edit.cancel()" ulife-btn-au class="btn btn-warning btn-sm">
+                <span>取消</span>
+            </button>
+            <tr ng-repeat="page in renderObj.refundRequisitionInfo">
+                <td><input type="radio" value="{{page.requisitionNo}}" name="menuRadio"
+                           ng-click="edit.open(page.requisitionNo)" ng-disabled="page.status!=1"/></td>
+                <td style="vertical-align: middle">{{page.requisitionNo}}</td>
+                <td style="vertical-align: middle">{{page.status|payRefundStatus}}</td>
+                <td style="vertical-align: middle">{{page.customerLoginName}}</td>
+                <td style="vertical-align: middle">{{page.canReturnAmount}}</td>
+                <td style="vertical-align: middle">{{page.feeRate | currency : ''}}%</td>
+                <td style="vertical-align: middle">{{page.returnAmount | currency : ''}}</td>
+                <td style="vertical-align: middle">{{page.factorage | currency : ''}}</td>
+                <td style="vertical-align: middle">{{page.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle"><div  ng-hide="page.refundTime==0">{{page.refundTime | date:'yyyy-MM-dd HH:mm:ss'}}</div></td>
+                <td style="vertical-align: middle">{{page.refundNo}}</td>
+                <td style="vertical-align: middle">{{page.creator}}</td>
+                <td style="vertical-align: middle">
+
+                    <button title="查看" ng-click="show.open(page.requisitionNo)" ulife-btn-au
+                            class="btn btn-success btn-sm">
+                        <span>查看</span>
+                    </button>
+
+                    <!--<a ng-href="index.html#/group/edit/{{page.id}}" title="修改" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">-->
+                    <!--<span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>-->
+                    <!--<span>修改</span>-->
+                    <!--</a>-->
+
+                    <!--<button title="活跃度" ng-click="searchPage.open(page.id)" ulife-btn-au class="btn btn-success  btn-xs" >-->
+                    <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+                    <!--<span>活跃度</span>-->
+                    <!--</button>-->
+
+                    <!--<a ng-if="page.deviceId == 2" ng-href="{{previewLinks.h5channel}}{{page.pageId}}" title="预览" ulife-btn-au class="btn btn-success btn-xs" target="_blank">-->
+
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 555px;height:444px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <H4 class="modal-title" id="moduleModalLabel">余额退款申请单==>创建</H4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="col-sm-3">
+                            <label class="control-label">账户号： </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class=" form-control input-sm" id="createGet.customerLoginName"
+                                   ng-model="createGet.customerLoginName" placeholder="请输入账户号"/>
+                        </div>
+                        <button title="搜索" ng-click="searchPage.getadd(createGet.customerLoginName)" ulife-btn-au
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-search"></span>
+                            <span>查询</span>
+                        </button>
+                    </div>
+                    <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center">卡号</th>
+                            <th style="width: 50px; text-align: center">卡类型</th>
+                            <th style="width: 50px; text-align: center">面值</th>
+                            <th style="width: 50px; text-align: center">卡余额</th>
+                            <th style="width: 50px; text-align: center">卡状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="page in createGet.giftCardInfoList">
+                            <td style="vertical-align: middle">{{page.number}}</td>
+                            <td style="vertical-align: middle">{{page.giftcardType}}</td>
+                            <td style="vertical-align: middle">{{page.denomination}}</td>
+                            <td style="vertical-align: middle">{{page.balance}}</td>
+                            <td style="vertical-align: middle">{{page.status}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table ng-hide="createGet.customer">
+                        <tr>
+
+                            <td style="vertical-align: middle">
+                                <label class="control-label">账户金額： {{createGet.sumAmount | currency :
+                                    ''}}&nbsp;元</label></td>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">可退余额： {{createGet.canReturnBalance | currency :
+                                    ''}}&nbsp;元</label></td>
+
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">退款手续费率： {{createGet.feeRate | currency : ''}}%</label></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">退款金额： {{createGet.returnAmount | currency :
+                                    ''}}&nbsp;元</label></td>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">退款手续费： {{createGet.factorage | currency :
+                                    ''}}&nbsp;元</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>备注：</label></td>
+                            <td style="width: 350px;">
+                                <textarea class="form-control" ng-model="createGet.remarks" rows="3" cols="18"
+                                          placeholder="备注说明"></textarea></td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button title="保存" ng-click="searchPage.save()" class="btn btn-primary">
+                        <span>保存</span>
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal bs-example-modal-lg" id="getMJModal1" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 555px;height:444px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <H4 class="modal-title" id="moduleModalLabel1">余额退款申请单==>查看</H4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="col-sm-3">
+                            <label class="control-label">账户号： </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class=" form-control input-sm"
+                                   ng-model="showGet.customerLoginName" placeholder="请输入账户号" ng-disabled="true"/>
+                        </div>
+                        <!--    <button title="搜索" ng-click="searchPage.getadd(showget.customerLoginName)" ulife-btn-au class="btn btn-primary btn-sm"  ng-show="true">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <span>查询</span>
+                            </button>-->
+                    </div>
+                    <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center">卡号</th>
+                            <th style="width: 50px; text-align: center">卡类型</th>
+                            <th style="width: 50px; text-align: center">面值</th>
+                            <th style="width: 50px; text-align: center">卡余额</th>
+                            <th style="width: 50px; text-align: center">卡状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="page in showGet.giftCardInfoList">
+                            <td style="vertical-align: middle">{{page.number}}</td>
+                            <td style="vertical-align: middle">{{page.giftcardType}}</td>
+                            <td style="vertical-align: middle">{{page.denomination}}</td>
+                            <td style="vertical-align: middle">{{page.balance}}</td>
+                            <td style="vertical-align: middle">{{page.status}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table >
+                        <tr>
+
+                            <td style="vertical-align: middle">
+                                <label class="control-label">账户金額： {{showGet.sumAmount | currency : ''}}&nbsp;元</label>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">可退余额： {{showGet.canReturnBalance | currency :
+                                    ''}}&nbsp;元</label></td>
+
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">退款手续费率： {{showGet.feeRate | currency : ''}}%</label></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">退款金额： {{showGet.returnAmount | currency :
+                                    ''}}&nbsp;元</label></td>
+                            <td style="vertical-align: middle">
+                                <label class="control-label">退款手续费： {{showGet.factorage | currency : ''}}&nbsp;元</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>备注：</label></td>
+                            <td style="width: 350px;">
+                                <textarea class="form-control" ng-model="showGet.remarks" rows="3" cols="18"
+                                          placeholder="备注说明" ng-disabled="true"></textarea></td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <!--<button title="保存"  class="btn btn-primary" ng-show="false" >-->
+                    <!--<span>保存</span>-->
+                    <!--</button>-->
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal bs-example-modal-lg" id="editMJModal1" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 555px;height:444px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <H4 class="modal-title" id="moduleModalLabel2">余额退款申请单==>修改费率</H4>
+                </div>
+                <div class="modal-body text-left">
+                    <div class="col-sm-12">
+                        <label class="control-label">账户号： {{showGet.customerLoginName}}</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <label class="control-label">可退余额： {{showGet.canReturnBalance | currency : ''}}&nbsp;元</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+
+                            <label class="control-label">退款手续费率：</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" style="width:60px; height:25px;"
+                                   ng-model="showGet.feeRate " ng-change="rateEdit()"
+                                   placeholder="退款手续费率">
+                        </div>                        <div class="col-sm-1"> % </div>
+
+                    </div>
+
+                    <div class="col-sm-12">
+
+                        <label class="control-label">退款金额： {{showGet.returnAmount | currency : ''}}&nbsp;元</label>
+
+                    </div>
+                    <div class="col-sm-12">
+
+                        <label class="control-label">退款手续费： {{showGet.factorage | currency : ''}}&nbsp;元</label>
+
+                    </div>
+                    <div class="col-sm-12">
+
+                        <label>备注：</label>
+                                <textarea class="form-control" ng-model="showGet.remarks" rows="3" cols="18"
+                                          placeholder="备注说明"></textarea>
+                    </div>
+
+
+                </div>
+
+                <div>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button title="保存" class="btn btn-primary"   ng-click="edit.rate()">
+                        <span>保存</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

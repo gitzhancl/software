@@ -1,0 +1,103 @@
+<div ng-controller="PromotionActivityBlacklistCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.promoact.sub[2].link}}">{{menuConfig.promoact.name}}</a></li>
+        <li class="active">{{menuConfig.promoact.sub[2].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <div class="pull-right">
+            <button title="导入" ng-click="" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-import" ></span>
+                <span>导入</span>
+            </button>
+            <button title="下载" ng-click="" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-export" ></span>
+                <span>下载EXCEL导入模板</span>
+            </button>
+            <button title="导出" ng-click="" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-export" ></span>
+                <span>导出</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">编号</th>
+                <th style="width: 50px; text-align: center">Item_ID</th>
+                <th style="width: 50px; text-align: center">SKU_ID</th>
+                <th style="width: 50px; text-align: center">商品名称</th>
+                <th style="width: 50px; text-align: center">规格</th>
+                <th style="width: 50px; text-align: center">售价</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">创建人</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="vertical-align: middle">093090</td>
+                <td style="vertical-align: middle">021</td>
+                <td style="vertical-align: middle">021</td>
+                <td style="vertical-align: middle">七喜</td>
+                <td style="vertical-align: middle">**</td>
+                <td style="vertical-align: middle">50元</td>
+                <td style="vertical-align: middle">2016-01-01 00:00:00</td>
+                <td style="vertical-align: middle">阿三</td>
+                <td style="vertical-align: middle">
+                    <button ng-click="deleteModule.dialog.open($index)" title="删除" ulife-btn-au class="btn btn-danger btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle">093090</td>
+                <td style="vertical-align: middle">021</td>
+                <td style="vertical-align: middle">021</td>
+                <td style="vertical-align: middle">七喜</td>
+                <td style="vertical-align: middle">**</td>
+                <td style="vertical-align: middle">100元</td>
+                <td style="vertical-align: middle">2016-01-01 00:00:00</td>
+                <td style="vertical-align: middle">阿三</td>
+                <td style="vertical-align: middle">
+                    <button ng-click="deleteModule.dialog.open($index)" title="删除" ulife-btn-au class="btn btn-danger btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bg-info clearfix cms-workarea form-inline">
+        <div class="form-group form-group-sm">
+            <label class=" control-label"><span style="color: red"> * </span>黑名单状态</label>
+            <select class="form-control" ng-model="isVType" ng-options="type.deviceId as type.key for type in isValidType"></select>
+        </div>
+        <div class="pull-right">
+            <button title="保存" ng-click="" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-save" ></span>
+                <span>保存</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Delete Module Modal -->
+    <div class="modal fade bs-example-modal-sm" id="deleteModuleModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span >&times;</span></button>
+                    <h4 class="modal-title">确认删除</h4>
+                </div>
+                <div class="modal-body">{{pageHandler.moduleHandler.data.name}}</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteModule.delete()">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,215 @@
+<style>
+    .sign:after{
+        content: '%';
+        position: absolute;;
+        top: 6px;
+        left: 73px;
+    }
+</style>
+<div ng-controller="OfflineCreateCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.promoact.name}}</a></li>
+        <li><a ng-href="{{menuConfig.promoact.sub[5].link}}">{{menuConfig.promoact.sub[5].name}}</a></li>
+        <li class="active">创建市场部拉新活动</li>
+    </ol>
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="offlineEditForm">
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动名称</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="offline.activity_name"
+                           placeholder="请输入活动名称"
+                  name="活动名称" required>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动时间</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="开始时间"  ulife-datetimepicker >
+                        <input type="text" class="form-control input-sm" placeholder="开始时间"
+                               ng-model="offline.activity_start_time"
+                         ulife-date-format name="活动时间:开始时间">
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label">----</label>
+                </div>
+                <!--至-->
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                        <input type="text" class="form-control input-sm" placeholder="结束时间"
+                               ng-model="offline.activity_end_time"
+                           ulife-date-format name="活动时间:结束时间" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-repeat="page in offline.prize">
+
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-sm-1" style="line-height:34px;">
+                        <strong> {{page.level}} 等奖</strong>
+                    </div>
+                    <div class="col-sm-1" style="white-space: nowrap;">
+                        <label class="control-label"><span style="color: red"> * </span>图片URL:</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control input-sm" ng-model="page.pic_url"
+                               placeholder="请输入..." required
+                        name="图片URL" >
+                    </div>
+                    <div class="col-sm-1" style="text-align: right;">
+                        <label class="control-label">概率:</label>
+                    </div>
+                    <div class="col-sm-1" style="position:relative">
+                        <input type="number" min="0" class="form-control input-sm" ng-model="page.probability"
+                               placeholder="请输入..."
+                         name="概率">
+                        <span class="sign"></span>
+                    </div>
+
+                    <div class="col-sm-1" style="text-align: right;">
+                        <label class="control-label">数量:</label>
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control input-sm" ng-model="page.quantity"
+                               placeholder="请输入..." min="0"
+                           name="数量" >
+                    </div>
+
+                    <div class="col-sm-1" style="white-space: nowrap;">
+                        <label class="control-label">优惠券ID:</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control input-sm" ng-model="page.prom_code_id"
+                               placeholder="请输入..."
+                            name="优惠券ID" >
+                    </div>
+                </div>
+            </div>
+            　<br/>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>中奖图片URL</label>
+                </div>
+                <div class="col-sm-3" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="offline.activity_win_pic_url"
+                           placeholder="请输入..."
+                        name="中奖图片URL" required>
+                </div>
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>中奖链接</label>
+                </div>
+                <div class="col-sm-3" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="offline.activity_win_url"
+                           placeholder="请输入..."
+                       name="中奖链接" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>老拉新活动ID</label>
+                </div>
+                <div class="col-sm-2" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="offline.old_to_new_id"
+                           placeholder="请输入..."
+                     name="老拉新活动ID" required>
+                </div>
+                </div>
+                <!--<div class="col-sm-2 cms-workarea1" style="text-align: right">-->
+                    <!--<label class="control-label">此活动点击分享数</label>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2" style="text-align: left">-->
+                    <!--<input type="text" class="form-control input-sm" ng-model="offline.share_count" placeholder="请输入..."-->
+                           <!--ng-disabled="true" name="此活动点击分享数">-->
+                <!--</div>-->
+                <!--<div class="col-sm-2 cms-workarea1" style="text-align: right">-->
+                    <!--<label class="control-label"><span style="color: red"> * </span>此活动点击注册数</label>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2" style="text-align: left">-->
+                    <!--<input type="text" class="form-control input-sm" ng-model="offline.reg_count" placeholder="请输入..."-->
+                           <!--ng-disabled="true" name="此活动点击注册数" required>-->
+                <!--</div>-->
+            <!--</div>-->
+            　
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">OA流程号</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="offline.oa_flow_number"
+                           placeholder="请输入..."
+                         name="OA流程号">
+                </div>
+            </div>
+            <!--<div class="row show-grid cms-workarea1">-->
+                <!--<div class="col-sm-1 cms-workarea1" style="text-align: right">-->
+                    <!--<label class="control-label"><span style="color: red"> * </span>注册数</label>-->
+                <!--</div>-->
+                <!--<div class="col-sm-5" style="text-align: left">-->
+                    <!--<input type="text" class="form-control input-sm" ng-model="offline.reg_count" placeholder="请输入..."-->
+                           <!--ng-disabled="true" name="注册数" required>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动规则</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <textarea class="form-control" ng-model="offline.activity_rule" rows="15" cols="66" name="活动规则"
+                          required></textarea>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <!--<div class="row show-grid cms-workarea1">-->
+                <!--<div class="col-sm-1 cms-workarea1" style="text-align: right">-->
+                    <!--<label class="control-label"><span style="color: red"> * </span>创建时间</label>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2">-->
+                    <!--<div class="input-group date" ulife-tooltip="创建时间">-->
+                        <!--<input type="text" class="form-control input-sm" placeholder="创建时间"-->
+                               <!--ng-model="offline.activity_create_time" ulife-datetimepicker ulife-date-format-->
+                               <!--name="创建时间" ng-disabled="true">-->
+                        <!--<span class="input-group-btn add-on">-->
+                            <!--<button class="btn btn-default btn-sm icon-th" type="button">-->
+                                <!--<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>-->
+                            <!--</button>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+        </form>
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+            <button title="保存" ng-click="btns.save()" class="btn btn-primary">
+                <span>保存</span>
+            </button>
+            <button title="发布" ng-click="btns.publish(1)" class="btn btn-primary">
+                <span>发布</span>
+            </button>
+            <button title="取消" ng-click="btns.publish(2)" class="btn btn-primary">
+                <span>取消</span>
+            </button>
+            <a title="取消" ng-href="{{menuConfig.promoact.sub[5].link}}" class="btn btn-default">
+                <span>退出</span>
+            </a>
+        </div>
+    </div>
+</div>

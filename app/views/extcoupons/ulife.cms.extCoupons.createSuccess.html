@@ -1,0 +1,273 @@
+<div ng-controller="CmsActivityCreateSuccess" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.extcoupons.sub[1].link}}">{{menuConfig.extcoupons.name}}</a></li>
+        <li><a ng-href="{{menuConfig.extcoupons.sub[1].link}}">{{menuConfig.extcoupons.sub[1].name}}</a></li>
+        <li class="active">{{params.title}}</li>
+    </ol>
+
+    <div id="confirmRule" class=" clearfix cms-workarea">
+
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>适用品牌：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{params.valid_brand}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>适用门店：
+            </div>
+
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label"  >{{params.valid_range|stores}}</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label class="control-label"> {{params.valid_shops}} </label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>优惠券名称：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{params.title}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>优惠券ID：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{params.id}}</label>
+            </div>
+        </div>
+
+
+        <!--<div class="row show-grid cms-workarea1">-->
+            <!--<div class="col-lg-1 cms-workarea1" style="text-align: right">-->
+                <!--<span style="color: red"> * </span>商品成本：-->
+            <!--</div>-->
+            <!--<div class="col-lg-3 cms-workarea1">-->
+                <!--<label class="control-label">{{params.item_cost}}</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row show-grid cms-workarea1">-->
+            <!--<div class="col-lg-1 cms-workarea1" style="text-align: right">-->
+                <!--<span style="color: red"> * </span>进项税率：-->
+            <!--</div>-->
+            <!--<div class="col-lg-3 cms-workarea1">-->
+                <!--<label class="control-label">{{params.in_cost}}</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+        <!--<div class="row show-grid cms-workarea1">-->
+            <!--<div class="col-lg-1 cms-workarea1" style="text-align: right">-->
+                <!--<span style="color: red"> * </span>销项税率：-->
+            <!--</div>-->
+            <!--<div class="col-lg-3 cms-workarea1">-->
+                <!--<label class="control-label">{{params.out_cost}}</label>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>需求部门：
+            </div>
+            <div class="col-lg-1 cms-workarea1">
+                <label class="control-label">{{params.departmentId|departmentType}}</label>
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{params.demandMan}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">设置规则：</div>
+            <div class="col-lg-11" style="text-align: left">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                    <tr class="active">
+                        <th style="text-align: center; width: 100px;">优惠券类型</th>
+                        <th style="text-align: center; width: 100px;">规则</th>
+                        <th style="text-align: center; width: 100px;">商品成本</th>
+                        <th style="text-align: center; width: 100px;">进项税率</th>
+                        <th style="text-align: center; width: 100px;">销项税率</th>
+                        <th style="text-align: center; width: 300px;">使用时间</th>
+                        <th style="text-align: center; width: 60px;">应用终端</th>
+                        <th style="text-align: center; width: 250px;">前端显示名称</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="r in params.cartPackage">
+                        <td><select class="form-control" disabled ng-model="params.type"
+                                    ng-options="type.deviceId as type.key for type in promotionType"></select></td>
+
+                    <!--<td>满<input name="" type="text" size="15" style="width:35px; height:25px;" disabled/>元，减<input name="" type="text" size="15" style="width:35px; height:25px;"disabled/>元 </td>-->
+
+                    <td>面值：<input ng-model="params.sell_price" type="text" size="15" style="width:60px; height:25px;"  disabled/>元 </td>
+                    <td><!--商品成本：--><input ng-model="params.item_cost" type="text" size="15" style="width:60px; height:25px;" disabled/>元 </td>
+                    <td><!--进项税率：--><input ng-model="params.in_cost" type="text" size="15" style="width:60px; height:25px;" disabled/> </td>
+                    <td><!--销项税率：--><input ng-model="params.out_cost" type="text" size="15" style="width:60px; height:25px;" disabled/> </td>
+
+                    <!-- <td><select class="form-control" disabled ng-model="r.cardId"
+                                    ng-options="type.id as type.name for type in rules[$index]"></select></td>-->
+                        <td class="form-inline">
+                           <!-- <select class="form-control" disabled ng-model="r.cycleType"
+                                    ng-options="type.deviceId as type.key for type in useDate"></select>-->
+                            <span >
+                                <input type="text" disabled class="form-control" ng-model="r.start" ulife-tooltip="开始时间"
+                                       ulife-datetimepicker ulife-date-format required/>至
+                                <input type="text" disabled class="form-control" ng-model="r.end" ulife-tooltip="结束时间"
+                                       ulife-datetimepicker ulife-date-format required/>
+                            </span>
+                           <!-- <span ng-show="{'days':true}[r.cycleType]">
+                                <input type="number" disabled class="form-control" ng-model="r.day" ulife-tooltip="天数"
+                                       min="0"/>天
+                                <label class="control-label">自领券成功起N天内有效</label>
+                            </span>-->
+                        </td>
+                    <td>
+                        <label class="control-label">{{r.terminal|terminalType}}</label>
+                    </td>
+                        <td><input type="text" disabled class="form-control" ng-model="r.display"
+                                   placeholder="限制25字符以内（中文，字母，数字）"/></td>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                使用规则：
+            </div>
+            <div class="col-lg-4 cms-workarea1">
+                <textarea class="form-control"  rows="15" cols="66" ng-model="params.use_rule_txt" disabled></textarea>
+            </div>
+        </div>
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>活动时间：
+            </div>
+            <div class="col-lg-7 cms-workarea1">
+                <label class="control-label">{{params.startTime|date:"yyyy-MM-dd H:mm"}}至{{params.endTime|date:"yyyy-MM-dd H:mm"}}</label>
+            </div>
+        </div>
+
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>是否公码：
+            </div>
+            <div class="col-lg-1 cms-workarea1">
+                <label class="control-label">{{params.isPublic|isPublicType}}</label>
+            </div>
+            <div class="col-lg-1 cms-workarea1" style="text-align: right" ng-show="params.isPublic == 1">
+                公码：
+            </div>
+            <div class="col-lg-1 cms-workarea1" ng-show="params.isPublic == 1">
+                <label class="control-label">{{params.public_code}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>发券总量：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{params.count}}</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a title="查看全部" ng-href="index.html#/codeManage/list" class="btn btn-success">
+                    <span>查看全部</span>
+                </a>
+            </div>
+
+        </div>
+        <div class="row show-grid cms-workarea1">
+            <div class="col-lg-1 cms-workarea1" style="text-align: right">
+                <span style="color: red"> * </span>每会员ID限领数量：
+            </div>
+            <div class="col-lg-3 cms-workarea1">
+                <label class="control-label">{{params.perLimit}}</label>
+            </div>
+        </div>
+        <div class="row show-grid cms-workarea1" ng-hide="params.status==-1">
+            <div class="col-lg-6 col-lg-offset-1 cms-workarea1" style="text-align: left">
+                <a title="修改" ng-href="index.html#/extCoupons/create/{{id}}" class="btn btn-primary">
+                    <span>修改</span>
+                </a><!--
+                <button title="发布" ng-click="publishPromotion.open()" class="btn btn-primary"
+                        ng-hide="params.status == 1">
+                    <span>发布</span>
+                </button>-->
+                <button title="追加" ng-click="appendPromotion.open()" class="btn btn-primary">
+                    <span>追加</span>
+                </button>
+                <button title="作废" ng-click="cancelPromotion.open()" class="btn btn-primary">
+                    <span>作废</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg" id="appendModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">追加优惠券</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">追加优惠券数量</label>
+                        </div>
+                        <div class="col-lg-6" style="text-align: left">
+                            <input type="number" min="0" class="form-control" ng-model="appendPromotion.count"
+                                   placeholder="请输入需要追加的优惠券数量,最多300W" max="3000000"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="appendPromotion.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="modal fade bs-example-modal-lg" id="publishModal" tabindex="1" role="dialog">-->
+    <!--<div class="modal-dialog modal-lg" role="document" style="width: 700px;">-->
+    <!--<div class="modal-content text-center">-->
+    <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>-->
+    <!--<label class="text-warning">确认发布优惠券吗？</label>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--<button type="button" class="btn btn-primary" ng-click="publishPromotion.publish(id)">确认</button>-->
+    <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="modal fade bs-example-modal-lg" id="cancelModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">确认作废优惠券吗？</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="cancelPromotion.cancel(id)">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

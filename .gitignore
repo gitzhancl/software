@@ -1,0 +1,7 @@
+**/node_modules
+**/dist
+**/.tmp
+.idea
+/.idea
+**/bower_components
+autogen/apigen/source/ulife.json

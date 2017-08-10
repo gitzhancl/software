@@ -1,0 +1,403 @@
+<div ng-controller="OrderDetail" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.order.name}}</li>
+        <li><a ng-href="{{menuConfig.order.sub[1].link}}">{{menuConfig.order.sub[1].name}}</a></li>
+        <li class="active">订单详情:{{order.saleNo}}</li>
+    </ol>
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#orderDetail" aria-controls="orderDetail" role="tab" data-toggle="tab">订单详情</a></li>
+            <li role="presentation"><a href="#address" aria-controls="address" role="tab" data-toggle="tab">收货信息</a></li>
+            <li role="presentation"><a href="#productPrice" aria-controls="productPrice" role="tab" data-toggle="tab">订单商品</a></li>
+            <li role="presentation"><a href="#payLog" aria-controls="payLog" role="tab" data-toggle="tab">支付记录</a></li>
+            <li role="presentation"><a href="#returnLog" aria-controls="returnLog" role="tab" data-toggle="tab">退款记录</a></li>
+            <li role="presentation"><a href="#orderRemark" aria-controls="orderRemark" role="tab" data-toggle="tab">订单备注</a></li>
+            <li ng-if="order.orderCategory == '兑换订单'" role="presentation"><a href="#orderExchange" aria-controls="orderExchange" role="tab" data-toggle="tab">兑换券信息</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="orderDetail">
+                <br />
+                <!--订单详情-->
+                <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <!--姓名 -->
+                        <tr>
+                            <td>
+                                <label class="control-label">下单日期</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.orderTime | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                            </td>
+                            <td>
+                                <label class="control-label">客户账号</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.customerId}}</label>
+                            </td>
+                            <td>
+                                <label class="control-label">订单类型</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.orderCategory}}</label>
+                            </td>
+                            <!--是否成团 -->
+                            <td>
+                                <label class="control-label">是否成团</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">{{order.isGroup|groupStatus}}</label>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <!--订单状态 -->
+                        <tr>
+                            <td>
+                                <label class="control-label">订单状态</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.status | orderStatusValue}}</label>
+                            </td>
+                            <td>
+                                <label class="control-label">支付状态</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.payStatus | payStatusValue}}</label>
+                            </td>
+                            <td>
+                                <label class="control-label">渠道</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.saleChannel}}</label>
+                            </td>
+                            <td>
+                                <label class="control-label">终端</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.terminal | terminalValue}}</label>
+                            </td>
+                            <td>
+                                <button title="取消" ng-click="btnCancel.open()" class="btn btn-success" ng-show="order.status==1 || order.status==2">
+                                <span class="glyphicon" aria-hidden="true">取消订单</span>
+                            </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td colspan="8" align="left">
+                                {{order.totalAmount}}(订单总金额) = {{order.subAmount}}(商品金额) + {{order.shipFee}}(运费金额) - {{order.shipFeeDiscount}}(运费减免金额) -
+                                {{order.shipFeeCouponDiscount}}(运费优惠券) - {{order.productCouponDiscount}}(商品优惠券) - {{order.promotionDiscount}}(优惠)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="address">
+                <br />
+                <!--收货信息-->
+                <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <!--姓名 -->
+                        <tr>
+                            <td>
+                                <label class="control-label">姓名</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">{{order.address.consignee}}</label>
+                            </td>
+                            <td>
+                                <label class="control-label">手机</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">{{order.address.mobile}} </label>
+                            </td>
+                            <!--配送时间 -->
+                            <td>
+                                <label class="control-label">配送时间</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.shipDate | date:'yyyy-MM-dd'}}</label>
+                            </td>
+                        </tr>
+                        <!--配送地址 -->
+                        <tr>
+                            <td>
+                                <label class="control-label">配送地址</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">{{order.address.province}}</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">{{order.address.city}}</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">{{order.address.cityZone}}</label>
+                            </td>
+                            <td colspan="2">
+                                <label class="form-control input-sm" ng-disabled="true">{{order.address.addressDetail}}</label>
+                            </td>
+                            <td style="align-content: inherit;display: none;">
+                                <button ng-click="openbtns.address()" title="修改" ulife-btn-au class="btn btn-success" aria-label="Left Align">
+                                <span class="glyphicon " aria-hidden="true" >编辑收货信息</span>
+                            </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="productPrice">
+                <br />
+                <!--订单及商品金额-->
+                <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th>商品名称</th>
+                            <th>ItemID</th>
+                            <th>商品ID</th>
+                            <th>商品货号</th>
+                            <th>售价</th>
+                            <th>数量</th>
+                            <th>发货单号</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="orderItem in order.items">
+                            <td>{{orderItem.itemTitle}}</td>
+                            <td>{{orderItem.itemId}}</td>
+                            <td>{{orderItem.skuId}}</td>
+                            <td>{{orderItem.skuCode}}</td>
+                            <td>{{orderItem.unitPrice}}</td>
+                            <td>{{orderItem.quantity}}</td>
+                            <td>{{orderItem.shipOrderNo}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="right">合计（售价 * 数量）：</td>
+                            <td colspan="2">{{order.itemsTotalPrice}}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="payLog">
+                <br />
+                <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th>支付渠道</th>
+                            <th>金额</th>
+                            <th>处理状态</th>
+                            <th>银行流水号</th>
+                            <th>创建时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="payInfo in order.payInfoList">
+                            <td>{{payInfo.PayChannel }}</td>
+                            <td>{{payInfo.Amount }}</td>
+                            <td>{{payInfo.Status | orderPayStatusValue}}</td>
+                            <td>{{payInfo.BankSerialNo }}</td>
+                            <td>{{payInfo.CreatedTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="returnLog">
+                <br />
+                <!--退款记录-->
+                <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th>退款渠道</th>
+                            <th>金额</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="refundInfo in order.refundList">
+                            <td>{{refundInfo.payChannel }}</td>
+                            <td>{{refundInfo.amount }}</td>
+                            <td>{{refundInfo.refund_Status | refundStatusValue}}</td>
+                            <td>{{refundInfo.createdTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="orderRemark">
+                <br />
+                <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th>备注内容</th>
+                            <th>订单状态</th>
+                            <th>支付状态</th>
+                            <th>创建人</th>
+                            <th>创建时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="comment in order.comments">
+                            <td>{{comment.remark }}</td>
+                            <td>{{comment.orderStatus | orderStatusValue }}</td>
+                            <td>{{comment.payStatus | order_PayStatusValue}}</td>
+                            <td>{{comment.creator }}</td>
+                            <td>{{comment.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td><button ng-click="btnComment.open()" title="添加订单备注" ulife-btn-au class="btn btn-success" aria-label="Left Align">
+                            <span class="glyphicon " aria-hidden="true" >添加订单备注</span>
+                        </button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="order.orderCategory == '兑换订单'" role="tabpanel" class="tab-pane" id="orderExchange">
+                <br/>
+                <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <td>
+                                <label class="control-label">券id</label>
+                            </td>
+                            <td>
+                                <label class="control-label">券名称</label>
+                            </td>
+                            <td>
+                                <label class="control-label">券号码</label>
+                            </td>
+                            <td>
+                                <label class="control-label">兑换截止日期</label>
+                            </td>
+                            <td>
+                                <label class="control-label">是否过期兑换</label>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.codeInfo.ticketId}}</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.codeInfo.name}}</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true"> {{order.codeInfo.code}}</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">{{order.codeInfo.expireDate | date:'yyyy-MM-dd'}}</label>
+                            </td>
+                            <td>
+                                <label class="form-control input-sm" ng-disabled="true">
+                                <div ng-if="order.codeInfo.isExpire"> 是</div>
+                                <div ng-if="!order.codeInfo.isExpire"> 否</div>
+                            </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- addPage OrderCancel Modal -->
+    <div class="modal bs-example-modal-lg" id="addCancelModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 1000px;height:666px;">
+            <div class="modal-content text-center">
+                <!-- 2、确认活动规则 -->
+                <div class="clearfix cms-workarea">
+                    <form class="form-horizontal" name="cancelForm">
+                        <div class="modal-header">
+                            <H4 class="modal-title">取消订单</H4>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label"><span style="color: red"> * </span>取消类型</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+                                <select class="form-control " ng-model="cancelOrderModel.cancelType" ng-options="type.value as type.key for type in cancelType"
+                                    name="取消类型" required></select>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label"><span style="color: red"> * </span>取消原因</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+                                <select class="form-control " ng-model="cancelOrderModel.cancel_reason" ng-options="type.value as type.key for type in cancel_reason"
+                                    name="取消原因" required></select>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">取消原因备注</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+                                <textarea class="form-control" rows="3" id="cancelOrderModel.cancel_remark" ng-model="cancelOrderModel.cancel_remark" placeholder="请输入取消原因备注"
+                                />
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">退款操作类型</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+                                <select class="form-control " ng-model="cancelOrderModel.operation_type" ng-options="type.value as type.key for type in operation_type"></select>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">是否生成退款单</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+                                <select class="form-control " ng-model="cancelOrderModel.is_need_refund" ng-options="type.value as type.key for type in is_need_refund"></select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class=" clearfix cms-workarea1 form-inline text-center">
+                        <button title="保存" ng-click="btnCancel.orderCancel()" class="btn btn-primary" ng-disabled="isCreateActivity">
+                            <span>保存</span>
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- addPage OrderComments Modal -->
+    <div class="modal bs-example-modal-lg" id="addCommentsModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 600px;height:400px;">
+            <div class="modal-content text-center">
+                <div class="clearfix cms-workarea">
+                    <form class="form-horizontal" name="commentsForm">
+                        <div class="modal-header">
+                            <H4 class="modal-title">订单备注</H4>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label"><span style="color: red"> * </span>备注内容</label>
+                            </div>
+                            <div class="col-sm-5" style="text-align: left">
+                                <textarea class="form-control" rows="5" cols="20" style="width: 400px;" id="commentsModel.comment" ng-model="commentsModel.comment"
+                                    placeholder="请输入备注内容" name="备注内容" required />
+                            </div>
+                        </div>
+                    </form>
+                    <div class=" clearfix cms-workarea1 form-inline text-center">
+                        <button title="保存" ng-click="btnComment.orderComment()" class="btn btn-primary" ng-disabled="isCreateActivity">
+                            <span>保存</span>
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

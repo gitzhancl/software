@@ -1,0 +1,164 @@
+<div ng-controller="PromotionActivityListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.coupon.sub[2].link}}">{{menuConfig.coupon.name}}</a></li>
+        <li class="active">{{menuConfig.coupon.sub[2].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="col-md-3">
+                <label class="control-label">优惠券名</label>
+                <input type="text" class="form-control" id="promotionName" ng-model="searchPage.params.name" placeholder="请输入名称"/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">优惠券ID</label>
+                <input type="text" class="form-control" id="promotionId" ng-model="searchPage.params.id" placeholder="请输入名称或ID"/>
+            </div>
+            <div class="col-md-6 form-inline">
+                <label class="control-label">适用日期</label>
+                <input type="text" class="form-control"  ng-model="searchPage.params.start_date" placeholder="yyyy-mm-dd" ulife-datepicker ulife-date-format/>
+                <input type="text" class="form-control"  ng-model="searchPage.params.end_date" placeholder="yyyy-mm-dd" ulife-datepicker ulife-date-format/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">活动状态</label>
+                <select class="form-control" ng-model="searchPage.params.status" ng-options="type.deviceId as type.key for type in status"></select>
+            </div>
+        </form>
+        <form class="form-group-sm form-inline">
+            <div class="col-md-3">
+                <label class="control-label">Code ID</label>
+                <input type="text" class="form-control"  ng-model="searchPage.params.code" placeholder="请输入券码"/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">商品类型</label>
+                <select class="form-control" ng-model="searchPage.params.product_from" ng-options="type.deviceId as type.key for type in productType"></select>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">应用终端</label>
+                <select class="form-control"  ng-model="searchPage.params.terminal" ng-options="type.deviceId as type.key for type in terminalType"></select>
+            </div>
+        </form>
+        <div class="pull-right">
+                <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                    <span class="glyphicon glyphicon-search" ></span>
+                    <span>搜索</span>
+                </button>
+                <a title="创建" ng-href="index.html#/promotionActivity/create/0" ulife-btn-au class="btn btn-success btn-sm" >
+                    <span class="glyphicon glyphicon-plus" ></span>
+                    <span>创建</span>
+                </a>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">活动ID</th>
+                <th style="width: 50px; text-align: center">活动名称</th>
+                <th style="width: 50px; text-align: center">商品类型</th>
+                <th style="width: 50px; text-align: center">适用日期</th>
+                <th style="width: 50px; text-align: center">发券总量/张</th>
+                <th style="width: 50px; text-align: center">领券量/张</th>
+                <th style="width: 50px; text-align: center">用券量/张</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">是否公券</th>
+                <th style="width: 50px; text-align: center">状态</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.promoActivity">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.title}}</td>
+                <td style="vertical-align: middle">{{page.productFrom|productType}}</td>
+                <td style="vertical-align: middle">{{page.startTime|date:"yyyy-MM-dd  HH:mm:ss"}}<BR>{{page.endTime|date:"yyyy-MM-dd  HH:mm:ss"}}</td>
+                <td style="vertical-align: middle">{{page.count}}</td>
+                <td style="vertical-align: middle">{{page.receiveCount}}</td>
+                <td style="vertical-align: middle">{{page.usedCount}}</td>
+                <td style="vertical-align: middle">{{page.createTime|date:"yyyy-MM-dd  H:mm:ss"}}</td>
+                <td style="vertical-align: middle">{{page.isPublic}}</td>
+                <td style="vertical-align: middle">{{page.status|status}}</td>
+                <td style="vertical-align: middle">
+                    <a ng-href="index.html#/promotionActivity/createSuccess/{{page.id}}" title="查看" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    </a>
+                    <!--<button ng-click="addPage.open()" title="数据分析" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">-->
+                        <!--<span class="glyphicon glyphicon-book" aria-hidden="true"></span>-->
+                    <!--</button>-->
+                    <a title="修改商品" ng-href="index.html#/promotionActivity/createSubmit/{{page.id}}" ulife-btn-au class="btn btn-info btn-xs" ng-show="page.showModifyProductBtn">
+                        <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="moduleModalLabel">优惠券数据分析</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline form-group">
+                        <label class="col-md-6">名称：新人专项券</label>
+                        <label class="col-md-6">当前状态：正常</label>
+                    </form>
+                </div>
+                <form class="form-inline form-group">
+                    <table class="table table-condensed table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">code状态</th>
+                                <th style="text-align: center">数量</th>
+                                <th style="text-align: center">占比（%）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>未激活</td>
+                                <td>10000</td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td>已激活</td>
+                                <td>10000</td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td>已失效</td>
+                                <td>10000</td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td>已作废</td>
+                                <td>10000</td>
+                                <td>10%</td>
+                            </tr>
+                            <tr>
+                                <td>已使用</td>
+                                <td>10000</td>
+                                <td>10%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

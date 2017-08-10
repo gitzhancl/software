@@ -1,0 +1,187 @@
+<div ng-controller="PromotionActivityManageCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.promoact.sub[3].link}}">{{menuConfig.promoact.name}}</a></li>
+        <li class="active">{{menuConfig.promoact.sub[3].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">活动名称</label>
+                    <input type="text" class="form-control" id="name" ng-model="searchPage.params.name" placeholder="请输入名称"/>
+                </div>
+            </div>
+            <div class="col-md-6 form-inline">
+                <div class="form-group">
+                <label class="control-label">活动时间</label>
+                    <div class="input-group date" ulife-tooltip="开始时间" ulife-datepicker>
+                        <input type="text" class="form-control input-sm" placeholder="开始时间" name="startTime" ng-model="searchPage.params.start_date" ulife-date-format required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" ></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="input-group date" ulife-tooltip="结束时间" ulife-datepicker>
+                        <input type="text" class="form-control input-sm" placeholder="结束时间" name="endTime" ng-model="searchPage.params.end_date" ulife-date-format required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" ></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form class="form-group-sm form-inline ">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">活动类型</label>
+                    <select class="form-control" ng-model="searchPage.params.rulesType" ng-options="type.deviceId as type.key for type in activityType"></select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">优惠活动组</label>
+                    <select class="form-control" ng-model="searchPage.params.groupId" ng-options="type.deviceId as type.key for type in activityGroupType"></select>
+                </div>
+            </div>
+        </form>
+        <form class="form-group-sm form-inline">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">活动状态</label>
+                    <select class="form-control" ng-model="searchPage.params.status" ng-options="type.deviceId as type.key for type in status"></select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">应用终端</label>
+                    <select class="form-control" ng-model="searchPage.params.terminal" ng-options="type.deviceId as type.key for type in terminalType"></select>
+                </div>
+            </div>
+        </form>
+        <form class="form-group-sm form-inline ">
+            <div class="col-md-6">
+                <div class="form-group">
+                <label class="control-label">活动商品类型</label>
+                <select class="form-control" ng-model="searchPage.params.product_from" ng-options="type.deviceId as type.key for type in activityProductType"></select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">参与活动商品Id</label>
+                    <input type="text" class="form-control" id="itemId" ng-model="searchPage.params.itemId" placeholder="请输入参与活动商品Id"/>
+                </div>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+            <a title="创建" ng-href="index.html#/promotionActivityManage/create/0" ulife-btn-au class="btn btn-success btn-sm" >
+                <span class="glyphicon glyphicon-plus" ></span>
+                <span>创建</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <!--<th style="width: 50px; text-align: center">编号</th>-->
+                <th style="width: 50px; text-align: center">优惠活动组</th>
+                <th style="width: 50px; text-align: center">活动ID</th>
+                <th style="width: 50px; text-align: center">活动名称</th>
+                <th style="width: 50px; text-align: center">活动类型</th>
+                <th style="width: 50px; text-align: center">开始时间</th>
+                <th style="width: 50px; text-align: center">结束时间</th>
+                <th style="width: 50px; text-align: center">应用终端</th>
+                <th style="width: 50px; text-align: center">活动状态</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">操作</th>
+                <!--<th style="width: 50px; text-align: center">分析</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.promoActivity">
+                <!--<td style="vertical-align: middle">{{page.id}}</td>-->
+                <td style="vertical-align: middle">{{page.groupNmae}}</td>
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.title}}</td>
+                <td style="vertical-align: middle">{{page.promoRule.type|promotionType}}</td>
+                <td style="vertical-align: middle">{{page.startTime|date:"yyyy-MM-dd  H:mm"}}</td>
+                <td style="vertical-align: middle">{{page.endTime|date:"yyyy-MM-dd  H:mm"}}</td>
+                <td style="vertical-align: middle">{{page.terminal|terminalType}}</td>
+                <td style="vertical-align: middle">{{page.status|status}}</td>
+                <td style="vertical-align: middle">{{page.createTime|date:"yyyy-MM-dd  H:mm"}}</td>
+                <td style="vertical-align: middle">
+                    <a ng-href="index.html#/promotionActivityManage/createSuccess/{{page.id}}" title="查看" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    </a>
+                    <a ng-href="index.html#/promotionActivityManage/create/{{page.id}}" title="修改活动" ulife-btn-au="修改" class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    <a title="修改活动商品ID" ng-href="index.html#/promotionActivityManage/createSubmit/{{page.id}}"
+                           ulife-btn-au="修改" class="btn btn-info btn-xs" ng-hide="page.status==-1||page.promoRule.type == 'PIECEGIVE'||page.promoRule.type == 'PIECEREDUCE'">
+                        <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                </td>
+                <!--<td style="vertical-align: middle">
+                    <button ng-click="addPage.open()" title="数据分析" class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                    </button>
+                </td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="moduleModalLabel">优惠活动数据分析</h3>
+                </div>
+                <form class="form-inline form-group">
+                    <table class="table table-condensed table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">活动名称</th>
+                            <th style="text-align: center">订单总数</th>
+                            <th style="text-align: center">订单总金额</th>
+                            <th style="text-align: center">已支付订单数</th>
+                            <th style="text-align: center">已支付金额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>新春大促</td>
+                            <td>21236</td>
+                            <td>56895476.5</td>
+                            <td>20000</td>
+                            <td>5216879879.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

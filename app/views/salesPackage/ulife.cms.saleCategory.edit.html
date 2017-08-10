@@ -1,0 +1,141 @@
+<style>
+    .border {
+        border: 1px solid #ddd;
+    }
+
+    .title {
+        background-color: #f5f5f5;
+        padding-left: 10px;
+    }
+
+    .text-danger {
+        padding-top: 7px;
+    }
+
+    .input-group[class*="col-"] {
+        padding-left: 14px;
+    }
+
+    hr {
+        border-top: 1px solid #d5d5d5;
+    }
+
+    input.ng-dirty.ng-invalid {
+        border: 1px solid red;
+    }
+
+    .modal-body {
+        padding: 15px 15px 0 15px;
+    }
+</style>
+<div ng-controller="SalesCategoryEditCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.operationManagement.name}}</li>
+        <li><a ng-href="{{menuConfig.operationManagement.sub[2].link}}">{{menuConfig.operationManagement.sub[2].name}}</a></li>
+        <li class="active">{{title}}</li>
+    </ol>
+    <div class="">
+        <form class="form-horizontal" name="HeadParamForm" novalidate="novalidate">
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">类目名称:</label>
+                <div class="col-sm-5">
+                    <input type="text" name="类目名称" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.categoryName" placeholder="请填写类目名称"
+                           required >
+                </div>
+                <div class="col-sm-2">
+                    <p class="text-danger">（ 20字以内 ）</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">终端:</label>
+                <div class="checkbox col-sm-5">
+                    <label class="col-sm-2">
+                        <input type="checkbox" checked class="PC" ng-model="params.showPc"> PC
+                    </label>
+                    <label class="col-sm-2">
+                        <input type="checkbox" checked class="H5" ng-model="params.showH5"> H5
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">类目iconUrl:</label>
+                <div class="col-sm-5">
+                    <input type="text" name="类目icon" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.categoryIconUrl" placeholder="请填写类目名称"
+                           required >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">排序:</label>
+                <div class="col-sm-5">
+                    <input type="text" name="排序" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.sortNumber" placeholder="请填写排序"
+                           required  style="color: #000;">
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<label class="control-label text-nowrap col-sm-2">价格区间:</label>-->
+                <!--<div class="col-sm-2">-->
+                    <!--<input type="text" name="价格区间" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="Param.low" placeholder="请填写类目名称"-->
+                           <!--required >-->
+                <!--</div>-->
+                <!--<div class="col-sm-1">-->
+                    <!--————-->
+                <!--</div>-->
+                <!--<div class="col-sm-2">-->
+                    <!--<input type="text" name="价格区间" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="Param.up" placeholder="请填写类目名称"-->
+                           <!--required >-->
+                <!--</div>-->
+            <!--</div>-->
+            <hr>
+            <div class="form-group">
+                <div class="col-sm-3" style="margin-left: 2%;">
+                    <input type="text" name="券号" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.ticketId" placeholder="请填写券号"
+                           required >
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" ng-click="btn.addPackage()" class="btn btn-primary" >添加礼包</button>
+                </div>
+                <!--<div class="col-sm-2">-->
+                    <!--<button type="button" ng-click="btn.outStockImportManual.open()" class="btn btn-primary">下载批量导入excel</button>-->
+                <!--</div>-->
+                <!--<div class="col-sm-1">-->
+                    <!--<button type="button" class="btn btn-primary" ng-click="btn.userEmailExport.open()">批量导入</button>-->
+                <!--</div>-->
+
+            </div>
+        </form>
+        <div class=" form-inline  cms-workarea table-bordered" style="border: none;">
+            <div class="clearfix">
+                <div class="pull-left col-lg-6">
+                    <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center">券ID</th>
+                            <th style="width: 50px; text-align: center">券名称</th>
+                            <th style="width: 50px; text-align: center">上架端</th>
+                            <th style="width: 50px; text-align: center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="ticket in params.ticketList">
+                            <td style="vertical-align: middle">{{ticket.id}}</td>
+                            <td style="vertical-align: middle">{{ticket.name}}</td>
+                            <td style="vertical-align: middle">{{ticket.saleH5 | categoryH5}}/{{ticket.salePc | categoryPc}}</td>
+                            <td style="vertical-align: middle">
+                                <button title="删除" index="{{$index}}" ng-click="btn.deleteTicket($event)" class="btn btn-danger btn-xs ng-scope" ticketId="{{ticket.id}}">
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <input type="submit" class="btn btn-primary btn-lg" title="保存" ng-click="btn.save()" value="保存" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,237 @@
+<div ng-controller="takeOutStockListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a>{{menuConfig.exchangeCoupon.name}}</a></li>
+        <li class="active">{{menuConfig.exchangeCoupon.sub[4].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form">
+            <div class="form-group">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="control-label">券名称</label>
+                        <input type="text" class="form-control" id="moblie" ng-model="searchPage.params.ticketName" placeholder="请输入卡券名称"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">券ID</label>
+                        <input type="text" class="form-control" id="voucherName" ng-model="searchPage.params.ticketId" placeholder="请输入卡券ID"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">领用状态</label>
+                        <select class="form-control"  ng-model="searchPage.params.status" ng-init="searchPage.params.status = '-99'" ng-options="type.value as type.key for type in checkState"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="control-label">领用部门</label>
+                        <getdeport></getdeport>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">领用人</label>
+                        <input type="text" class="form-control" id="user" ng-model="searchPage.params.demandMan" placeholder="请输入领用人"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">领用用途</label>
+                        <select class="form-control"  ng-model="searchPage.params.purpose" ng-init="searchPage.params.purpose = ''" ng-options="type.value as type.key for type in purpose"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="control-label">创建日期</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker="" data-original-title="" title="">
+                            <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="开始时间" name="createTimeBegin" ng-model="searchPage.params.createTimeBegin" ulife-date-format  required="">
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker="" data-original-title="" title="">
+                            <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="结束时间" name="createTimeEnd" ng-model="searchPage.params.createTimeEnd" ulife-date-format  required="">
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">出库日期</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker="" data-original-title="" title="">
+                            <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="开始时间" name="confirmTimeBegin" ng-model="searchPage.params.confirmTimeBegin" ulife-date-format  required="">
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker="" data-original-title="" title="">
+                            <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="结束时间" name="confirmTimeEnd" ng-model="searchPage.params.confirmTimeEnd" ulife-date-format  required="">
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="pull-left">
+            <div class="form-group">
+                <button type="button" ulife-btn-au title="查询" class="btn btn-primary" ng-click="searchPage.search()">查询</button>
+                <a ulife-btn-au ng-href="index.html#/exchangeCoupon/takeOutStockList/create" title="新建" class="btn btn-success">新建</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">领用单号</th>
+                <th style="width: 50px; text-align: center">申请时间</th>
+                <th style="width: 50px; text-align: center">申请总数</th>
+                <th style="width: 50px; text-align: center">申请总金额</th>
+                <th style="width: 50px; text-align: center">领用状态</th>
+                <th style="width: 50px; text-align: center">用途</th>
+                <th style="width: 50px; text-align: center">OA申请号</th>
+                <th style="width: 50px; text-align: center">领用部门</th>
+                <th style="width: 50px; text-align: center">业务员</th>
+                <th style="width: 50px; text-align: center">客户名称</th>
+                <th style="width: 50px; text-align: center">确认出库日期</th>
+                <th style="width: 50px; text-align: center">创建人</th>
+                <th style="width: 50px; text-align: center">签收人</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj">
+                <td style="vertical-align: middle">{{page.orderNo}}</td>
+                <td style="vertical-align: middle">{{page.createTime | show | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">{{page.total}}</td>
+                <td style="vertical-align: middle">{{page.totalAmout}}</td>
+                <td style="vertical-align: middle">{{page.Status | takeStatus}}</td>
+                <td style="vertical-align: middle">{{page.purpose}}</td>
+                <td style="vertical-align: middle">{{page.oaNo}}</td>
+                <td style="vertical-align: middle">{{page.departmentId | exchangedept}}</td>
+                <td style="vertical-align: middle">{{page.demandMan}}</td>
+                <td style="vertical-align: middle">{{page.saleCompany}}</td>
+                <td style="vertical-align: middle">{{page.confirmTime  | show | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">{{page.createdName}}</td>
+                <td style="vertical-align: middle">{{page.receiptorName}}</td>
+                <td style="vertical-align: middle">
+                    <button title="提交" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.submit(page.id,page.version)" class="btn btn-success btn-xs"
+                            ng-disabled="page.isDelete==1" data-version="{{page.id}}">
+                        <span>提交</span>
+                    </button>
+                    <a title="修改" ulife-btn-st="{{page.status}}" ulife-btn-au href="index.html#/exchangeCoupon/takeOutStockList/edit/{{page.id}}" class="btn btn-warning btn-xs"
+                       ng-disabled="page.isDelete==1">
+                        <span>修改</span>
+                    </a>
+                    <!--<button title="主管审核" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.manageAudit(page.id,page.version)" class="btn btn-success btn-xs"-->
+                       <!--ng-disabled="page.isDelete==1">-->
+                        <!--<span>主管审核</span>-->
+                    <!--</button>-->
+                    <a title="主管审核" ulife-btn-st="{{page.status}}" ulife-btn-au href="index.html#/exchangeCoupon/takeOutStockList/detail/{{page.id}}/review/{{page.version}}" class="btn btn-success btn-xs" ng-disabled="page.isDelete==1">
+                        <span>主管审核</span>
+                    </a>
+                    <!--<button title="主管审核驳回" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.manageReject(page.id,page.version)" class="btn btn-danger btn-xs"-->
+                            <!--ng-disabled="page.isDelete==1">-->
+                        <!--<span>主管审核驳回</span>-->
+                    <!--</button>-->
+                    <a title="出库/出库修改" ulife-btn-st="{{page.status}}" ulife-btn-au href="index.html#/exchangeCoupon/takeOutStockList/detail/{{page.id}}/chuku" class="btn btn-warning btn-xs" ng-disabled="page.isDelete==1">
+                        <span>出库/出库修改</span>
+                    </a>
+                    <button title="出库提交" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.outStoreSubmit(page.id,page.version)" class="btn btn-success btn-xs"
+                       ng-disabled="page.isDelete==1">
+                        <span>出库提交</span>
+                    </button>
+                    <button title="出库审核通过" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.outStoreConfirm(page.id,page.version)" class="btn btn-success btn-xs"
+                       ng-disabled="page.isDelete==1">
+                        <span>出库审核通过</span>
+                    </button>
+                    <button title="出库审核驳回" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.outStoreConfirmReject(page.id,page.version)" class="btn btn-danger btn-xs"
+                            ng-disabled="page.isDelete==1">
+                        <span>出库审核驳回</span>
+                    </button>
+                    <button title="签收" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.outStoreReceipt(page.id,page.version)" class="btn  btn-success btn-xs"
+                            ng-disabled="page.isDelete==1">
+                        <span>签收</span>
+                    </button>
+
+                    <a title="查看出库明细" ulife-btn-st="{{page.status}}" ulife-btn-au href="index.html#/exchangeCoupon/takeOutStockList/detail/{{page.id}}/preview" class="btn btn-info btn-xs"
+                       ng-disabled="page.isDelete==1">
+                        <span>查看出库明细</span>
+                    </a>
+                    <button title="作废" ulife-btn-st="{{page.status}}" ulife-btn-au ng-click="btns.outStoreDisuse(page.id,page.version)" class="btn btn-danger btn-xs"
+                            ng-disabled="page.isDelete==1">
+                        <span>作废</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+            <!--&nbsp;&nbsp;  跳转至：  <input type="number"  style="width:50px;height:25px"  ng-model="searchPage.params.goto" placeholder="GO" />-->
+            <!--<button title="搜索" ng-click="searchPage.search1()" ulife-btn-au  >-->
+            <!--<span>跳转</span>-->
+        </button>
+
+        </ul>
+
+    </nav>
+
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6"  style="text-align: left">
+                            <input type="text" class="form-control" ng-model="searchPage.params.userEmail" placeholder="请输入邮箱" max="3000000" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="createActivity.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg" id="delMJModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 400px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">是否删除此兑换单？</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="btns1.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

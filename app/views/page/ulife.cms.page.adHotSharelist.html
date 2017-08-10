@@ -1,0 +1,330 @@
+<div ng-controller="hotShareList" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+        <ol class="breadcrumb">
+            <li>{{menuConfig.content.name}}</li>
+            <li class="active"><a ng-href="{{menuConfig.content.sub[4].link}}">{{menuConfig.content.sub[4].name}}</a></li>
+        </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">关联活动ID</label>
+                        <input type="text" class=" form-control input-sm" ng-model="searchPage.params.activityId"
+                               placeholder="请关联活动ID"/>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <label class="control-label">应用终端</label>
+                    <select class=" form-control input-sm" ng-model="searchPage.params.terminal"
+                            ng-options="type.value as type.key for type in terminal"></select>
+                </div>
+            </div>
+            <div class="pull-right">
+
+                <button title="创建" ng-click="btns.open(0)" ulife-btn-au class="btn btn-success btn-sm">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>创建</span>
+                </button>
+
+                <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <span>搜索</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="">广告名称</th>
+                <th style="">关联活动ID</th>
+                <th style="">图片URL</th>
+                <th style="">活动时间</th>
+                <th style=" ">应用终端</th>
+                <th style=" ">创建时间</th>
+                <th style=" ">排序</th>
+                <th style=" ">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj">
+                <td style="">{{page.adsName}}</td>
+                <td style=" ">{{page.activityId}}</td>
+                <td style=""><div style=" width: 200px;height: 100%; word-wrap: break-word; word-break: break-all;">{{page.imagesUrl}}</div></td>
+                <td style=" ">{{page.validTimeStart | date:'yyyy-MM-dd HH:mm:ss'}}<br/>{{page.validTimeEnd | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style=" ">{{page.terminal|terminal}}</td>
+                <td style=" ">{{page.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style=" ">{{page.sort}}</td>
+                <td style=" ">
+
+                    <button title="修改"  ng-click="btns1.open(page.id)" ulife-btn-au class="btn btn-success btn-xs"
+                       aria-label="Left Align">
+                        <span>修改</span>
+                    </button>
+
+                    <button title="删除" ng-click="hotShareDel.open(page.id)"  class="btn btn btn-danger btn-xs">
+                        <span>删除</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:666px;">
+            <div class="modal-content text-center">
+                <div  class="clearfix cms-workarea" >
+                    <form class="form-horizontal" name="addFrom">
+
+                        <div><div class="modal-header">
+                            <H4 class="modal-title" >分类热门推荐</H4>
+                        </div>
+
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>关联活动ID</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="addSaveParams.activityId"
+                                           placeholder="请输入关联活动ID" name="关联活动ID" ng-blur="verifyActivityId1()" required>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>活动广告名称</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="addSaveParams.adsName"
+                                           placeholder="请输入活动广告名称" name="活动广告名称" ng-maxlength="20"   required>
+                                </div>
+
+                                <div class="col-sm-3 cms-workarea1">
+                                    <label class="text-warning">限制最多15字以内（中文，字母，数字）</label>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>图片URL</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="addSaveParams.imagesUrl"
+                                           placeholder="请输入图片URL" name="图片URL" required>
+                                </div>
+                                <div class="col-sm-3 cms-workarea1">
+                                    <label class="text-warning">图片URL大小 262*112</label>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>活动时间</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                <span>
+                                    <input type="text" class="form-control" ng-model="addSaveParams.validTimeStart" ulife-tooltip="活动开始时间"
+                                           ulife-datetimepicker ulife-date-format required/>至
+                                    <input type="text" class="form-control" ng-model="addSaveParams.validTimeEnd" ulife-tooltip="活动结束时间"
+                                           ulife-datetimepicker ulife-date-format  required/>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>排序</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="number" class="form-control input-sm"
+                                           ng-model="addSaveParams.sort"
+                                           placeholder="请输入排序" name="排序" required>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">应用终端</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="checkbox"  name="终端"  ng-model="terminals.app" />APP&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox"  name="终端" ng-model="terminals.h5" />H5
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1"   ng-if="addSaveParams.id!==0">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>创建时间</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="addSaveParams.createTime"   ulife-datetimepicker ulife-date-format ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button title="保存" ng-click="btns.save()"  class="btn btn btn-primary">
+                                    <span>保存</span>
+                                </button>
+
+                                <!--
+                                                                <button title="编辑" ng-click="searchPage.save(0)"  class="btn btn btn-primary">
+                                                                    <span>编辑</span>
+                                                                </button>
+
+                                -->
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal bs-example-modal-lg" id="editMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:666px;">
+            <div class="modal-content text-center">
+                <div  class="clearfix cms-workarea" >
+                    <form class="form-horizontal" name="editFrom">
+
+                        <div><div class="modal-header">
+                            <H4 class="modal-title" >分类热门推荐</H4>
+                        </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>关联活动ID</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="saveParams.activityId"
+                                           placeholder="请输入关联活动ID" name="关联活动ID" ng-blur="verifyActivityId()" required>
+                                </div>
+                            </div>
+
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>活动广告名称</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="saveParams.adsName"
+                                           placeholder="请输入活动广告名称" name="活动广告名称" ng-maxlength="20"   required>
+                                </div>
+
+                                <div class="col-sm-3 cms-workarea1">
+                                    <label class="text-warning">限制最多15字以内（中文，字母，数字）</label>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>图片URL</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="saveParams.imagesUrl"
+                                           placeholder="请输入图片URL" name="图片URL" required>
+                                </div>
+
+                                <div class="col-sm-3 cms-workarea1">
+                                    <label class="text-warning">图片URL大小 262*112</label>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>活动时间</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                <span>
+                                    <input type="text" class="form-control" ng-model="saveParams.validTimeStart" ulife-tooltip="活动开始时间"
+                                           ulife-datetimepicker ulife-date-format required/>至
+                                    <input type="text" class="form-control" ng-model="saveParams.validTimeEnd" ulife-tooltip="活动结束时间"
+                                           ulife-datetimepicker ulife-date-format  required/>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>排序</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="number" class="form-control input-sm"
+                                           ng-model="saveParams.sort"
+                                           placeholder="请输入排序" name="排序" required>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">应用终端</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="checkbox"  name="终端"  ng-model="terminals.app" />APP&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox"  name="终端" ng-model="terminals.h5" />H5
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1"   ng-if="saveParams.id!==0">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>创建时间</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="saveParams.createTime"   ulife-datetimepicker ulife-date-format ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button title="保存" ng-click="btns1.save()"  class="btn btn btn-primary">
+                                    <span>保存</span>
+                                </button>
+
+                                <!--
+                                                                <button title="编辑" ng-click="searchPage.save(0)"  class="btn btn btn-primary">
+                                                                    <span>编辑</span>
+                                                                </button>
+
+                                -->
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--删除用户信息-->
+    <div class="modal fade bs-example-modal-lg" id="delMJModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 400px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">是否删除该页面？</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="hotShareDel.del()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

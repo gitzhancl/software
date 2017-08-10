@@ -1,0 +1,213 @@
+<div ng-controller="PromotionAutoSendListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.coupon.sub[5].link}}">{{menuConfig.coupon.name}}</a></li>
+        <li class="active">{{menuConfig.coupon.sub[5].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline">
+            <div class="col-md-3">
+                <label class="control-label">优惠券名</label>
+                <input type="text" class="form-control" ng-model="searchPage.params.name" placeholder="请输入优惠券名"/>
+            </div>
+            <div class="col-md-4 form-inline">
+                <label class="control-label">执行日期</label>
+                <input type="text" class="form-control" ng-model="searchPage.params.start_date" placeholder="开始时间" ulife-datepicker ulife-date-format>
+                <input type="text" class="form-control" ng-model="searchPage.params.end_date" placeholder="结束时间" ulife-datepicker ulife-date-format>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">执行条件</label>
+                <select class="form-control" ng-model="searchPage.params.type" ng-options="type.deviceId as type.key for type in execConditin"></select>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+            <button title="创建" ng-click="addAutoSendModal.open()" ulife-btn-au class="btn btn-success btn-sm" >
+                <span class="glyphicon glyphicon-plus" ></span>
+                <span>创建</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">编号</th>
+                <th style="width: 50px; text-align: center">执行条件</th>
+                <th style="width: 50px; text-align: center">优惠券活动</th>
+                <th style="width: 50px; text-align: center">执行日期</th>
+                <th style="width: 50px; text-align: center">每USER ID限量</th>
+                <th style="width: 50px; text-align: center">送券总数量</th>
+                <th style="width: 50px; text-align: center">剩余数量</th>
+                <th style="width: 50px; text-align: center">优惠券活动ID</th>
+                <th style="width: 50px; text-align: center">渠道</th>
+                <th style="width: 50px; text-align: center">rule</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.promoTrigger">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.triggerType|triggerType}}</td>
+                <td style="vertical-align: middle">{{page.activity.title}}</td>
+                <td style="vertical-align: middle">{{page.startTime|date:"yyyy-MM-dd  HH:mm:ss"}}<br>{{page.endTime|date:"yyyy-MM-dd  HH:mm:ss"}}</td>
+                <td style="vertical-align: middle">{{page.activity.perLimit}}</td>
+                <td style="vertical-align: middle">{{page.activity.count}}</td>
+                <td style="vertical-align: middle">{{page.activity.count-page.activity.receiveCount}}</td>
+                <td style="vertical-align: middle">{{page.activityId}}</td>
+                <td style="vertical-align: middle">{{page.terminal|terminalType}}</td>
+                <td style="vertical-align: middle">{{page.rule}}</td>
+                <td style="vertical-align: middle">
+                    <button ng-click="addAutoSendModal.open(page.id)" title="修改" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="autoSendModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="moduleModalLabel">自动送券设置</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="attrForm">
+                        <div class="row show-grid cms-workarea1" ng-class="{'has-error' : attrForm.type.$dirty && attrForm.type.$invalid}">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">执行条件</label>
+                            </div>
+                            <div class="col-lg-4"  style="text-align: left">
+                                <select class="form-control" ng-model="params.type" name="执行条件" ulife-tooltip="执行条件" ng-options="type.deviceId as type.key for type in execConditin" ng-disabled="params.id != ''" required></select>
+                            </div>
+                        </div>
+                        <div ng-show="params.type != 'REGISTERED'">
+                            <div class="row show-grid cms-workarea1"  ng-class="{'has-error' : attrForm.limit.$dirty && attrForm.limit.$invalid}">
+                                <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">单个订单商品总价满</label>
+                                </div>
+                                <div class="col-lg-4"  style="text-align: left">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" name="单个订单商品总价" ulife-tooltip="单个订单商品总价满"  ng-model="params.rule.limit" min="0" />
+                                        <span class="input-group-addon">元</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1"  ng-class="{'has-error' : attrForm.orderType.$dirty && attrForm.orderType.$invalid}">
+                                <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">订单类型</label>
+                                </div>
+                                <div class="col-lg-4"  style="text-align: left">
+                                    <select class="form-control" ng-model="params.rule.orderType" name="订单类型" ulife-tooltip="订单类型" ng-options="type.deviceId as type.key for type in orderType" ng-disabled="params.id != ''"></select>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">用户限制</label>
+                                </div>
+                                <div class="col-lg-2 form-inline"  style="text-align: left">
+                                    <input type="checkbox" ng-model="fastOrder" />限首单
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">短信</label>
+                            </div>
+                            <div class="col-lg-2 form-inline"  style="text-align: left">
+                                <input type="checkbox" ng-model="sendMsg" />是否发送
+
+                                <div class="col-lg-4"  style="text-align: left">
+                                    <textarea  type="" class="form-control" placeholder="短信内容（限50字以内）" ng-model="params.rule.msg"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1" ng-class="{'has-error' : attrForm.activityId.$dirty && attrForm.activityId.$invalid}">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">优惠券活动ID</label>
+                            </div>
+                            <div class="col-lg-4"  style="text-align: left">
+                                <input type="number" class="form-control" name="优惠券活动ID" ng-model="params.activityId" min="0"  ulife-tooltip="优惠券活动ID" required/>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">执行日期</label>
+                            </div>
+                            <div class="col-lg-4"  style="text-align: left">
+                                <input type="text" class="form-control" name="开始执行日期" ng-model="params.startTime" placeholder="开始时间" ulife-tooltip="开始时间" ulife-datetimepicker ulife-date-format required />
+                            </div>
+                            <div class="col-lg-1 cms-workarea1">
+                                <label class="control-label">至</label>
+                            </div>
+                            <div class="col-lg-4"  style="text-align: left">
+                                <input type="text" class="form-control" name="结束执行日期"  ng-model="params.endTime" placeholder="结束时间" ulife-tooltip="结束时间" ulife-datetimepicker ulife-date-format required />
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1" ng-class="{'has-error' : attrForm.sourceCode.$dirty && attrForm.sourceCode.$invalid}">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">指定渠道</label>
+                            </div>
+                            <div class="col-lg-4"  style="text-align: left">
+                                <select class="form-control" ng-model="params.sourceCode" name="指定渠道" ulife-tooltip="指定渠道" ng-options="type.deviceId as type.key for type in activitySource" ng-disabled="params.id != ''"></select>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">app/h5图片url</label>
+                            </div>
+                            <div class="col-lg-4"  style="text-align: left">
+                                <input type="text" class="form-control" name="app/h5图片url" ng-model="params.mobileUrl"  ulife-tooltip="app/h5图片url"/>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">web图片url</label>
+                            </div>
+                            <div class="col-lg-4"  style="text-align: left">
+                                <input type="text" class="form-control" name="web图片url" ng-model="params.pcUrl"  ulife-tooltip="web图片url"/>
+                            </div>
+                        </div>
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">领取渠道</label>
+                            </div>
+                            <div class="col-lg-2 form-inline"  style="text-align: left">
+                                <input type="checkbox" ng-model="app" />APP
+                            </div>
+                            <div class="col-lg-2 form-inline"  style="text-align: left">
+                                <input type="checkbox" ng-model="pc" />WEB
+                            </div>
+                            <div class="col-lg-2 form-inline"  style="text-align: left">
+                                <input type="checkbox" ng-model="h5" />WAP
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="addAutoSendModal.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

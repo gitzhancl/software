@@ -1,0 +1,137 @@
+
+<!-- Modal -->
+<div class="modal bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改组件信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">编号</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control input-sm" id="inputEmail3" placeholder="Email" ng-value="editPageInfo.id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control input-sm" id="inputPassword3" placeholder="Password" ng-value="editPageInfo.title">
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label for="inputPassword3" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputSuccess4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">头部</label>
+                        <div class="col-sm-10">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-info active btn-sm">
+                                    <input type="checkbox" autocomplete="off" checked>置顶导航栏
+                                </label>
+                                <label class="btn btn-info btn-sm">
+                                    <input type="checkbox" autocomplete="off">搜索条
+                                </label>
+                                <label class="btn btn-info btn-sm">
+                                    <input type="checkbox" autocomplete="off">频道导航
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">头部</label>
+                        <div class="col-sm-10">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-info active">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Radio 1 (preselected)
+                                </label>
+                                <label class="btn btn-info">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> Radio 2
+                                </label>
+                                <label class="btn btn-info">
+                                    <input type="radio" name="options" id="option3" autocomplete="off"> Radio 3
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="inputPassword3" class="col-sm-2 control-label">
+                            <span class="text-danger" aria-hidden="true">*</span>头部</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" placeholder="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="basic-addon2">元</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-error">
+                        <label for="inputPassword3" class="col-sm-2 control-label">头部</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" placeholder="Recipient's username" aria-describedby="basic-addon3">
+                                <span class="input-group-addon" id="basic-addon3">元</span>
+                            </div>
+                            <span class="help-block">错误信息</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">头部</label>
+                        <div class="col-sm-10">
+                            <select class="form-control input-sm">
+                                <option>option1</option>
+                                <option>option2</option>
+                                <option>option3</option>
+                            </select>
+                            <span class="help-block">辅助文本</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">时间</label>
+                        <div class="col-sm-10">
+                            <div class="input-group date" ulife-datetimepicker>
+                                <input type="text" class="form-control input-sm" placeholder="Search for date">
+                                <span class="input-group-btn add-on">
+                                    <button class="btn btn-default btn-sm icon-th" type="button">
+                                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">活动时间</label>
+                        <div class="col-sm-5">
+                            <div class="input-group date" ulife-tooltip="开始时间" ulife-datepicker>
+                                <input type="text" class="form-control input-sm" placeholder="开始时间">
+                                <span class="input-group-btn add-on">
+                                    <button class="btn btn-default btn-sm icon-th" type="button">
+                                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="input-group date" ulife-tooltip="结束时间" ulife-datepicker>
+                                <input type="text" class="form-control input-sm" placeholder="结束时间">
+                                <span class="input-group-btn add-on">
+                                    <button class="btn btn-default btn-sm icon-th" type="button">
+                                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

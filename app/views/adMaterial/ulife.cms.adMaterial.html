@@ -1,0 +1,271 @@
+<style>
+    .blue{background-color: aliceblue}
+    .table-hover > tbody >.blue:hover{background-color: aliceblue;}
+</style>
+<div ng-controller="adMaterials" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+        <ol class="breadcrumb">
+            <li>{{menuConfig.adMaterial.name}}</li>
+            <li class="active"><a ng-href="{{menuConfig.adMaterial.sub[1].link}}">{{menuConfig.adMaterial.sub[1].name}}</a></li>
+        </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-2">
+                    <label class="control-label">类型</label>
+                    <select class=" form-control input-sm" ng-model="searchPage.params.type"
+                            ng-options="type.value as type.key for type in bannerType"></select>
+                </div>
+            </div>
+                <div class="col-sm-2">
+                    <label class="control-label">状态</label>
+                    <select class=" form-control input-sm" ng-model="searchPage.params.status"
+                            ng-options="type.value as type.key for type in status"></select>
+                </div>
+                <div class="col-sm-2">
+                    <label class="control-label">是否默认</label>
+                    <select class=" form-control input-sm" ng-model="searchPage.params.isDefault"
+                            ng-options="type.value as type.key for type in isDefault"></select>
+                </div>
+            <div class="pull-right">
+
+                <button title="创建" ng-click="btns1.open(0)" ulife-btn-au class="btn btn-success btn-sm">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>创建</span>
+                </button>
+
+                <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <span>搜索</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th  style="width: 50px; text-align: center">banner图片</th>
+                <th  style="width: 50px; text-align: center">标题</th>
+                <th  style="width: 50px; text-align: center">类型</th>
+                <th  style="width: 50px; text-align: center">修改时间</th>
+                <th  style="width: 50px; text-align: center">是否默认</th>
+                <th  style="width: 50px; text-align: center">状态</th>
+                <th  style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj" class="{{page.isDefault|qqq}}">
+                <td style="vertical-align: middle"><div style=" width: 100%;height: 100%; word-wrap: break-word; word-break: break-all;"><a href="{{page.imagesUrl}}" target=_blank>
+                    <img src="{{page.imagesUrl}}" style="width: 160px;height: 80px;"/></a></div></td>
+                <td style="vertical-align: middle"><div style=" width: 180px;height: 100%; word-wrap: break-word; word-break: break-all;">{{page.title}}</div></td>
+                <td style="vertical-align: middle"><div style=" width: 180px;height: 100%; word-wrap: break-word; word-break: break-all;">{{page.type}}</div></td>
+                <td style="vertical-align: middle">{{page.modifyTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">{{page.isDefault|isDefault}}</td>
+                <td style="vertical-align: middle">{{page.status|status}}</td>
+                <td style="vertical-align: middle">
+                   <span ng-hide="page.type!='注册页'">高度:720px</span>
+                   <span ng-hide="page.type!='登录页'&& page.type!='404页'">高度:465px</span>
+                   <span ng-hide="page.type!='吃货团'">高度:450px</span>
+                   <span ng-hide="page.type!='卡券兑换'">高度:460px</span>
+
+                    <button title="修改"  ng-click="btns.open(page.id)" ulife-btn-au class="btn btn-success btn-xs"
+                       aria-label="Left Align">
+                        <span>修改</span>
+                    </button>
+                    <button title="修改"  ng-click="switch.open(page.id,1)" ulife-btn-au class="btn btn-success btn-xs" ng-hide="page.status==1"
+                       aria-label="Left Align">
+                        <span>启用</span>
+                    </button>
+                    <button title="修改"  ng-click="switch.open(page.id,2)" ulife-btn-au class="btn btn-success btn-xs" ng-hide="page.status==2"
+                       aria-label="Left Align">
+                        <span>停用</span>
+                    </button>
+                    <button title="删除" ng-click="isDelete.open(page.id,page.isDefault)" ulife-btn-au  class="btn btn btn-danger btn-xs"  ng-if="page.isDefault !=1">
+                        <span>删除</span>
+                    </button>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:666px;">
+            <div class="modal-content text-center">
+                <div  class="clearfix cms-workarea" >
+                    <form class="form-horizontal" name="addFrom1">
+
+                        <div><div class="modal-header">
+                            <H4 class="modal-title" >素材管理新增</H4>
+                        </div>
+
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>类型</label>
+                                </div>
+                                <div class="col-sm-5"  style="text-align: left">
+                                    <select class="form-control input-sm" ng-model="saveParams.type" name="类型"
+                                            ng-options="type.value as type.key for type in type" required></select>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>标题</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="saveParams.title"
+                                           placeholder="请输入标题" name="标题"   required>
+                                </div>
+
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>图片URL</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="saveParams.imagesUrl"
+                                           placeholder="请输入图片URL" name="图片URL" required>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">图片跳转URL</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="saveParams.skipUrl"
+                                           placeholder="请输入图片URL" name="图片跳转URL" >
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button title="保存" ng-click="btns1.save()"  class="btn btn btn-primary">
+                                    <span>保存</span>
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal bs-example-modal-lg" id="editMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 666px;height:666px;">
+            <div class="modal-content text-center">
+                <div  class="clearfix cms-workarea" >
+                    <form class="form-horizontal" name="editFrom1">
+
+                        <div><div class="modal-header">
+                            <H4 class="modal-title" >素材管理修改</H4>
+                        </div>
+
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">类型</label>
+                                </div>
+                                <div class="col-sm-5"  style="text-align: left">
+                                    <select class="form-control input-sm" ng-model="editParams.type"
+                                            ng-options="type.value as type.key for type in type" name="类型" ng-disabled="true"></select>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>标题</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="editParams.title"
+                                           placeholder="请输入标题" name="标题"   required>
+                                </div>
+
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label"><span style="color: red"> * </span>图片URL</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="editParams.imagesUrl"
+                                           placeholder="请输入图片URL" name="图片URL" required>
+                                </div>
+                            </div>
+                            <div class="row show-grid cms-workarea1">
+                                <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                    <label class="control-label">图片跳转URL</label>
+                                </div>
+                                <div class="col-sm-5" style="text-align: left">
+                                    <input type="text" class="form-control input-sm"
+                                           ng-model="editParams.skipUrl"
+                                           placeholder="请输入图片URL" name="图片跳转URL">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button title="保存" ng-click="btns.save()"  class="btn btn btn-primary">
+                                    <span>保存</span>
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--删除-->
+    <div class="modal fade bs-example-modal-lg" id="delMJModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 400px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">是否删除该页面？</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="isDelete.del()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!--switch-->
+    <div class="modal fade bs-example-modal-lg" id="switchMJModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 400px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <label class="text-warning">是否禁用或启用？</label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="switch.no()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

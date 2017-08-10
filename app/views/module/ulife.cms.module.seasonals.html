@@ -1,0 +1,250 @@
+<div ng-controller="SeasonalsModule">
+
+
+    <div class="cms-moduleEdit">
+
+        <ol class="breadcrumb">
+            <li><a ng-href="{{menuConfig.content.sub[0].link}}">{{menuConfig.content.name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].link}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].name}}</a></li>
+            <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].link}}{{editModule.pageInfo.pageId}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].name}}</a></li>
+            <li class="active">当季特惠</li>
+
+            <div class="pull-right">
+                <div class="btn-group" role="group">
+                    <button title="修改" ng-click="editAttr.open()" class="btn btn-info btn-xs" >
+                        <span>修改</span>
+                    </button>
+                </div>
+
+                <div class="btn-group" role="group">
+                    <button title="增加活动" ng-click="editContent.add()" target="_blank" class="btn btn-success btn-xs" >
+                        <span>增加活动</span>
+                    </button>
+                </div>
+            </div>
+        </ol>
+
+
+        <div class="">
+            <table ulife-content-sortable="tbody>tr" class="table table-condensed table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>活动类型</th>
+                    <th>主标题</th>
+                    <th>上架时间</th>
+                    <th>下架时间</th>
+                    <th style="width: 64px">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="activiyItem in  editModule.moduleInfo.content" ng-dblclick="gotoPageEdit()" href="index.html#/pageEdit/{{page.id}}">
+                    <td><span ng-repeat="nt in activityType" ng-if="nt.type == activiyItem.type">{{nt.key}}</span></td>
+                    <td>{{activiyItem.title}}</td>
+                    <td>{{activiyItem.onTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{activiyItem.outTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>
+                        <button type="button" ng-click="editContent.edit($index)" title="修改" class="btn btn-info btn-xs" >
+                            <span class="glyphicon glyphicon glyphicon-edit" ></span>
+                        </button>
+                        <button ng-click="editContent.delete($index)" title="删除" class="btn btn-info btn-xs" >
+                            <span class="glyphicon glyphicon glyphicon-trash" ></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+    <!-- Edit ModuleInfo Modal -->
+    <div class="modal bs-example-modal-lg" id="attrModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</span></button>
+                    <h4 class="modal-title" id="moduleModalLabel">修改组件信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="attrForm">
+                        <div class="form-group" ng-class="{'has-error' : attrForm.title.$dirty && attrForm.title.$invalid}">
+                            <label for="dialog-moduleInfoTitle" class="col-sm-2 control-label">主标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-moduleInfoTitle" name="title" placeholder="主标题" ng-model="editModule.moduleInfo.attr.title">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : attrForm.subTitle.$dirty && attrForm.subTitle.$invalid}" ng-if="editModule.pageInfo.deviceId==1">
+                            <label for="dialog-moduleInfoSubTitle" class="col-sm-2 control-label">副标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-moduleInfoSubTitle" name="subTitle" placeholder="副标题" ng-model="editModule.moduleInfo.attr.subTitle">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error' : attrForm.iconUrl.$dirty && attrForm.iconUrl.$invalid}">
+                            <label class="col-sm-2 control-label">小图标URL</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" placeholder="小图标URL" name="iconUrl" ng-model="editModule.moduleInfo.attr.iconUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dialog-moduleInfoMore" class="col-sm-2 control-label">更多</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-moduleInfoMore" placeholder="更多" ng-model="editModule.moduleInfo.attr.moreUrl">
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="editModule.pageInfo.categoryId=='1'&&editModule.pageInfo.deviceId=='1'" ng-class="{'has-error' : attrForm.navName.$dirty && attrForm.navName.$invalid}">
+                            <label for="dialog-moduleInfoNavName" class="col-sm-2 control-label"><span class="text-danger" ></span>导航名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-moduleInfoNavName" name="navName" placeholder="导航名称" ng-model="editModule.moduleInfo.attr.navName" >
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="editModule.pageInfo.categoryId=='1'&&editModule.pageInfo.deviceId=='1'" ng-class="{'has-error' : attrForm.navIcon.$dirty && attrForm.navIcon.$invalid}">
+                            <label for="dialog-moduleInfoNavIcon" class="col-sm-2 control-label"><span class="text-danger" ></span>导航图标</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-moduleInfoNavIcon" name="navIcon" placeholder="导航图标" ng-model="editModule.moduleInfo.attr.navIcon" >
+                            </div>
+                        </div>
+                        <div class="form-group"
+                        ng-if="editModule.pageInfo.categoryId=='1'&&editModule.pageInfo.deviceId=='2'">
+                          <label for="dialog-moduleInfoMore" class="col-sm-2 control-label">楼层向上间距</label>
+                          <div class="col-sm-10">
+                              <select class="form-control input-sm"
+                                  ng-model="editModule.moduleInfo.attr.top"
+                                ng-options="item.value as item.key for item in Tops"></select>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="editAttr.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Activity Modal -->
+    <div class="modal bs-example-modal-lg" id="contentModal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="activityModalLabel">{{editModule.contentHandle.action == 'edit' ?  '修改活动信息' : '添加活动信息' }}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="contentForm">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="text-danger" >*</span>活动类型</label>
+                            <div class="col-sm-10">
+                                <select class="form-control input-sm" ng-model="editModule.contentHandle.content.type" ng-options="type.type as type.key for type in activityType"  ng-disabled="editModule.contentHandle.action == 'edit'"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="" ></span>上下架时间</label>
+                            <div class="col-sm-5" ng-class="{'has-error': contentForm.onTime.$dirty && contentForm.onTime.$invalid}">
+                                <div class="input-group date" ulife-tooltip="上架时间" ulife-datetimepicker>
+                                    <input type="text" class="form-control input-sm" placeholder="上架时间" name="onTime" ng-model="editModule.contentHandle.content.onTime" ulife-date-format >
+                                    <span class="input-group-btn add-on">
+                                        <button class="btn btn-default btn-sm icon-th" type="button">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5" ng-class="{'has-error': contentForm.outTime.$dirty && contentForm.outTime.$invalid}">
+                                <div class="input-group date" ulife-tooltip="下架时间" ulife-datetimepicker>
+                                    <input type="text" class="form-control input-sm" placeholder="下架时间" name="outTime" ng-model="editModule.contentHandle.content.outTime" ulife-date-format >
+                                    <span class="input-group-btn add-on">
+                                        <button class="btn btn-default btn-sm icon-th" type="button">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="editModule.contentHandle.content.type == 'LIMIT'">
+                            <label class="col-sm-2 control-label"><span class="text-danger" >*</span>活动时间</label>
+                            <div class="col-sm-5" ng-class="{'has-error': contentForm.startTime.$dirty && contentForm.startTime.$invalid}">
+                                <div class="input-group date" ulife-tooltip="开始时间" ulife-datetimepicker>
+                                    <input type="text" class="form-control input-sm" placeholder="开始时间" name="startTime" ng-model="editModule.contentHandle.content.startTime" ulife-date-format required>
+                                    <span class="input-group-btn add-on">
+                                        <button class="btn btn-default btn-sm icon-th" type="button">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5" ng-class="{'has-error': contentForm.endTime.$dirty && contentForm.endTime.$invalid}">
+                                <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                                    <input type="text" class="form-control input-sm" placeholder="结束时间" name="endTime" ng-model="editModule.contentHandle.content.endTime" ulife-date-format required>
+                                    <span class="input-group-btn add-on">
+                                        <button class="btn btn-default btn-sm icon-th" type="button">
+                                            <span class="glyphicon glyphicon-calendar" ></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': contentForm.url.$dirty && contentForm.url.$invalid}">
+                            <label for="dialog-activityUrl" class="col-sm-2 control-label"><span class="text-danger">*</span>活动URL</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-activityUrl" name="url" placeholder="活动URL" ng-model="editModule.contentHandle.content.url" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': contentForm.title.$dirty && contentForm.title.$invalid}">
+                            <label for="dialog-productName" class="col-sm-2 control-label"><span class="text-danger" >*</span>主标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-productName" placeholder="主标题" name="title" ng-model="editModule.contentHandle.content.title" ulife-tooltip="PC限16个字， H5限12个字" required ng-maxlength="16" maxlength="16">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': contentForm.subTitle.$dirty && contentForm.subTitle.$invalid}">
+                            <label class="col-sm-2 control-label"><span class="text-danger" >*</span>副标题</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" name="subTitle" ng-model="editModule.contentHandle.content.subTitle"
+                                          ulife-tooltip="PC限时抢36-48个字, PC普通活动60-96个字，H5限时抢16个字, H5普通活动32个字"
+                                          required ng-maxlength="96" maxlength="96"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': contentForm.image.$dirty && contentForm.image.$invalid}">
+                            <label for="dialog-img" class="col-sm-2 control-label"><span class="text-danger" >*</span>图片URL</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-img" name="image" placeholder="图片URL" ng-model="editModule.contentHandle.content.image" required>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="dialog-activityPrice" class="col-sm-2 control-label">活动价格</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input id="dialog-activityPrice" ng-model="editModule.contentHandle.content.activityPrice" type="text" class="form-control input-sm" placeholder="活动价格">
+                                    <span class="input-group-addon">元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dialog-originPrice" class="col-sm-2 control-label">原价</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input id="dialog-originPrice" ng-model="editModule.contentHandle.content.originPrice" type="text" class="form-control input-sm" placeholder="原始价格">
+                                    <span class="input-group-addon">元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dialog-tabs" class="col-sm-2 control-label">右上角标签</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control input-sm" id="dialog-tabs" placeholder="右上角标签" ng-model="editModule.contentHandle.content.tags">
+                                <span class="help-block">最多3个标签，之间用“,”隔开</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="editContent.save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

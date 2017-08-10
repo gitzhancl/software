@@ -1,0 +1,228 @@
+<div ng-controller="cmsItemEdit" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.sku.name}}</li>
+        <li><a ng-href="{{menuConfig.sku.sub[3].link}}">{{menuConfig.sku.sub[3].name}}</a></li>
+        <li class="active">修改ITEM</li>
+    </ol>
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="itemForm">
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">ITEM ID</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="items.id" placeholder="请输入ITEM ID"
+                           ng-disabled="true">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">SKU ID</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="items.skuId" placeholder="请输入SKU ID"
+                           ng-disabled="true">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">市场价</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="items.magicPrice" ng-model="items.magicPrice"
+                           placeholder="市场价">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">零售价</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="items.retailPrice" ng-model="items.retailPrice"
+                           placeholder="请输入零售价">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">每单限购上限</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="items.limitUp" ng-model="items.limitUp"
+                           placeholder="请输入每单限购上限">
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">每单限购下限</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="items.limitDown" ng-model="items.limitDown"
+                           placeholder="请输入每单限购下限">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 库存模式</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <select class="form-control input-sm" ng-model="items.stockType"
+                            ng-options="type.value as type.key for type in stockType"></select>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">商品列表标</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="items.tags" ng-model="items.tags"
+                           ng-disabled="true">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">详情标</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="items.detailTags" ng-model="items.detailTags"
+                           ng-disabled="true">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">是否支持购物车</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <select class="form-control input-sm" ng-model="items.supportShoppingCart"
+                            ng-options="type.value as type.key for type in supportShoppingCart"></select>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">销量</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="items.salesQty"
+                           placeholder="请输入销量" ng-disabled="true">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">商品来源</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <select class="form-control input-sm" ng-model="items.productForm"
+                            ng-options="type.value as type.key for type in productForm"></select>
+
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">销售渠道</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+
+                    <tr   ng-repeat="as in applyStores">
+                        <select class="form-control" ng-model="items.salesChannels" ng-options="as.code as as.jointName  for as in applyStores" ></select>
+                    </tr>
+
+                    <!--<select class="form-control input-sm" ng-model="items.salesChannels"-->
+                            <!--ng-options="type.value as type.key for type in salesChannels"  ng-disabled="items.salesChannels=='ONLINE'"></select>-->
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">销售终端</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <select class="form-control input-sm" ng-model="items.salesTerminal"
+                            ng-options="type.value as type.key for type in salesTerminal"></select>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">状态</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <select class="form-control input-sm" ng-model="items.status"
+                            ng-options="type.value as type.key for type in status"></select>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+        </form>
+        <hr/>
+
+        <label class="text-warning">克隆商品只能做为团购商品或活动商品！！</label><br/>
+        <label style="color: red">团购商品需要配置支付信息！！</label>
+        <div class=" clearfix cms-workarea1 form-inline ">
+
+            <button  ng-click="btns.payment()" title="修改支付方式" class="btn btn-success" aria-label="Left Align">
+                <span class="glyphicon glyphicon-jpy" aria-hidden="true" >修改支付方式</span>
+            </button>
+            <button ng-click="btns.delivery()" title="修改收货日期" class="btn btn-success" aria-label="Left Align">
+                <span class="glyphicon glyphicon-time" aria-hidden="true">修改收货日期</span>
+            </button>
+                <button title="克隆商品" ng-click="checkPage.open()" class="btn btn-success">
+                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true">克隆商品</span>
+                </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button title="保存" ng-click="btns.save()" class="btn btn-primary">
+                <span>保存</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- addPage Modal -->
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 450px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="moduleModalLabel">克隆商品的销售渠道</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="row show-grid cms-workarea1">
+                            <div class="col-sm-3 cms-workarea1" style="text-align: right">
+                                <label class="control-label">销售渠道</label>
+                            </div>
+                            <div class="col-sm-6" style="text-align: left">
+
+
+                                <tr   ng-repeat="as in applyStores">
+                                    <select class="form-control" ng-model="items.salesChannels1" ng-options="as.code as as.jointName  for as in applyStores" ></select>
+                                </tr>
+
+
+                                <!--<select class="form-control " ng-model="items.salesChannels1"-->
+                                        <!--ng-options="type.value as type.key for type in salesChannels1" ></select>-->
+                            </div>
+                            <div class="col-sm-3 cms-workarea1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="checkPage.itemClone()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,135 @@
+<div ng-controller="PromotionCodeListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.coupon.sub[3].link}}">{{menuConfig.coupon.name}}</a></li>
+        <li class="active">{{menuConfig.coupon.sub[3].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="col-md-1" style="text-align: right">
+                <label class="control-label">Code</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" ng-model="exportParams.code" placeholder="Code ID"/>
+            </div>
+            <div class="col-md-1" style="text-align: right">
+                <label class="control-label">优惠券活动ID</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" ng-model="exportParams.id" placeholder="请输入优惠券活动ID"/>
+            </div>
+            <div class="col-md-1" style="text-align: right">
+                <label class="control-label">会员ID</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" ng-model="exportParams.customer_id" placeholder="请输入会员ID"/>
+            </div>
+        </form>
+
+        <form class="form-group-sm form-inline">
+            <div class="col-md-1" style="text-align: right">
+                <label class="control-label">会员登录名</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" ng-model="exportParams.login_name" placeholder="请输入会员登录名"/>
+            </div>
+            <div class="col-md-1" style="text-align: right">
+                <label class="control-label">Code状态</label>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="exportParams.status" ng-options="type.deviceId as type.key for type in codeStatus"></select>
+            </div>
+            <div class="col-md-1" style="text-align: right">
+                <label class="control-label">绑定状态</label>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="exportParams.isbinding" ng-options="type.deviceId as type.key for type in bindingType"></select>
+            </div>
+        </form>
+        <div class="pull-right">
+                <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                    <span class="glyphicon glyphicon-search" ></span>
+                    <span>搜索</span>
+                </button>
+                <button title="导出CodeID" ng-click="createActivity.open()" ulife-btn-au class="btn btn-primary btn-sm" >
+                    <span class="glyphicon glyphicon-save" ></span>
+                    <span>导出CodeID</span>
+                </button>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">优惠券ID</th>
+                <th style="width: 50px; text-align: center">优惠券名称</th>
+                <th style="width: 50px; text-align: center">会员ID</th>
+                <th style="width: 50px; text-align: center">会员登录名</th>
+                <th style="width: 50px; text-align: center">领券时间</th>
+                <th style="width: 50px; text-align: center">领券渠道</th>
+                <th style="width: 50px; text-align: center">Code</th>
+                <th style="width: 50px; text-align: center">Code 状态</th>
+                <th style="width: 50px; text-align: center">生成时间</th>
+                <th style="width: 50px; text-align: center">使用时间</th>
+                <th style="width: 50px; text-align: center">使用订单号</th>
+                <th style="width: 50px; text-align: center">使用订单金额</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.promoCode">
+                <td style="vertical-align: middle">{{page.activityId}}</td>
+                <td style="vertical-align: middle">{{page.name}}</td>
+                <td style="vertical-align: middle">{{page.customerId == 0 && '-' || page.customerId}}</td>
+                <td style="vertical-align: middle">{{page.loginName == null && '-' || page.loginName}}</td>
+                <td style="vertical-align: middle">{{page.receiveTime == 0 && '-' || (page.receiveTime|date:"yyyy-MM-dd H:mm:ss")}}</td>
+                <td style="vertical-align: middle">{{page.receiveChannel == '' && '-' || page.receiveChannel}}</td>
+                <td style="vertical-align: middle">{{page.code}}</td>
+                <td style="vertical-align: middle">{{page.status|codeStatusType}}</td>
+                <td style="vertical-align: middle">{{page.createTime == 0 && '-'|| (page.createTime|date:"yyyy-MM-dd H:mm:ss")}}</td>
+                <td style="vertical-align: middle">{{page.usedTime == 0 && '-'||page.usedTime|date:"yyyy-MM-dd H:mm:ss"}}</td>
+                <td style="vertical-align: middle">
+                    <a href="javascript:void(0)" title="查看" aria-label="Left Align">{{page.orderNo == '' && '-' || page.orderNo}}</a>
+                </td>
+                <td style="vertical-align: middle">{{page.orderAmount}}</td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <div class="modal bs-example-modal-lg" id="downloadModal" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">导出CodeID</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                            <label class="control-label">邮箱</label>
+                        </div>
+                        <div class="col-lg-6"  style="text-align: left">
+                            <input type="text" class="form-control" ng-model="exportParams.mailAdress" placeholder="请输入邮箱" max="3000000" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="createActivity.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

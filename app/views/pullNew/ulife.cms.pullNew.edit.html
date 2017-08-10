@@ -1,0 +1,235 @@
+<div ng-controller="PullNewEditCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.group.name}}</a></li>
+        <li><a ng-href="{{menuConfig.group.sub[3].link}}">{{menuConfig.group.sub[3].name}}</a></li>
+        <li class="active">修改老拉新活动</li>
+    </ol>
+
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="pullNewEditForm">
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动名称</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.activityName"
+                           placeholder="请输入活动名称"
+                           name="活动名称" required>
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>新用户优惠券公码</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.newCode" placeholder="新用户优惠券公码"
+                           ng-disabled="pullNew.status ==2||pullNew.status ==3"
+                           name="新用户优惠券公码" required>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                    <label class="text-warning">优惠券活动状态必须为已发布状态</label>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>老用户优惠券公码</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.oldCode" placeholder="老用户优惠券公码"
+                           ng-disabled="pullNew.status ==2||pullNew.status ==3"
+                           name="老用户优惠券公码" required>
+                </div>
+                <!--<div class="col-sm-3 cms-workarea1">-->
+                <!--<label class="text-warning">优惠券活动状态必须为已发布状态</label>-->
+                <!--</div>-->
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动时间</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="开始时间">
+                        <input type="text" class="form-control input-sm" placeholder="开始时间" ng-model="pullNew.startTime"
+                               ulife-datetimepicker ulife-date-format name="活动时间:开始时间">
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label">至</label>
+                </div>
+                <!--至-->
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="结束时间" ulife-datetimepicker>
+                        <input type="text" class="form-control input-sm" placeholder="结束时间" ng-model="pullNew.endTime"
+                               ulife-date-format name="活动时间:结束时间" required>
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <!--<div class="col-sm-3 cms-workarea1">-->
+                <!--<label class="text-warning">活动发布后只能编辑结束时间向后延迟</label>-->
+                <!--</div>-->
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>老会员邀请图片URL</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.oldMemberImages"
+                           placeholder="请输入..."
+                           name="老会员邀请图片URL" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>新会员邀请图片URL</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.newMemberImages"
+                           placeholder="请输入..."
+                           name="新会员邀请图片URL" required>
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>领券成功引导图片</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.induceImages"
+                           placeholder="请输入..."
+                           name="领券成功引导图片" required>
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>领券成功引导URL</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.induceUrl"
+                           placeholder="请输入..."
+                           name="领券成功引导URL" required>
+                </div>
+            </div>
+
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>分享文案标题</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.shareTitle" placeholder="请输入..."
+                           name="分享标题" required>
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">描述</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.shareDescription"
+                           placeholder="请输入..."
+                           name="描述">
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>分享图标URL</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.shareIcon" placeholder="请输入..."
+                           name="分享图标URL" required>
+                </div>
+            </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">OA流程号</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="pullNew.oaFlowNo" placeholder="请输入..."
+                           ng-disabled="pullNew.status ==2||pullNew.status ==3"
+                           name="OA流程号">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>活动规则</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <!--<input type="text" class="form-control input-sm" ng-model="pullNew.sort" placeholder="sort">-->
+
+                    <textarea class="form-control" ng-model="pullNew.activityRule" rows="15" cols="66"
+                              required></textarea>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div ng-if="pullNew.status ==2||pullNew.status ==3">
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                        <label class="control-label">拉新数</label>
+                    </div>
+                    <div class="col-sm-5" style="text-align: left">
+                        <input type="text" class="form-control input-sm" ng-model="pullNew.pullNewCount"
+                               placeholder="请输入..." ng-disabled="true">
+                    </div>
+                </div>
+
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>创建时间</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group date" ulife-tooltip="创建时间">
+                        <input type="text" class="form-control input-sm" placeholder="创建时间"     ng-model="pullNew.createTime" ulife-datetimepicker ulife-date-format
+                               name="创建时间"    ng-disabled="true" >
+                        <span class="input-group-btn add-on">
+                            <button class="btn btn-default btn-sm icon-th" type="button">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+</div>
+
+        </form>
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+            <button title="保存" ng-click="btns.save()" class="btn btn-primary"
+                    ng-show="  pullNew.status!==3">
+                <span>保存</span>
+            </button>
+            <button title="发布" ng-click="btns.publishOrCancel()" class="btn btn-primary"
+                    ng-show="pullNew.type!=2">
+                <span>发布</span>
+            </button>
+            <a title="取消" ng-href="{{menuConfig.group.sub[3].link}}" class="btn btn-default">
+                <span>退出</span>
+            </a>
+        </div>
+    </div>
+</div>

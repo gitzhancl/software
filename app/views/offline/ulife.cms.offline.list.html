@@ -1,0 +1,112 @@
+<div ng-controller="OfflineListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="">{{menuConfig.promoact.name}}</a></li>
+        <li>{{menuConfig.promoact.sub[5].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">活动名称</label>
+                        <input type="text" class=" form-control input-sm" ng-model="searchPage.params.activityName"
+                               placeholder="请输入活动名称"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">活动时间</label>
+                        <div class="input-group date" ulife-tooltip="开始时间" ulife-datepicker>
+                            <input type="text" class="form-control input-sm" placeholder="yyyy-mm-dd" name="activityStartTime"
+                                   ng-model="searchPage.params.activityStartTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group date" ulife-tooltip="结束时间" ulife-datepicker>
+                            <input type="text" class="form-control input-sm" placeholder="yyyy-mm-dd" name="endTime"
+                                   ng-model="searchPage.params.activityEndTime" ulife-date-format required>
+                            <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;活动ID</label>
+                            <input type="text" class=" form-control input-sm" ng-model="searchPage.params.activityId"
+                                   placeholder="请输入ID"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="pull-right">
+            <a title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-search"></span>
+                <span>搜索</span>
+            </a>
+            <a title="创建" ng-href="index.html#/offline/create" ulife-btn-au class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>创建</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">活动ID</th>
+                <th style="width: 50px; text-align: center">活动名称</th>
+                <th style="width: 50px; text-align: center">活动时间</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">注册数</th>
+                <th style="width: 50px; text-align: center">分享数</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in offline">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.title}}</td>
+                <td style="vertical-align: middle">{{page.description | date:'yyyy-MM-dd HH:mm:ss'}}<br/>{{page.demandPerson |date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">{{page.extData | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">{{page.personAllCount}}</td>
+                <td style="vertical-align: middle">{{page.totalPlayCount}}</td>
+                <td style="vertical-align: middle">
+                    <a title="搜索" ng-href="index.html#/offline/get/{{page.id}}" ulife-btn-au
+                            class="btn btn-success  btn-xs">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span>查看</span>
+                    </a>
+
+                    <a ng-href="index.html#/offline/edit/{{page.id}}" title="修改" ulife-btn-au
+                       class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        <span>修改</span>
+                    </a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+</div>

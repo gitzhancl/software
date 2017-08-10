@@ -1,0 +1,407 @@
+{
+    "apiList": [
+        {
+            
+            "methodName": "cms.page.getList",
+            "parameterInfoList": [
+                {
+                    "isRequired": false,
+                    "name": "pageId",  
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "categoryId",  
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "deviceId",  
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "size",   
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "from",  
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "isRequired": false,
+                    "name": "title",
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "pagelist": [
+                    {
+                        "pageId": 1,  
+                        "deviceId": "2",  
+                        "deviceName": "PC",  
+                        "name": "PC首页",  
+                        "categoryId": "homepage",  
+                        "categoryName": "homepage",  
+                        "title": "ulife都市生活", 
+                        "keywords": "",  
+                        "description": "" 
+                    }
+                ]
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            
+            "methodName": "cms.page.get",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",   
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "pageId": 1,   
+                "deviceId": "PC",   
+                "deviceName": "PC",   
+                "name": "PC首页",  
+                "categoryId": "homepage",  
+                "categoryName": "homepage",  
+                "title": "ulife都市生活",  
+                "keywords": "",  
+                "description": ""  
+                
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            
+            "methodName": "cms.page.update",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",  
+                    "type": "long"
+                },
+                {
+                    "isRequired": false,
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "isRequired": false,
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "isRequired": false,
+                    "name": "keywords", 
+                    "type": "string"
+                },
+                {
+                    "isRequired": false,
+                    "name": "description",  
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            
+            "methodName": "cms.page.publish",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "startTime",
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            
+            "methodName": "cms.page.updateName",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",  
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "name",  
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin"
+        },
+        {
+            
+            "methodName": "cms.page.add",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "deviceId",
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "pageId": "", 
+                "name": "",  
+                "modifTime": "",  
+                "deviceId": "",
+                "deviceName": "",
+                "categoryId": "",
+                "categoryName": ""
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+
+        {
+            
+            "methodName": "cms.page.getModuleList",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId", 
+                    "type": "long"
+                }
+            ],
+            "responseData": { 
+                "pagelist": [
+                    {
+                        "pageId": 1,  
+                        "moduleId": 2,  
+                        "databindingId": 3,  
+                        "code": "newbie",   
+                        "name": "新人必看A"  
+                    },
+                    {
+                        "pageId": 1, 
+                        "moduleId": 2, 
+                        "databindingId": 4,  
+                        "code": "newbie",    
+                        "name": "新人必看B"  
+                    }
+                ]
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"modules\" :[{\"id\":\"1\", \"title\":\"新人必看\", \"type\": \"newbie\"},{\"id\":\"2\", \"title\":\"module2\"},{\"id\":\"3\", \"title\":\"module3\"},{\"id\":\"4\", \"title\":\"module4\"},{\"id\":\"5\", \"title\":\"module5\"}]}"
+        },
+        {
+            
+            "methodName": "cms.page.getModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id",  
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "name": "新人必看A",  
+                "attr": "属性数据",  
+                "content": "数据位数据(坑位)"  
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            
+            "methodName": "cms.page.updateModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id",
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "attr",
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            
+            "methodName": "cms.page.addModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "pageId",  
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "moduleId",
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "sort",
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "id": 1,  
+                "name": 1,  
+                "module": {
+                    "id":1,
+                    "name": "123231",
+                    "code": "123123"
+                },
+                "module": "module表内的数据"  
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            
+            "methodName": "cms.page.deleteModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id", 
+                    "type": "long"
+                }
+            ],
+            "securityLevel": "UserLogin",
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            
+            "methodName": "cms.page.sortModule",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "ids",  
+                    "type": "string"
+                },
+                {
+                    "isRequired": true,
+                    "name": "sorts",  
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+
+        {
+            
+            "methodName": "cms.page.getModuleContent",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id",  
+                    "type": "long"
+                }
+            ],
+            "responseData": {
+                "content": "坑位数据"  
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            
+            "methodName": "cms.page.updateModuleContent",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id", 
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "content",  
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+        {
+            
+            "methodName": "cms.page.updateModuleName",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "id", 
+                    "type": "long"
+                },
+                {
+                    "isRequired": true,
+                    "name": "name",  
+                    "type": "string"
+                }
+            ],
+            "responseData": {
+                "isSuccess": "true"
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        },
+
+        {
+            
+            "methodName": "cms.module.getLibrary",
+            "parameterInfoList": [
+                {
+                    "isRequired": true,
+                    "name": "deviceId", 
+                    "type": "string"
+                }
+            ],
+            "responseData": { 
+                "modulelist": [
+                    {
+                        "moduleId": 1,  
+                        "name": "name", 
+                        "deviceType": "",
+                        "code": "" 
+                       
+                    }
+                ]
+            },
+            "securityLevel": "UserLogin",
+            "mockReturnObject": "{ \"isSuccess\" :\"true\"}"
+        }
+    ]
+}

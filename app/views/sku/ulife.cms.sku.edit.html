@@ -1,0 +1,252 @@
+<div ng-controller="skuParamIsView" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.sku.name}}</a></li>
+        <li class="active"><a ng-href="{{menuConfig.sku.sub[2].link}}">{{menuConfig.sku.sub[2].name}}</a></li>
+        <li class="active">修改SKU详情</li>
+    </ol>
+    <div id="confirmRule" class="clearfix cms-workarea">
+        <form class="form-horizontal" name="skuForm">
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">SKU ID</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="skus.id" placeholder="请输入SKU ID"
+                           ng-disabled="true"  >
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">商品货号</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="skus.productCode" ng-model="skus.productCode"
+                           placeholder="请输入商品货号" ng-disabled="true">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">商品名称</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="skus.name" ng-model="skus.name"
+                           placeholder="请输入商品名称" ng-disabled="true">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"><span style="color: red"> * </span>商品主标题</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="skus.title" ng-model="skus.title"
+                           placeholder="请输入商品主标题" required>
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label"> 关键词</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="keywords" name="keywords" ng-model="skus.keywords"/>
+                </div>
+               <!-- <div class="col-sm-2 cms-workarea1">
+                    <label class="text-warning">请用英文逗号分割多个关键字</label>
+                </div>-->
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">商品副标题</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="skus.subtitle" ng-model="skus.subtitle"
+                           placeholder="请输入商品副标题"  >
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">后台分类ID</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" id="skus.categoryId"
+                           ng-model="skus.categoryId" placeholder="请输入后台分类ID" ng-disabled="true">
+                </div>
+            </div>
+            <!-- <div class="row show-grid cms-workarea1">
+                 <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                     <label class="control-label">销量</label>
+                 </div>
+                 <div class="col-sm-5" style="text-align: left">
+                     <input type="text" class="form-control input-sm" ng-model="skus.departmentId"
+                            placeholder="departmentId" ng-disabled="true" >
+                 </div>
+                 <div class="col-sm-3 cms-workarea1">
+                 </div>
+             </div>-->
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">产地</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="skus.origin"
+                           placeholder="请输入产地" ng-disabled="true">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">重量</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="skus.weight" placeholder="请输入重量"
+                           ng-disabled="true">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">是否礼包</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="skus.combination" ng-disabled="true">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">建议零售价</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <input type="text" class="form-control input-sm" ng-model="skus.rrp" placeholder="零售价"
+                           ng-disabled="true">
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">状态</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left" >
+                    <select class="form-control input-sm" ng-model="skus.status"  name="status" id="status"
+                            ng-options="type.value as type.key for type in skuStatus"></select>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">是否虚拟商品</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <select class="form-control input-sm" ng-model="skus.type"
+                            ng-options="type.value as type.key for type in virtualType"  ng-disabled="true"></select>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">是否显示商品参数</label>
+                </div>
+                <div class="col-sm-5" style="text-align: left">
+                    <select class="form-control input-sm" ng-model="skus.paramIsView"
+                            ng-options="type.value as type.key for type in skuParamIsView"></select>
+                </div>
+                <div class="col-sm-3 cms-workarea1">
+                </div>
+            </div>
+            <div class="row show-grid cms-workarea1">
+                <div class="col-sm-1 cms-workarea1" style="text-align: right">
+                    <label class="control-label">商品参数</label>
+                </div>
+                <div class="col-sm-8" style="text-align: left">
+
+                    <textarea class="form-control" rows="12" ng-model="skus.parameter"  ng-disabled="true"></textarea>
+                    <!-- <div wang-editor name="wangEditor" ng-model="skus.parameter"></div> -->
+                </div>
+            </div>
+        </form>
+        <hr/>
+
+
+        <div class=" clearfix cms-workarea1 form-inline text-center">
+
+            <a title="主图" ng-click="checkPage1.open1()" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>主图</span>
+            </a>
+            <a title="详情" ng-click="checkPage2.open2()" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>详情</span>
+            </a>
+            <a title="移动端详情" ng-click="checkPage3.open3()" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>移动端详情</span>
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button title="保存" ng-click="btns.save()" class="btn btn-primary">
+                <span>保存</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- checkPage  -->
+    <div class="modal bs-example-modal-lg" id="previewModal1" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 755px;;">
+            <div class="modal-content text-center">
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-12" style="text-align: left">
+                        <div ng-repeat="cpp in skus.mediaInfo">
+                            <img ng-src="{{cpp}}"/>
+                            {{cpp}}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- checkPage  -->
+    <div class="modal bs-example-modal-lg" id="previewModal2" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 755px;;">
+            <div class="modal-content text-center">
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-12" style="text-align: left">
+                        <div class="content" data-ng-bind-html="skus.description"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- checkPage  -->
+    <div class="modal bs-example-modal-lg" id="previewModal3" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 755px;;">
+            <div class="modal-content text-center">
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-12" style="text-align: left">
+                        <div class="content" data-ng-bind-html="skus.moblieDscp"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

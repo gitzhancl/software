@@ -1,0 +1,147 @@
+<style>
+
+</style>
+<div ng-controller="giftVideoBookCreateCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.exchangeCoupon.name}}</li>
+        <li><a ng-href="index.html#/exchangeCoupon/giftVideoBooklist">{{menuConfig.exchangeCoupon.sub[6].name}}</a></li>
+        <li class="active">{{title}}</li>
+    </ol>
+    <div class="border">
+        <form class="form-horizontal" name="giftDataForm" novalidate="novalidate">
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">公司名称:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="公司名称" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.companyName"
+                        placeholder="公司名称" required  disabled>
+                </div>
+                <div class="col-sm-2">
+                    <p ng-click="searchConpany.open()" class="btn btn-primary">添加公司</p>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">券ID:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="券ID" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.ticketIds"
+                        placeholder="如果多个请用半角逗号分隔" required ng-disabled="id != 0">
+                </div>
+                <div class="col-sm-2">
+                    <p class="text-danger">如果多个请用半角逗号分隔</p>
+                </div>
+            </div>-->
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">视频URL:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="视频URL" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.videoUrl"
+                        placeholder="视频URL" >
+                </div>
+                <div class="col-sm-2">
+                    <p class="text-danger">视频和图片至少选一个,优先选视频</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">图片URL:</label>
+                <div class="col-sm-4">
+                    <input type="text" name="图片URL" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="params.imageUrl"
+                        placeholder="视频URL"  >
+                </div>
+                <div class="col-sm-2">
+                    <p class="text-danger">视频和图片至少选一个,优先选视频</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-inline">
+                    <label class="control-label text-nowrap col-sm-2">有效时间:</label>
+                    <div class="input-group date col-sm-2" ulife-tooltip="开始时间" ulife-datetimepicker="" data-original-title="" title="">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="开始时间" name="startTime"
+                            ng-model="params.startTime" ulife-date-format required="">
+                        <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        </span>
+                    </div>
+                    <div class="input-group date col-sm-2" ulife-tooltip="结束时间" ulife-datetimepicker="" data-original-title="" title="">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="结束时间" name="endTime"
+                            ng-model="params.endTime" ulife-date-format required="">
+                        <span class="input-group-btn add-on">
+                                <button class="btn btn-default btn-sm icon-th" type="button">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">是否启用:</label>
+                <label class="control-label text-nowrap col-sm-1">
+                    <input type="radio" name="selectCity" ng-model="params.validTag" value="1">
+                    是
+                </label>
+                <label class="control-label text-nowrap col-sm-1">
+                    <input type="radio" name="selectCity" ng-model="params.validTag" value="0">
+                    否
+                </label>
+            </div>
+            <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <input type="submit" class="btn btn-primary btn-lg" title="新建保存" ng-click="save()" value="新建保存" />
+                    </div>
+                </div>
+        </form>
+    </div>
+    <!--选择公司弹窗-->
+    <div class="modal bs-example-modal-lg" id="selectCompany" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 800px;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">选择公司</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row show-grid cms-workarea1">
+                        <div class="form-inline cms-workarea clearfix">
+                            <div class="col-md-4">
+                                <label class="control-label">公司名称关键字</label>
+                                <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="depend" ng-model="searchConpany.params.name"
+                                    placeholder="" style="width:120px">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">公司编号</label>
+                                <input type="text" class="form-control ng-pristine ng-untouched ng-valid" id="depend" ng-model="searchConpany.params.code"
+                                    placeholder="" style="width:120px">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary" ng-click="searchConpany.search()">查询</button>
+                            </div>
+                        </div>
+                        <div class="pull-left col-lg-12">
+                            <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center">排序</th>
+                                        <th style="text-align: center">公司名称</th>
+                                        <th style="text-align: center">公司编号</th>
+                                        <th style="text-align: center">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="company in companyList">
+                                        <td style="vertical-align: middle">{{$index}}</td>
+                                        <td style="vertical-align: middle">{{company.CompanyName}}</td>
+                                        <td style="vertical-align: middle">{{company.CompanyCode}}</td>
+                                        <td style="vertical-align: middle">
+                                            <button title="删除" ng-click="searchConpany.select(company.CompanyName,company.Id)" class="btn  btn-info btn-xs">
+                                            <span>选择</span>
+                                        </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

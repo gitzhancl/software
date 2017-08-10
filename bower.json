@@ -1,0 +1,20 @@
+{
+  "name": "ulife-cms",
+  "private": true,
+  "authors": [
+    "zhangke"
+  ],
+  "dependencies": {
+    "moment": "~2.8.4",
+    "momentjs": "~2.8.4",
+    "text": "~2.0.14",
+    "requirejs": "~2.1.15",
+    "bootstrap": "~3.3.5",
+    "jqueryui": "~1.11.4",
+    "bootstrap_datetimepicker": "git://github.com/smalot/bootstrap-datetimepicker.git",
+    "ngDialog": "0.5.8",
+    "wangEditor": "2.0.17",
+    "highlight": "~9.2.0",
+    "angular-tree-control": "~0.2.20"
+  }
+}

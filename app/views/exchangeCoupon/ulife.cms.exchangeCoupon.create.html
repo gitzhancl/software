@@ -1,0 +1,505 @@
+<style>
+    .border {
+        border: 1px solid #ddd;
+    }
+    
+    .title {
+        background-color: #f5f5f5;
+        padding-left: 10px;
+    }
+    
+    .text-danger {
+        padding-top: 7px;
+    }
+    
+    .input-group[class*="col-"] {
+        padding-left: 14px;
+    }
+    
+    hr {
+        border-top: 1px solid #d5d5d5;
+    }
+    
+    input.ng-dirty.ng-invalid {
+        border: 1px solid red;
+    }
+    
+    .modal-body {
+        padding: 15px 15px 0 15px;
+    }
+</style>
+<div ng-controller="exchangeCouponCreateCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li>{{menuConfig.exchangeCoupon.name}}</li>
+        <li><a ng-href="index.html#/exchangeCoupon/exchangeCouponList">{{menuConfig.exchangeCoupon.sub[1].name}}</a></li>
+        <li class="active">{{title}}</li>
+    </ol>
+    <div class="border">
+        <form class="form-horizontal" name="HeadParamForm" novalidate="novalidate">
+            <p class="title">基本信息</p>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">券名称:</label>
+                <div class="col-sm-6">
+                    <input type="text" name="券名称" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.name" placeholder="请填写券名称"
+                        required ng-disabled="id != 0">
+                </div>
+                <div class="col-sm-2">
+                    <p class="text-danger">（ 20字以内 ）</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">售价:</label>
+                <div class="col-sm-3">
+                    <input type="number" name="售价" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.retailPrice"
+                        placeholder="（元，显示成千分位格式）" required ng-disabled="id != 0">
+                </div>
+                <div class="col-sm-3">
+                    <p class="text-danger text-nowrap">（元，显示成千分位格式）</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">状态:</label>
+                <div class="col-sm-3">
+                    <select class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.status" ng-options="type.value as type.key for type in validState"></select>
+                </div>
+                <label class="control-label text-nowrap col-sm-2">兑换开始日期:</label>
+                <div class="input-group date col-sm-3 ng-scope" ulife-tooltip="兑换开始日期" ulife-datetimepicker="" data-original-title="" title="">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="兑换开始日期"
+                        name="兑换开始日期" ng-model="HeadParam.exchangeStartDate" ulife-date-format="" required="">
+                        <span class="input-group-btn add-on">
+                        <button class="btn btn-default btn-sm icon-th" type="button">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label  col-sm-2">财务记账商品归属:</label>
+                <div class="col-sm-3">
+                    <select class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.accountType" ng-options="type.value as type.key for type in accountTypes"></select>
+                </div>
+
+
+                <div class="input-group date col-sm-3 ng-scope" >
+                    <input type="checkbox" ng-model="HeadParam.canChange">是否可更换任意商品
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">出库有效期至:</label>
+                <div class="input-group date col-sm-3 ng-scope" ulife-tooltip="出库有效期至" ulife-datetimepicker="" data-original-title="" title="">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="出库有效期"
+                        name="出库有效期" ng-model="HeadParam.outgoingExpire" ulife-date-format="" required="">
+                        <span class="input-group-btn add-on">
+                        <button class="btn btn-default btn-sm icon-th" type="button">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        </span>
+                </div>
+            </div>
+            <hr/>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2 text-danger">
+                兑换截止时间以下数据二选一:
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-sm-2">
+                    <input type="radio" checked name="outTime" checked  ng-model="HeadParam.exchangeExpireType" value="1">
+                    按出库时间+（天）:
+                    </label>
+                <div class="col-sm-3">
+                    <input ng-if="HeadParam.exchangeExpireType==1" type="number" class="form-control input-sm ng-pristine ng-untouched ng-valid"
+                        ng-model="HeadParam.exchangeExpireDate" name="出库时间" placeholder="按出库时间+（天）" required>
+                </div>
+                <label class="control-label text-nowrap col-sm-2">
+                    <input type="radio" name="outTime" ng-model="HeadParam.exchangeExpireType" value="0">
+                    兑换截止至:
+                    </label>
+                <div ng-if="HeadParam.exchangeExpireType==0" class="input-group date col-sm-3 ng-scope" ulife-tooltip="出库有效期" ulife-datetimepicker=""
+                    data-original-title="" title="">
+                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-valid-required" placeholder="兑换截止至"
+                        name="兑换截止时间" ng-model="HeadParam.exchangeExpireDate" ulife-date-format="" required name="出库有效期">
+                        <span class="input-group-btn add-on">
+                        <button class="btn btn-default btn-sm icon-th" type="button">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                        </span>
+            </div>
+    </div>
+    <hr/>
+    <div class="form-group" ng-show="id == 0">
+        <label class='control-label col-sm-2'>申请部门:</label>
+        <div class='col-sm-3'>
+            <getdeport isedit='false'></getdeport>
+        </div>
+    </div>
+    <div class="form-group" ng-show="id != 0">
+        <label class='control-label col-sm-2'>申请部门:</label>
+        <div class='col-sm-3'>
+            <getdeport isedit='true'></getdeport>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label text-nowrap col-sm-2">
+                    <input type="radio" name="selectCity" ng-model="HeadParam.scope" value="0">
+                    全国
+                </label>
+        <label class="control-label text-nowrap col-sm-2">
+                    <input type="radio" name="selectCity" ng-model="HeadParam.scope" value="1">
+                    上海
+                </label>
+    </div>
+    <div class="form-group">
+        <label class="control-label text-nowrap col-sm-2">申请人:</label>
+        <div class="col-sm-3">
+            <input type="text" name="申请人" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.demandMan"
+                placeholder="（中文名，必填含至少2个汉字不能空格）" ng-pattern="/^[\u4e00-\u9fa5]*$/" ng-disabled="id != 0" required>
+        </div>
+        <div class="col-sm-3">
+            <p class="text-danger text-nowrap">（中文名，必填含至少2个汉字不能空格）</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label text-nowrap col-sm-2">券号前缀:</label>
+        <div class="col-sm-3">
+            <input type="text" name="券号前缀" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.codePrefix"
+               maxlength="5" placeholder="（只能填写5个字母，不能重复）" ng-disabled="id != 0" required>
+        </div>
+        <div class="col-sm-3">
+            <p class="text-danger text-nowrap">（只能填写5个字母，不能重复）</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  col-sm-2">兑换商品发货方式:</label>
+        <div class="col-sm-3">
+            <select class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.shipType" ng-options="type.value as type.key for type in shipTypes"
+                ng-disabled="id != 0"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  col-sm-2">备注（非必填）:</label>
+        <div class="col-sm-6">
+            <textarea ng-model="HeadParam.remark" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="border" ng-if="id != 0">
+        <p class="title">其它信息</p>
+        <div class="table-responsive">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label text-nowrap col-sm-1">券id:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" placeholder="" ng-model="id" disabled>
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="text-danger text-nowrap">（自动生成）</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-nowrap col-sm-1">销项税率:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.taxRate" placeholder="">
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="text-danger text-nowrap"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-nowrap col-sm-1">预定成本:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="HeadParam.costPrice" placeholder="">
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="text-danger text-nowrap"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-nowrap col-sm-1">二维码链接:</label>
+                    <div class="col-sm-3">
+                         <span>{{newParam.qrCode}}</span>
+                          </div>
+                    <div class="col-sm-3">
+                        <!--<p class="text-danger text-nowrap">复制此链接手动转换二维码</p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border">
+        <div class="form-group">
+            <label class="control-label text-nowrap col-sm-4" style="text-align:left; padding-left: 30px;">
+                        <input type="radio" checked name="selectPro" checked="checked"  ng-model="HeadParam.type" value="0" ng-disabled="id != 0"> 兑换商品多选一
+                    </label>
+            <label class="control-label text-nowrap col-sm-2">
+                        <input type="radio" checked name="selectPro"   ng-model="HeadParam.type" value="1" ng-disabled="id != 0"> 兑换商品多选多
+                    </label>
+        </div>
+        <p class="title">兑换商品（多选一兑换，如果兑换是多个商品的组合，在OM创建礼包商品后添加）</p>
+        <!--多选一  列表-->
+        <div ng-if="HeadParam.type == '0' " class="table-responsive">
+            <table class="table table-condensed table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 50px; text-align: center">商品itemid</th>
+                        <th style="width: 50px; text-align: center">是否礼包</th>
+                        <th style="width: 50px; text-align: center">商品名称</th>
+                        <th style="width: 50px; text-align: center">商品货号</th>
+                        <th style="width: 50px; text-align: center">商品售价</th>
+                        <th style="width: 50px; text-align: center">是否上架</th>
+                        <th style="width: 50px; text-align: center">OM是否可售</th>
+                        <th style="width: 50px; text-align: center">销项税率</th>
+                        <th style="width: 50px; text-align: center">预估成本</th>
+                        <th style="width: 50px; text-align: center">是否有效</th>
+                        <th style="width: 50px; text-align: center">创建时间</th>
+                        <th style="width: 50px; text-align: center">最后修改时间</th>
+                        <th style="width: 50px; text-align: center">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="prd in productList">
+                        <td style="vertical-align: middle">{{prd.itemId}}</td>
+                        <td style="vertical-align: middle">{{prd.combination | exchangeIsGift}}</td>
+                        <td style="vertical-align: middle">{{prd.name}}</td>
+                        <td style="vertical-align: middle">{{prd.productCode}}</td>
+                        <td style="vertical-align: middle">{{prd.retailPrice}}</td>
+                        <td style="vertical-align: middle">{{prd.upDown | exchangeIsupdown}}</td>
+                        <td style="vertical-align: middle">{{prd.isSale | exchangeIsSale}}</td>
+                        <td style="vertical-align: middle">{{prd.taxRate}}</td>
+                        <td style="vertical-align: middle">{{prd.cost}}</td>
+                        <td style="vertical-align: middle">{{prd.status | exitemStatus}}</td>
+                        <td style="vertical-align: middle">{{prd.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td style="vertical-align: middle">{{prd.modifyTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td style="vertical-align: middle">
+                            <button ng-if="id !=0" index="{{$index}}" title="改状态" ng-click="isStatus($event)" class="btn-warning btn-xs ng-scope">
+                                        改状态
+                                    </button>
+                            <button ng-if="id ==0" index="{{$index}}" title="删除" ng-click="delprd($event)" class="btn btn-danger btn-xs ng-scope">
+                                        删除
+                                    </button>
+                            <button ng-if="prd.combination != 0"  title="礼包详情" ng-click="giftDetail(prd.itemId)" class="btn-warning btn-xs ng-scope">
+                                礼包详情
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label text-nowrap col-sm-1">商品ID:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="singleProduct.model.singleProductId"
+                            placeholder="（2-5字母，不能重复）">
+                    </div>
+                    <span ng-click="singleProduct.addProduct()" class="btn btn-default">添加</span>
+                </div>
+                <hr/>
+            </div>
+        </div>
+        <!--多选多   列表-->
+        <div ng-if="HeadParam.type == '1' " class="table-responsive">
+            <table class="table table-condensed table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 50px; text-align: center">分组名称</th>       
+                        <th style="width: 50px; text-align: center">组内可选商品个数</th>
+                        <th style="width: 50px; text-align: center">选择数量限制</th>
+                        <th style="width: 50px; text-align: center">商品名称</th>
+                        <th style="width: 50px; text-align: center">是否礼包</th>
+                        <th style="width: 50px; text-align: center">商品售价</th>
+                        <th style="width: 50px; text-align: center">skuId</th>
+                        <th style="width: 50px; text-align: center">itemId</th>
+                        <th style="width: 50px; text-align: center">上下架状态</th>
+                        <th style="width: 50px; text-align: center">OM可售状态</th>
+                        <th style="width: 50px; text-align: center">预估成本</th>
+                        <th style="width: 50px; text-align: center">税率</th>
+                        <th style="width: 50px; text-align: center">创建时间</th>
+                        <th style="width: 50px; text-align: center">修改时间</th>
+                        <th style="width: 50px; text-align: center">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="prd in doubleProductList">
+                        <td style="vertical-align: middle">{{prd.groupName}}</td>
+                        <td style="vertical-align: middle">{{prd.prodNum}}</td>
+                        <td style="vertical-align: middle">{{prd.skuNum}}</td>
+                        <td style="vertical-align: middle">{{prd.name}}</td>
+                        <td style="vertical-align: middle">{{prd.combination | exchangeIsGift}}</td>
+                        <td style="vertical-align: middle">{{prd.retailPrice}}</td>
+                        <td style="vertical-align: middle">{{prd.skuId }}</td>
+                        <td style="vertical-align: middle">{{prd.itemId}}</td>
+                        <td style="vertical-align: middle">{{prd.upDown | exchangeIsupdown}}</td>
+                        <td style="vertical-align: middle">{{prd.isSale | exchangeIsSale}}</td>
+                        <td style="vertical-align: middle">{{prd.cost}}</td>
+                        <td style="vertical-align: middle">{{prd.taxRate }}</td>
+                        <td style="vertical-align: middle">{{prd.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td style="vertical-align: middle">{{prd.modifyTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td style="vertical-align: middle">
+                            <button ng-if="prd.combination !=0" title="礼包详情" ng-click="giftDetail(prd.itemId)" class="btn-warning btn-xs ng-scope">
+                                礼包详情
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <span ng-click="searchProdect.open()" class="btn btn-default">设置商品</span>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-center" ng-if="id == 0">
+                <input type="submit" class="btn btn-primary btn-lg" title="保存" ng-click="save()" value="新建保存" />
+            </div>
+            <div class="col-sm-12 text-center" ng-if="id != 0">
+                <input type="submit" class="btn btn-primary btn-lg" title="修改" ng-click="edit()" value="修改保存" />
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<!--多选多商品弹窗-->
+<div class="modal bs-example-modal-lg" id="selectMoreProduct" tabindex="1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" style="width: 1024px;">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h3 class="modal-title">多选多商品管理</h3>
+            </div>
+            <div class="modal-body" ng-repeat="doubleprd in doubleProductData">
+                <p class="title">分组{{$index}}</p>
+                <div class="row">
+                    <div class="form-group">
+                        <label class="control-label  col-sm-2">分组名称:</label>
+                        <div class="col-sm-3">
+                            <input name="分组名称" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="doubleprd.groupName" type="text"
+                                required>
+                        </div>
+                        <!--<label class="control-label  col-sm-2">最少必选SKU数量:</label>
+                            <div class="col-sm-3">
+                                <input name="最少必选SKU数量" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="doubleprd.skuNum" type="number"
+                                    required>
+                            </div>-->
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px">
+                    <div class="form-group">
+                        <label class="control-label  col-sm-2">可选商品数量:</label>
+                        <div class="col-sm-3">
+                            <input name="可选商品数量" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="doubleprd.prodNum" type="number"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="" style="margin-top:10px">
+                    <table class="table table-condensed table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center">skuId</th>
+                                <th style="width: 50px; text-align: center">itemId</th>
+                                <th style="width: 50px; text-align: center">商品售价</th>
+                                <th style="width: 50px; text-align: center">商品名称</th>
+                                <th style="width: 50px; text-align: center">是否礼包</th>
+                                <th style="width: 50px; text-align: center">是否上架</th>
+                                <th style="width: 50px; text-align: center">OM是否可售</th>
+                                <th style="width: 50px; text-align: center">销项税率</th>
+                                <th style="width: 50px; text-align: center">预估成本</th>
+                                <th style="width: 50px; text-align: center">选择数量限制</th>
+                                <th style="width: 50px; text-align: center">是否有效</th>
+                                <th style="width: 50px; text-align: center">创建时间</th>
+                                <th style="width: 50px; text-align: center">最后修改时间</th>
+                                <th style="width: 50px; text-align: center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody farther="{{$index}}">
+                            <tr ng-repeat="prd in doubleprd.items">
+                                <td style="vertical-align: middle">{{prd.skuId}}</td>
+                                <td style="vertical-align: middle">{{prd.itemId}}</td>
+                                <td style="vertical-align: middle">{{prd.retailPrice}}</td>
+                                <td style="vertical-align: middle">{{prd.name}}</td>
+                                <td style="vertical-align: middle">{{prd.combination | exchangeIsGift}}</td>
+                                <td style="vertical-align: middle">{{prd.upDown | exchangeIsupdown}}</td>
+                                <td style="vertical-align: middle">{{prd.isSale | exchangeIsSale}}</td>
+                                <td style="vertical-align: middle">{{prd.taxRate}}</td>
+                                <td style="vertical-align: middle">{{prd.cost}}</td>
+                                <td style="vertical-align: middle"><input style="width: 40px" type="number" ng-model="prd.skuNum"></td>
+                                <td style="vertical-align: middle">{{prd.status | exitemStatus}}</td>
+                                <td style="vertical-align: middle">{{prd.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td style="vertical-align: middle">{{prd.modifyTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td style="vertical-align: middle">
+                                    <button ng-if="id !=0" index="{{$index}}" title="改状态" ng-click="searchProdect.isStatus($event)" class="btn-warning btn-xs ng-scope">
+                                        改状态
+                                    </button>
+                                    <button ng-if="id ==0" index="{{$index}}" title="删除" ng-click="searchProdect.delprd($event)" class="btn btn-danger btn-xs ng-scope">
+                                        删除
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label text-nowrap col-sm-1">商品ID:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid" ng-model="searchProdect.model.productId"
+                                    placeholder="（2-5字母，不能重复）">
+                            </div>
+                            <div class="col-sm-3">
+                                <span ng-click="searchProdect.addProduct($event)" index="{{$index}}" class="btn btn-default">添加商品</span>
+                                <span ng-click="searchProdect.deletGroup($event)" ng-if="id == 0" index="{{$index}}" class="btn btn-default">删除分组</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <span ng-click="searchProdect.addGroup()" ng-if="id == 0" class="btn btn-primary btn-lg ">添加分组</span>
+                <span ng-click="searchProdect.save()" class="btn btn-primary btn-lg">完成</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--礼包商品详情页-->
+<div class="modal bs-example-modal-lg" id="giftDetailModel" tabindex="1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" style="width: 1024px;">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="giftClose()" data-dismiss="modal"><span>&times;</span></button>
+                <h3 class="modal-title">礼包商品详情</h3>
+            </div>
+            <div class="modal-body">
+                <div class="" style="margin-top:10px">
+                    <table class="table table-condensed table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; text-align: center">skuId</th>
+                                <th style="width: 50px; text-align: center">商品货号</th>
+                                <th style="width: 50px; text-align: center">商品名称</th>
+                                <th style="width: 50px; text-align: center">商品价格</th>
+                                <th style="width: 50px; text-align: center">商品状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="prd in giftProductList">
+                                <td style="vertical-align: middle">{{prd.id}}</td>
+                                <td style="vertical-align: middle">{{prd.productCode}}</td>
+                                <td style="vertical-align: middle">{{prd.title}}</td>
+                                <td style="vertical-align: middle">{{prd.rrp}}</td>
+                                <td style="vertical-align: middle">{{prd.status | exskuStatus}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

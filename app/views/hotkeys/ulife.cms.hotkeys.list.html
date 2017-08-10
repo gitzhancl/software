@@ -1,0 +1,73 @@
+<div ng-controller="hotkeysList" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+        <ol class="breadcrumb">
+            <li>{{menuConfig.sku.name}}</li>
+            <li class="active"><a ng-href="{{menuConfig.sku.sub[4].link}}">{{menuConfig.sku.sub[4].name}}</a></li>
+        </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">热词</label>
+                        <input type="text" class=" form-control input-sm" id="name" ng-model="searchPage.params.hotKey"
+                               placeholder="请输入热词"/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="pull-right">
+
+                <a title="创建" ng-href="index.html#/hotkeys/create/0" ulife-btn-au class="btn btn-success btn-sm">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>创建</span>
+                </a>
+
+                <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <span>搜索</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <th style="width: 50px; text-align: center">ID</th>
+                <th style="width: 50px; text-align: center">热词</th>
+                <th style="width: 50px; text-align: center">排序</th>
+                <th style="width: 50px; text-align: center">终端</th>
+                <th style="width: 50px; text-align: center">创建时间</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.rs">
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.hotkey}}</td>
+                <td style="vertical-align: middle">{{page.hits}}</td>
+                <td style="vertical-align: middle">{{page.terminal|terminal}}</td>
+                <td style="vertical-align: middle">{{page.create_time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="vertical-align: middle">
+
+                    <a title="修改" ng-href="index.html#/hotkeys/edit/{{page.id}}" ulife-btn-au class="btn btn-success btn-xs"
+                       aria-label="Left Align">
+                        <span>修改</span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+</div>

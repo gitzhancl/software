@@ -1,0 +1,30 @@
+
+<section class="login_form form_wrap" ng-controller="LoginCtrl">
+
+
+    <form class="form-horizontal" name="contentForm" style="margin-top: 100px;">
+        <div class="form-group">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control input-sm" placeholder="用户名" name="image" required="true" id="username" required>
+            </div>
+            <div class="col-sm-5"></div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2">
+            　　<input style="display:none">
+                <input type="password" class="form-control input-sm" placeholder="密码" autocomplete="off" name="image" required="true" id="password" required>
+            </div>
+            <div class="col-sm-5"></div>
+        </div>
+        <!-- for disable autocomplete on chrome -->
+        <div class="form-group">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2" style="text-align: center">
+                <button type="submit" id="submit_btn" class="btn btn-default">登录</button>
+            </div>
+            <div class="col-sm-5"></div>
+        </div>
+    </form>
+</section>

@@ -1,0 +1,122 @@
+<div ng-controller="PromotionActivityGroupListCtrl" class="cms-pageList">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.promoact.sub[1].link}}">{{menuConfig.promoact.name}}</a></li>
+        <li class="active">{{menuConfig.promoact.sub[1].name}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <div class="form-group-sm form-inline">
+            <!--<label class=" control-label"><span style="color: red"> * </span>优惠券类型（必选）</label>
+            <select class="form-control" ng-model="pType" ng-options="type.deviceId as type.key for type in promotionType"></select>-->
+            <div class="col-md-3">
+                <label class="control-label">优惠活动组名称</label>
+                <input type="text" class="form-control" id="promotionName" ng-model="searchPage.searchName" placeholder="请输入名称"/>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">优惠活动组ID&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" class="form-control" id="promotionId" ng-model="searchPage.searchId" placeholder="请输入ID"/>
+            </div>
+        </div>
+        <div class="pull-right">
+            <button title="搜索" ng-click="searchPage.search()" ulife-btn-au class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+            <a title="创建" ng-click="addPage.open()" ulife-btn-au class="btn btn-success btn-sm" >
+                <span class="glyphicon glyphicon-plus" ></span>
+                <span>创建</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover" style="text-align: center">
+            <thead>
+            <tr>
+                <!--<th style="width: 50px; text-align: center">编号</th>-->
+                <th style="width: 80px; text-align: center">优惠活动组ID</th>
+                <th style="width: 120px; text-align: center">优惠活动组名称</th>
+                <th style="width: 80px; text-align: center">创建时间</th>
+                <!--<th style="width: 50px; text-align: center">创建人</th>-->
+                <th style="width: 50px; text-align: center">包含活动ID</th>
+                <th style="width: 50px; text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.promoActivityGroup">
+                <!--<td style="vertical-align: middle">{{page.id}}</td>-->
+                <td style="vertical-align: middle">{{page.id}}</td>
+                <td style="vertical-align: middle">{{page.name}}</td>
+                <td style="vertical-align: middle">{{page.createTime|date:"yyyy-MM-dd HH:mm"}}</td>
+                <!--<td style="vertical-align: middle">{{page.creator}}</td>-->
+                <td style="vertical-align: middle; max-width: 200px;">
+                    <div style="word-wrap: break-word;word-break: normal; overflow:scroll; max-height:200px;">{{page.activityIds}}</div>
+                </td>
+                <td style="vertical-align: middle">
+                    <button ng-click="editGroup.open(page.id)" title="修改" ulife-btn-au class="btn btn-danger btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pager">
+            <li><a href="javascript:void(0);" ng-click="searchPage.pre()">上一页</a></li>
+            <li><a href="javascript:void(0);" ng-click="searchPage.next()">下一页</a></li>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;第{{searchPage.pageNum}}页</a>
+            <a href="javascript:void(0);">&nbsp;&nbsp;&nbsp;&nbsp;共{{searchPage.pageTotal}}页</a>
+        </ul>
+    </nav>
+
+    <!-- addGroup Modal -->
+    <div class="modal bs-example-modal-lg" id="addMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="moduleGroupLabel">创建活动组</h3>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">优惠活动组名称</label>
+                    </div>
+                    <div class="col-lg-4"  style="text-align: left">
+                        <input type="text" class="form-control" ng-model="addPage.name" min="0" placeholder="请输入名称"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addPage.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- editGroup Modal -->
+    <div class="modal bs-example-modal-lg" id="editMJModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document" style="width: 700px;;">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title" id="editGroupLabel">修改活动组</h3>
+                </div>
+                <div class="row show-grid cms-workarea1">
+                    <div class="col-lg-3 cms-workarea1" style="text-align: right">
+                        <label class="control-label">优惠活动组名称</label>
+                    </div>
+                    <div class="col-lg-4"  style="text-align: left">
+                        <input type="text" class="form-control" ng-model="addPage.name" min="0" placeholder="请输入名称"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="editGroup.save()">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

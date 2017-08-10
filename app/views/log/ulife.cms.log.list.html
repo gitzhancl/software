@@ -1,0 +1,36 @@
+<div ng-controller="LogListCtrl" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline ">
+            <div class="form-horizontal">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label">系统</label>
+                        <select class=" form-control" ng-model="searchPage.sysment" ng-options="type.value as type.key for type in sysType"></select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">行数</label>
+                        <input type="text" class=" form-control" ng-model="searchPage.params.lineNumber" placeholder="行数"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">关键字</label>
+                        <input type="text" class=" form-control" ng-model="searchPage.params.keyword" placeholder="关键字"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button title="搜索" ng-click="searchPage.search()" class="btn btn-primary btn-sm" >
+                <span class="glyphicon glyphicon-search" ></span>
+                <span>搜索</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="content" data-ng-bind-html="renderObj.value"></div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div ng-controller="HomepageListCtrl" class="cms-pageList">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.content.sub[1].link}}">{{menuConfig.content.name}}</a></li>
+        <li class="active">{{menuConfig.content.sub[1].name}}</li>
+    </ol>
+
+    <div class="">
+        <table class="table table-condensed table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 50px">终端</th>
+                <th>首页标题</th>
+                <th style="width: 64px">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="page in renderObj.list" ng-dblclick="gotoPageEdit(page.pageId)">
+                <td>{{page.deviceName}}</td>
+                <td>{{page.title}}</td>
+                <td>
+                    <button type="button" ng-click="gotoPageEdit(page.pageId)" title="修改" ulife-btn-au class="btn btn-success btn-xs" aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    </button>
+                    <a ng-if="page.deviceId == 2" ng-href="{{previewLinks.h5home}}{{page.pageId}}" title="预览" ulife-btn-au class="btn btn-success btn-xs" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a ng-if="page.deviceId == 1" ng-href="{{previewLinks.pchome}}{{page.pageId}}" title="预览" ulife-btn-au class="btn btn-success btn-xs" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a ng-if="page.deviceId == 3" ng-href="{{previewLinks.h5exchangeIndex}}{{page.pageId}}" title="预览" ulife-btn-au class="btn btn-success btn-xs" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a ng-if="page.deviceId == 4" ng-href="{{previewLinks.pcexchangeIndex}}{{page.pageId}}" title="预览" ulife-btn-au class="btn btn-success btn-xs" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

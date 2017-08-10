@@ -1,0 +1,178 @@
+<div ng-controller="singleProductH5">
+
+
+  <div class="cms-moduleEdit">
+
+    <ol class="breadcrumb">
+      <li><a ng-href="{{menuConfig.content.sub[0].link}}">{{menuConfig.content.name}}</a></li>
+      <li><a ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].link}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].name}}</a>
+      </li>
+      <li><a
+          ng-href="{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].link}}{{editModule.pageInfo.pageId}}">{{menuConfig.content.sub[editModule.pageInfo.categoryId].sub[0].name}}</a>
+      </li>
+      <li class="active">H5 单商品组件：{{editModule.moduleInfo.name}}</li>
+
+      <div class="pull-right">
+        <div class="btn-group" role="group">
+          <button title="修改" ng-click="editAttr.open()" class="btn btn-info btn-xs">
+            <span>修改</span>
+          </button>
+        </div>
+
+        <div class="btn-group" role="group">
+          <button title="增加商品" ng-click="editContent.add()" target="_blank" class="btn btn-success btn-xs">
+            <span>增加商品</span>
+          </button>
+        </div>
+
+        <div class="btn-group" role="group">
+          <button title="批量操作商品" ng-click="editListContent.add()" target="_blank" class="btn btn-success btn-xs">
+            <span>批量操作商品</span>
+          </button>
+        </div>
+      </div>
+    </ol>
+
+
+    <div class="cms-panel">
+      <p>
+        <small>可上下拖动更换排序</small>
+        <small class="pull-right">可上下拖动更换排序</small>
+      </p>
+      <div ulife-content-sortable="[ng-repeat]" class="cms-moduleList">
+        <div ng-repeat="activiyItem in  editModule.moduleInfo.content" class="panel" ng-class="{'panel-warning': activiyItem.stock >= 10, 'panel-info': activiyItem.stock < 10, 'panel-danger': activiyItem.stock < 1}">
+          <div class="panel-heading">
+            {{activiyItem.itemId}} -- {{activiyItem.title}} -- 价格:{{activiyItem.price}} -- 库存:{{activiyItem.stock}}
+            <div class="pull-right">
+              <button type="button" ng-click="editContent.edit($index)" title="修改" class="btn btn-info btn-xs">
+                <span class="glyphicon glyphicon glyphicon-edit"></span>
+              </button>
+              <button ng-click="editContent.delete($index)" title="删除" class="btn btn-info btn-xs">
+                <span class="glyphicon glyphicon glyphicon-trash"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Edit ModuleInfo Modal -->
+  <div class="modal bs-example-modal-lg" id="attrModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title" id="moduleModalLabel">修改组件信息</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" name="attrForm">
+            <div class="form-group">
+              <label for="dialog-moduleInfoMore" class="col-sm-2 control-label">楼层向上间距</label>
+              <div class="col-sm-10">
+                  <select class="form-control input-sm"
+                      ng-model="editModule.moduleInfo.attr.top"
+                    ng-options="item.value as item.key for item in Tops"></select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" ng-click="editAttr.save()">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Activity Modal -->
+  <div class="modal bs-example-modal-lg" id="contentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title" id="activityModalLabel">{{editModule.contentHandle.action == "add" ? "添加商品" :
+            "修改商品"}}</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" name="contentForm">
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span class='text-danger'>*</span>商品</label>
+              <div class="col-sm-10" ng-class="{'has-error' : contentForm.itemId.$dirty && contentForm.itemId.$invalid}">
+                <input type="text" class="form-control input-sm" name="itemId" placeholder="商品itemId"
+                       ng-model="editModule.contentHandle.content.itemId"
+                       ng-blur="editContent.getProductInfo(editModule.contentHandle.content)" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">标题</label>
+              <div class="col-sm-10" ng-class="{'has-error' : contentForm.title.$dirty && contentForm.title.$invalid}">
+                <input type="text" class="form-control input-sm" name="title" placeholder="标题"
+                       ng-model="editModule.contentHandle.content.title">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">商品主图url</label>
+              <div class="col-sm-10" ng-class="{'has-error' : contentForm.image.$dirty && contentForm.image.$invalid}">
+                <input type="text" class="form-control input-sm" name="image" placeholder="商品主图url"
+                       ng-model="editModule.contentHandle.content.image">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">商品真实价格</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control input-sm" name="price" placeholder="商品真实价格"
+                       ng-model="editModule.contentHandle.content.price" ng-disabled="true">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">库存</label>
+              <div class="col-sm-10"
+                   ng-class="{'has-error' : contentForm.stock.$dirty && contentForm.stock.$invalid}">
+                <input type="text" class="form-control input-sm" name="stock" placeholder="库存"
+                       ng-model="editModule.contentHandle.content.stock" ng-disabled="true">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" ng-click="editContent.save()">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Edit ActivityList Modal -->
+  <div class="modal bs-example-modal-lg" id="contentListModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title" id="activityListModalLabel">批量操作商品</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" name="contentListForm">
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span class='text-danger'>*</span>商品itemIds</label>
+              <div class="col-sm-10"
+                   ng-class="{'has-error' : contentForm.itemId.$dirty && contentForm.itemId.$invalid}">
+                                <textarea rows='10' class="form-control input-sm" name="itemId" placeholder="商品itemIds"
+                                          ng-model="editListContent.itemIds" required>
+                                </textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" ng-click="editListContent.save()">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

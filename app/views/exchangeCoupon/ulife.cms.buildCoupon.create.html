@@ -1,0 +1,60 @@
+<div ng-controller="buildCouponCreate" class="cms-pageList" xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li><a ng-href="{{menuConfig.exchangeCoupon.sub[1].link}}">{{menuConfig.exchangeCoupon.name}}</a></li>
+        <li class="active"><a ng-href="{{menuConfig.exchangeCoupon.sub[2].link}}">{{menuConfig.exchangeCoupon.sub[2].name}}</a></li>
+        <li class="active">{{currentStatus}}</li>
+    </ol>
+
+    <div class="bg-info clearfix cms-workarea">
+        <form class="form-group-sm form-inline" name='param'>
+            <div class="col-md-12 form-inline" ng-if="params.id != 0">
+                <div class="form-group">
+                    <label class="control-label" style="width:80px;">申请单号</label>
+                    <input type="text" name="申请单号" class="form-control" id="id" ng-model="params.id" placeholder="请输入单号" ng-disabled="permission.CloseEditId" required/>
+                </div>
+            </div>
+
+            <div class="col-md-12 form-inline" style="margin-top:10px;">
+                <div class="form-group">
+                    <label class="control-label" style="width:80px;">券ID</label>
+                    <input type="text" class="form-control" id="ticketId" ng-model="params.ticketId" placeholder="请输入券ID"/>
+                    <button type="button" class="btn btn-success" ng-click="ticketQueryTicketNameById()">查询劵名</button>
+                </div>
+            </div>
+
+            <div class="col-md-12 form-inline" style="margin-top:10px;">
+                <div class="form-group">
+                    <label class="control-label" style="width:80px;">券名称</label>
+                    <input type="text" name="券名称" style="width: 400px" class="form-control" id="ticketName" ng-model="ticketName" placeholder="" disabled="disabled"/>
+                </div>
+            </div>
+
+            <div class="col-md-12 form-inline" style="margin-top:10px;">
+                <div class="form-group">
+                    <label class="control-label" style="width:80px;">申请部门</label>
+                    <getdeport></getdeport>
+                </div>
+            </div>
+            <div class="col-md-12 form-inline" style="margin-top:10px;">
+                <div class="form-group">
+                    <label class="control-label" style="width:80px;">申请人</label>
+                    <input type="text" name="申请人" class="form-control" id="demandMan" ng-model="params.demandMan" required placeholder=""/>
+                </div>
+            </div>
+
+            <div class="col-md-12 form-inline" style="margin-top:10px;">
+                <div class="form-group">
+                    <label class="control-label" style="width:80px;">申请数量</label>
+                        <input type="text" name="申请数量" class="form-control" id="count" ng-model="params.count"
+                               maxlength="4" required placeholder=""/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container" style="margin-top:20px;">
+        <button type="button" class="btn btn-success" ng-click="ticketCreateOrUpdateCode()">保存</button>
+        <a href="/index.html#/exchangeCoupon/buildCouponList"type="button" class="btn btn-primary" style="margin-left:10px;">返回</a>
+    </div>
+
+</div>
